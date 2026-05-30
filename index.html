@@ -506,7 +506,8 @@ function renderCharts() {
 
 /* ── CALENDAR ── */
 const MONTHS_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-let calYear = 2026, calMonth = 7; // agosto 2026
+const _now = new Date();
+let calYear = _now.getFullYear(), calMonth = _now.getMonth();
 
 // Eventos iniciales
 let events = [
