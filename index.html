@@ -562,20 +562,18 @@ function renderCalendar() {
 
 function renderEvList() {
   const list = document.getElementById('evList');
-  const label = document.getElementById('evListLabel');
-  const monthStr = String(calMonth+1).padStart(2,'0');
-  const monthEvents = events
-    .filter(e => e.date.startsWith(calYear+'-'+monthStr))
-    .sort((a,b) => a.date.localeCompare(b.date));
-  label.textContent = monthEvents.length
-    ? `Eventos de ${MONTHS_ES[calMonth]} ${calYear} (${monthEvents.length})`
-    : `Sin eventos en ${MONTHS_ES[calMonth]} ${calYear}`;
+  const today = new Date();
+  const todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  const upcoming = events
+    .filter(e => e.date >= todayStr)
+    .sort((a,b) => a.date.localeCompare(b.date))
+    .slice(0, 5);
   list.innerHTML = '';
-  if (!monthEvents.length) {
-    list.innerHTML = '<div style="font-size:13px;color:var(--text3);padding:16px 0;">Haz doble clic en un día del calendario para añadir una fecha, o usa el botón + Añadir fecha.</div>';
+  if (!upcoming.length) {
+    list.innerHTML = '<div style="font-size:13px;color:var(--text3);padding:16px 0;">Sin eventos próximos.</div>';
     return;
   }
-  monthEvents.forEach(ev => {
+  upcoming.forEach(ev => {
     const parts = ev.date.split('-');
     const day = parseInt(parts[2]);
     const monthName = MONTHS_ES[parseInt(parts[1])-1].slice(0,3);
