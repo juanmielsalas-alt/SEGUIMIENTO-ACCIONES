@@ -381,17 +381,21 @@ body{
         <button class="cal-add-btn" onclick="openModal()">+ Añadir fecha</button>
       </div>
 
-      <!-- Calendario visual -->
-      <div class="cal-grid-wrap">
-        <div class="cal-dow">
-          <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
+      <!-- Layout: calendario izquierda + próximos eventos derecha -->
+      <div class="cal-layout">
+        <div class="cal-left">
+          <div class="cal-grid-wrap">
+            <div class="cal-dow">
+              <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
+            </div>
+            <div class="cal-days" id="calDays"></div>
+          </div>
         </div>
-        <div class="cal-days" id="calDays"></div>
+        <div class="cal-right">
+          <div class="sl">Próximos eventos</div>
+          <div class="ev-list" id="evList"></div>
+        </div>
       </div>
-
-      <!-- Lista de eventos del mes -->
-      <div class="sl" id="evListLabel">Eventos de este mes</div>
-      <div class="ev-list" id="evList"></div>
 
     </div>
   </div><!-- /sheet-calendario -->
