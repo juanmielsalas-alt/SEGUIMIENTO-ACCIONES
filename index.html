@@ -137,7 +137,12 @@ body{
 .cal-month-title{font-size:18px;font-weight:500;min-width:160px;text-align:center;}
 .cal-add-btn{background:var(--blue-bg);border:1px solid rgba(55,138,221,.3);border-radius:var(--r);color:var(--blue);cursor:pointer;padding:7px 16px;font-size:13px;font-family:inherit;font-weight:500;transition:all .15s;}
 .cal-add-btn:hover{background:rgba(55,138,221,.28);}
-.cal-grid-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:24px;}
+.cal-grid-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;}
+.cal-layout{display:flex;gap:24px;align-items:flex-start;margin-top:0;}
+.cal-left{flex:1;min-width:0;}
+.cal-right{width:300px;flex-shrink:0;}
+.cal-right .sl{margin-bottom:14px;}
+@media(max-width:900px){.cal-layout{flex-direction:column;}.cal-right{width:100%;}}
 .cal-dow{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--border);}
 .cal-dow span{padding:10px 0;text-align:center;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);}
 .cal-days{display:grid;grid-template-columns:repeat(7,1fr);}
