@@ -816,7 +816,7 @@ function updateHeader(id) {
   sym.textContent = d.sym;
   sym.style.display = d.sym ? '' : 'none';
   sym.style.color = d.symColor;
-  sym.style.borderColor = d.symColor ? d.symColor.replace(')', ',.4)').replace('var(','rgba(').replace('--blue','55,138,221').replace('--amber','186,117,23').replace('--red','226,75,74') : '';
+  sym.style.borderColor = d.symColor ? d.symColor : '';
   document.getElementById('hdr-price').textContent = d.price;
   document.getElementById('hdr-chg').textContent = d.chg;
   document.getElementById('hdr-chg').style.color = d.chgColor;
