@@ -723,6 +723,21 @@ body{
         </div>
       </div>
 
+      <!-- FEED DE NOTICIAS -->
+      <div class="news-section">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0;flex-wrap:wrap;gap:10px;">
+          <div class="sl" style="margin-bottom:0;">Últimas noticias</div>
+          <div class="news-filters" id="newsFilters">
+            <button class="nf-btn active" onclick="filterNews('all',this)">Todas</button>
+            <button class="nf-btn" onclick="filterNews('mosaic',this)">📊 MOS</button>
+            <button class="nf-btn" onclick="filterNews('anthropic',this)">🤖 Anthropic</button>
+            <button class="nf-btn" onclick="filterNews('openai',this)">🧠 OpenAI</button>
+            <button class="nf-btn" onclick="filterNews('spacex',this)">🚀 SpaceX</button>
+          </div>
+        </div>
+        <div class="news-feed" id="newsFeed"></div>
+      </div>
+
     </div>
   </div><!-- /sheet-calendario -->
 
