@@ -791,6 +791,15 @@ function showITab(id, btn) {
   renderCharts();
 }
 
+function showITabSheet(prefix, id, btn) {
+  const allBtns = btn.closest('.itabs').querySelectorAll('.itab');
+  allBtns.forEach(b => b.classList.remove('active'));
+  const sheet = btn.closest('.s1-inner');
+  sheet.querySelectorAll('.ipanel').forEach(p => p.classList.remove('active'));
+  document.getElementById(prefix + '-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
 /* ── SHEET TABS ── */
 function showSheet(id, btn) {
   document.querySelectorAll('.sheet-tab').forEach(b => b.classList.remove('active'));
