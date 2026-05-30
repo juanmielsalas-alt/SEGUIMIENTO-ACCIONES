@@ -1217,6 +1217,53 @@ function renderNews() {
   });
 }
 
+/* ── TAB DRAG-AND-DROP ── */
+(function() {
+  let dragged = null;
+
+  const tabbar = document.getElementById('tabbar');
+
+  tabbar.addEventListener('dragstart', e => {
+    const tab = e.target.closest('.sheet-tab');
+    if (!tab) return;
+    dragged = tab;
+    setTimeout(() => tab.classList.add('dragging'), 0);
+    e.dataTransfer.effectAllowed = 'move';
+  });
+
+  tabbar.addEventListener('dragend', e => {
+    const tab = e.target.closest('.sheet-tab');
+    if (tab) tab.classList.remove('dragging');
+    tabbar.querySelectorAll('.sheet-tab').forEach(t => t.classList.remove('drag-over'));
+    dragged = null;
+  });
+
+  tabbar.addEventListener('dragover', e => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    const target = e.target.closest('.sheet-tab');
+    tabbar.querySelectorAll('.sheet-tab').forEach(t => t.classList.remove('drag-over'));
+    if (target && target !== dragged) target.classList.add('drag-over');
+  });
+
+  tabbar.addEventListener('dragleave', e => {
+    const target = e.target.closest('.sheet-tab');
+    if (target) target.classList.remove('drag-over');
+  });
+
+  tabbar.addEventListener('drop', e => {
+    e.preventDefault();
+    const target = e.target.closest('.sheet-tab');
+    if (!target || target === dragged) return;
+    const tabs = [...tabbar.querySelectorAll('.sheet-tab')];
+    const fromIdx = tabs.indexOf(dragged);
+    const toIdx   = tabs.indexOf(target);
+    if (fromIdx < toIdx) tabbar.insertBefore(dragged, target.nextSibling);
+    else                 tabbar.insertBefore(dragged, target);
+    target.classList.remove('drag-over');
+  });
+})();
+
 // Iniciar
 updateHeader('calendario');
 renderCharts();
