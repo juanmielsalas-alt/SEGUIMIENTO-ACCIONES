@@ -800,12 +800,36 @@ function showITabSheet(prefix, id, btn) {
   btn.classList.add('active');
 }
 
+/* ── HEADER DATA ── */
+const HDR_DATA = {
+  mosaic:     { lbl:'Análisis de inversión · Guerra de Irán 2026', name:'The Mosaic Company', sym:'NYSE: MOS', symColor:'var(--blue)', price:'$24,07', chg:'▼ −33,1% (52 semanas)', chgColor:'var(--red)', date:'· Actualizado 29 may 2026' },
+  anthropic:  { lbl:'IPO en preparación · Q4 2026 estimado', name:'Anthropic', sym:'PRIVADA · Pre-IPO', symColor:'var(--blue)', price:'$965B', chg:'Valoración Serie H · May 2026', chgColor:'var(--green)', date:'×5,3 en 12 meses' },
+  openai:     { lbl:'IPO posible · Sep–Q4 2026 o 2027', name:'OpenAI', sym:'PRIVADA · Incertidumbre alta', symColor:'var(--amber)', price:'$852B', chg:'Valoración mar 2026', chgColor:'var(--amber)', date:'$122B levantados en una ronda' },
+  spacex:     { lbl:'IPO más inminente · Roadshow ~4 jun 2026', name:'SpaceX + xAI', sym:'PRIVADA · S-1 presentado', symColor:'var(--red)', price:'$1,75T', chg:'Valoración objetivo IPO', chgColor:'var(--amber)', date:'La mayor IPO de la historia si se ejecuta' },
+  calendario: { lbl:'Seguimiento de inversión', name:'Calendario', sym:'', symColor:'', price:'', chg:'', chgColor:'', date:'' }
+};
+function updateHeader(id) {
+  const d = HDR_DATA[id] || HDR_DATA.mosaic;
+  document.getElementById('hdr-lbl').textContent = d.lbl;
+  document.getElementById('hdr-name').textContent = d.name;
+  const sym = document.getElementById('hdr-sym');
+  sym.textContent = d.sym;
+  sym.style.display = d.sym ? '' : 'none';
+  sym.style.color = d.symColor;
+  sym.style.borderColor = d.symColor ? d.symColor.replace(')', ',.4)').replace('var(','rgba(').replace('--blue','55,138,221').replace('--amber','186,117,23').replace('--red','226,75,74') : '';
+  document.getElementById('hdr-price').textContent = d.price;
+  document.getElementById('hdr-chg').textContent = d.chg;
+  document.getElementById('hdr-chg').style.color = d.chgColor;
+  document.getElementById('hdr-date').textContent = d.date;
+}
+
 /* ── SHEET TABS ── */
 function showSheet(id, btn) {
   document.querySelectorAll('.sheet-tab').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.sheet').forEach(s => s.classList.remove('active'));
   document.getElementById('sheet-' + id).classList.add('active');
   btn.classList.add('active');
+  updateHeader(id);
   if (id === 'mosaic') renderCharts();
   if (id === 'calendario') renderCalendar();
 }
