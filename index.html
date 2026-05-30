@@ -140,7 +140,7 @@ body{
 .cal-grid-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;}
 .cal-layout{display:flex;gap:24px;align-items:flex-start;margin-top:0;}
 .cal-left{flex:1;min-width:0;}
-.cal-right{width:300px;flex-shrink:0;}
+.cal-right{width:280px;flex-shrink:0;position:sticky;top:16px;align-self:flex-start;}
 .cal-right .sl{margin-bottom:14px;}
 @media(max-width:900px){.cal-layout{flex-direction:column;}.cal-right{width:100%;}}
 .cal-dow{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--border);}
