@@ -847,12 +847,25 @@ let calYear = _now.getFullYear(), calMonth = _now.getMonth();
 
 // Eventos iniciales
 let events = [
-  { id:1, date:'2026-08-03', title:'Resultados Q2 Mosaic', type:'resultados', desc:'Primera radiografía post-tregua. Ver: coste azufre, guía fosfato, Brasil.' },
-  { id:2, date:'2026-04-08', title:'Alto el fuego EE.UU.–Irán', type:'guerra', desc:'Trump acuerda tregua de 2 semanas. MOS cae 2,7%, Yara −12%.' },
-  { id:3, date:'2026-05-11', title:'Resultados Q1 Mosaic', type:'resultados', desc:'Pérdida neta $258M. BPA $0,05 vs $0,23 esperado.' },
-  { id:4, date:'2026-02-28', title:'Inicio guerra Irán / Bloqueo Ormuz', type:'guerra', desc:'EE.UU. e Israel atacan Irán. Ormuz bloqueado.' },
+  { id:1,  date:'2026-08-03', title:'Resultados Q2 Mosaic (MOS)', type:'resultados', desc:'Primera radiografía post-tregua. Ver: coste azufre, guía fosfato, Brasil.' },
+  { id:2,  date:'2026-04-08', title:'Alto el fuego EE.UU.–Irán', type:'guerra', desc:'Trump acuerda tregua de 2 semanas. MOS cae 2,7%, Yara −12%.' },
+  { id:3,  date:'2026-05-11', title:'Resultados Q1 Mosaic (MOS)', type:'resultados', desc:'Pérdida neta $258M. BPA $0,05 vs $0,23 esperado.' },
+  { id:4,  date:'2026-02-28', title:'Inicio guerra Irán / Bloqueo Ormuz', type:'guerra', desc:'EE.UU. e Israel atacan Irán. Ormuz bloqueado.' },
+  // SpaceX IPO
+  { id:5,  date:'2026-06-04', title:'🚀 SpaceX — Roadshow IPO', type:'resultados', desc:'Inicio roadshow. Goldman Sachs lidera sindicato de 21 bancos. Objetivo: $75B a valoración $1,75T. Ticker: SPCX (Nasdaq).' },
+  { id:6,  date:'2026-06-11', title:'🚀 SpaceX — Fijación de precio IPO', type:'resultados', desc:'Precio definitivo de salida. Determina valoración final y asignación a inversores institucionales.' },
+  { id:7,  date:'2026-06-12', title:'🚀 SpaceX — Debut en Nasdaq (SPCX)', type:'resultados', desc:'Primera jornada de cotización. La mayor IPO de la historia si se ejecuta a $1,75T.' },
+  { id:8,  date:'2026-12-15', title:'🚀 SpaceX — Inicio ventana lockup insiders', type:'macro', desc:'Estimado inicio del período en que insiders pueden vender (ventana 15–27 dic). Suele generar presión bajista.' },
+  { id:9,  date:'2026-12-27', title:'🚀 SpaceX — Fin lockup insiders', type:'macro', desc:'Fin estimado del lockup. Si los insiders venden masivamente, puede haber corrección significativa.' },
+  // OpenAI IPO
+  { id:10, date:'2026-05-22', title:'🧠 OpenAI — Filing confidencial S-1', type:'resultados', desc:'Presentó S-1 confidencial. Goldman Sachs y Morgan Stanley lideran. Dato clave: pierde $1,22 por cada $1 de ingreso.' },
+  { id:11, date:'2026-09-07', title:'🧠 OpenAI — Ventana IPO (Labor Day)', type:'resultados', desc:'Inicio de la ventana estimada de IPO: entre Labor Day y Thanksgiving 2026 (sep–nov). Alta incertidumbre de timing.' },
+  { id:12, date:'2026-11-26', title:'🧠 OpenAI — Ventana IPO (Thanksgiving)', type:'resultados', desc:'Fin de la ventana estimada de IPO. Si no ha cotizado antes de esta fecha, probable retraso a 2027.' },
+  // Anthropic IPO
+  { id:13, date:'2026-10-01', title:'🤖 Anthropic — Resultados Q3 (examen definitivo)', type:'resultados', desc:'Primer trimestre pagando precio completo a SpaceX ($1,25B/mes). Si mantiene beneficio → narrativa IPO se consolida. Si no → posible corrección fuerte pre-IPO.' },
+  { id:14, date:'2026-10-23', title:'🤖 Anthropic — IPO estimada', type:'resultados', desc:'Fecha estimada de debut bursátil. Sería la primera IPO de modelo IA fundacional rentable. Valoración objetivo: ~$965B.' },
 ];
-let nextId = 5;
+let nextId = 15;
 
 function renderCalendar() {
   document.getElementById('calTitle').textContent = MONTHS_ES[calMonth] + ' ' + calYear;
