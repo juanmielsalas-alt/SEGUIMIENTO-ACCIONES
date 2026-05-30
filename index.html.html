@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mosaic Company (MOS) — Seguimiento</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --bg:#1a1a1a; --bg2:#242424; --bg3:#2e2e2e; --bg4:#383838;
+  --border:rgba(255,255,255,0.08); --border2:rgba(255,255,255,0.15);
+  --text:#f0f0f0; --text2:#c8c8c8; --text3:#888;
+  --blue:#378ADD; --blue-bg:rgba(55,138,221,0.18);
+  --green:#639922; --green-bg:rgba(99,153,34,0.18);
+  --red:#E24B4A; --red-bg:rgba(226,75,74,0.18);
+  --amber:#BA7517; --amber-bg:rgba(186,117,23,0.18);
+  --r:8px; --r-lg:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  font-family:'Inter',-apple-system,sans-serif;
+  background:var(--bg); color:var(--text);
+  display:flex; flex-direction:column; height:100vh;
+  font-size:15px; line-height:1.6; overflow:hidden;
+}
+
+/* ── HEADER ── */
+.hdr{
+  background:var(--bg2); border-bottom:1px solid var(--border);
+  padding:18px 44px; flex-shrink:0; z-index:10;
+}
+.hdr-inner{max-width:1200px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.hdr-lbl{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:4px;}
+.hdr-main{display:flex;align-items:baseline;gap:12px;}
+.hdr-name{font-size:20px;font-weight:500;}
+.hdr-sym{font-size:12px;color:var(--blue);border:1px solid rgba(55,138,221,.4);border-radius:4px;padding:1px 7px;}
+.hdr-price{font-size:32px;font-weight:300;letter-spacing:-.02em;}
+.hdr-chg{font-size:13px;color:var(--red);margin-top:1px;}
+.hdr-date{font-size:11px;color:var(--text3);margin-top:1px;text-align:right;}
+
+/* ── SHEET AREA (scrollable) ── */
+.sheet-area{flex:1;overflow-y:auto;min-height:0;}
+.sheet{display:none;}
+.sheet.active{display:block;}
+
+/* ── SHEET 1 CONTENT ── */
+.s1-inner{max-width:1200px;margin:0 auto;padding:28px 44px 40px;}
+
+/* ── METRICS ── */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px;}
+.mc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;}
+.mc-lbl{font-size:11px;color:var(--text3);margin-bottom:4px;}
+.mc-val{font-size:20px;font-weight:500;}
+.mc-sub{font-size:11px;color:var(--text3);margin-top:2px;}
+.cr{color:var(--red);} .cg{color:var(--green);} .ca{color:var(--amber);} .cb{color:var(--blue);}
+
+/* ── INNER TABS (dentro de hoja 1) ── */
+.itabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap;}
+.itab{
+  padding:6px 16px;font-size:13px;font-family:inherit;font-weight:400;
+  border:1px solid var(--border2);border-radius:var(--r);
+  cursor:pointer;background:transparent;color:var(--text2);transition:all .15s;
+}
+.itab:hover{background:var(--bg3);color:var(--text);}
+.itab.active{background:var(--bg3);color:var(--text);font-weight:500;}
+.ipanel{display:none;}
+.ipanel.active{display:block;animation:fi .18s ease;}
+@keyframes fi{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+
+/* ── COMMON ── */
+.sl{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
+.cw{position:relative;width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;margin-bottom:20px;}
+.divider{height:1px;background:var(--border);margin:20px 0;}
+.notice{display:flex;gap:10px;padding:12px 14px;background:var(--blue-bg);border:1px solid rgba(55,138,221,.25);border-radius:var(--r);font-size:12px;color:var(--text2);line-height:1.6;margin-top:14px;}
+.ni{color:var(--blue);flex-shrink:0;font-size:15px;margin-top:1px;}
+
+/* TIMELINE */
+.tl-item{display:flex;}
+.tl-lc{display:flex;flex-direction:column;align-items:center;width:36px;flex-shrink:0;}
+.tl-dot{width:13px;height:13px;border-radius:50%;border:2px solid;margin-top:4px;flex-shrink:0;}
+.tl-vt{width:1px;background:var(--border);flex:1;min-height:20px;}
+.tl-last .tl-vt{background:transparent;}
+.tl-body{flex:1;padding:0 0 18px 10px;}
+.tl-date{font-size:11px;color:var(--text3);margin-bottom:2px;}
+.tl-text{font-size:13px;color:var(--text2);line-height:1.55;}
+.tl-px{font-size:13px;font-weight:500;margin-top:4px;display:inline-block;}
+
+/* FACTORS */
+.fl{display:flex;flex-direction:column;gap:8px;}
+.fi{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);}
+.fi-ic{font-size:17px;width:28px;text-align:center;color:var(--text3);flex-shrink:0;}
+.fi-bd{flex:1;}
+.fi-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px;}
+.fi-desc{font-size:12px;color:var(--text2);line-height:1.5;}
+.fi-bar{width:110px;flex-shrink:0;text-align:right;}
+.bt{height:4px;background:var(--bg4);border-radius:2px;overflow:hidden;margin-bottom:3px;}
+.bf{height:100%;border-radius:2px;}
+.bl{font-size:10px;color:var(--text3);}
+
+/* SCENARIOS */
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+.sc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;transition:border-color .2s;}
+.sc:hover{border-color:var(--border2);}
+.sc.ft{border-color:var(--blue);background:linear-gradient(145deg,var(--bg2),rgba(55,138,221,.06));}
+.bdg{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-bottom:10px;}
+.bdg-r{background:var(--red-bg);color:var(--red);}
+.bdg-b{background:var(--blue-bg);color:var(--blue);}
+.bdg-g{background:var(--green-bg);color:var(--green);}
+.sc-ttl{font-size:14px;font-weight:500;color:var(--text);margin-bottom:8px;line-height:1.4;}
+.sc-px{font-size:26px;font-weight:300;letter-spacing:-.02em;margin-bottom:3px;}
+.sc-pb{font-size:11px;color:var(--text3);margin-bottom:12px;}
+.sc-li{font-size:12px;color:var(--text2);line-height:1.9;border-top:1px solid var(--border);padding-top:10px;}
+.leg{display:flex;gap:18px;margin-bottom:10px;font-size:12px;color:var(--text2);align-items:center;}
+
+/* ANALYSTS */
+.rg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.tw{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:14px;}
+.at{width:100%;border-collapse:collapse;}
+.at th{font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--text3);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);background:var(--bg3);}
+.at td{padding:10px 14px;font-size:13px;border-bottom:1px solid var(--border);color:var(--text2);}
+.at tr:last-child td{border-bottom:none;}
+.at tr:hover td{background:var(--bg3);}
+.pill{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500;}
+.pb{background:var(--green-bg);color:var(--green);}
+.pn{background:var(--amber-bg);color:var(--amber);}
+.du{color:var(--green);font-size:12px;}
+.dd{color:var(--red);font-size:12px;}
+
+/* ── SHEET 2: CALENDARIO ── */
+.s2-inner{max-width:1200px;margin:0 auto;padding:28px 44px 40px;}
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.cal-nav{display:flex;align-items:center;gap:12px;}
+.cal-nav button{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);color:var(--text2);cursor:pointer;padding:6px 14px;font-size:13px;font-family:inherit;transition:all .15s;}
+.cal-nav button:hover{background:var(--bg4);color:var(--text);}
+.cal-month-title{font-size:18px;font-weight:500;min-width:160px;text-align:center;}
+.cal-add-btn{background:var(--blue-bg);border:1px solid rgba(55,138,221,.3);border-radius:var(--r);color:var(--blue);cursor:pointer;padding:7px 16px;font-size:13px;font-family:inherit;font-weight:500;transition:all .15s;}
+.cal-add-btn:hover{background:rgba(55,138,221,.28);}
+.cal-grid-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:24px;}
+.cal-dow{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--border);}
+.cal-dow span{padding:10px 0;text-align:center;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);}
+.cal-day{
+  min-height:90px;padding:8px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);
+  cursor:pointer;transition:background .15s;position:relative;
+}
+.cal-day:nth-child(7n){border-right:none;}
+.cal-day:hover{background:var(--bg3);}
+.cal-day.other-month .cal-day-num{color:var(--text3);opacity:.4;}
+.cal-day.today .cal-day-num{background:var(--blue);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;}
+.cal-day-num{font-size:12px;font-weight:500;color:var(--text2);margin-bottom:4px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;}
+.cal-event{font-size:10px;padding:2px 5px;border-radius:3px;margin-bottom:2px;line-height:1.4;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cal-event.type-resultados{background:rgba(55,138,221,.25);color:var(--blue);}
+.cal-event.type-guerra{background:rgba(226,75,74,.25);color:var(--red);}
+.cal-event.type-macro{background:rgba(186,117,23,.25);color:var(--amber);}
+.cal-event.type-personal{background:rgba(99,153,34,.25);color:var(--green);}
+.cal-event.type-otro{background:var(--bg4);color:var(--text2);}
+
+/* EVENT LIST */
+.ev-list{display:flex;flex-direction:column;gap:8px;}
+.ev-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);}
+.ev-date-col{flex-shrink:0;text-align:center;min-width:48px;}
+.ev-day{font-size:20px;font-weight:300;line-height:1;color:var(--text);}
+.ev-month{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);}
+.ev-body{flex:1;}
+.ev-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px;}
+.ev-desc{font-size:12px;color:var(--text2);}
+.ev-del{background:transparent;border:none;color:var(--text3);cursor:pointer;font-size:16px;padding:0 4px;flex-shrink:0;line-height:1;transition:color .15s;}
+.ev-del:hover{color:var(--red);}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r-lg);padding:24px;width:420px;max-width:90vw;}
+.modal h3{font-size:16px;font-weight:500;margin-bottom:18px;}
+.modal label{display:block;font-size:12px;color:var(--text3);margin-bottom:5px;margin-top:14px;}
+.modal label:first-of-type{margin-top:0;}
+.modal input,.modal textarea,.modal select{
+  width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);
+  color:var(--text);font-family:inherit;font-size:13px;padding:8px 10px;outline:none;
+}
+.modal input:focus,.modal textarea:focus,.modal select:focus{border-color:var(--blue);}
+.modal textarea{resize:vertical;min-height:70px;}
+.modal-btns{display:flex;gap:8px;margin-top:20px;justify-content:flex-end;}
+.btn-cancel{background:transparent;border:1px solid var(--border2);border-radius:var(--r);color:var(--text2);cursor:pointer;padding:7px 16px;font-size:13px;font-family:inherit;}
+.btn-cancel:hover{background:var(--bg3);}
+.btn-save{background:var(--blue-bg);border:1px solid rgba(55,138,221,.4);border-radius:var(--r);color:var(--blue);cursor:pointer;padding:7px 16px;font-size:13px;font-family:inherit;font-weight:500;}
+.btn-save:hover{background:rgba(55,138,221,.3);}
+
+/* ── EXCEL TAB BAR ── */
+.tabbar{
+  display:flex;align-items:flex-end;gap:0;
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:0 44px; flex-shrink:0;
+}
+.sheet-tab{
+  padding:9px 20px;font-size:13px;font-family:inherit;font-weight:400;
+  border:1px solid transparent;border-bottom:none;border-radius:6px 6px 0 0;
+  cursor:pointer;background:transparent;color:var(--text3);
+  transition:all .15s;margin-right:2px;position:relative;bottom:-1px;
+}
+.sheet-tab:hover{color:var(--text2);background:var(--bg3);}
+.sheet-tab.active{
+  background:var(--bg);color:var(--text);font-weight:500;
+  border-color:var(--border2);border-bottom-color:var(--bg);
+}
+
+@media(max-width:768px){
+  .hdr,.s1-inner,.s2-inner,.tabbar{padding-left:20px;padding-right:20px;}
+  .metrics,.rg{grid-template-columns:repeat(2,1fr);}
+  .sg{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-lbl">Análisis de inversión · Guerra de Irán 2026</div>
+      <div class="hdr-main">
+        <span class="hdr-name">The Mosaic Company</span>
+        <span class="hdr-sym">NYSE: MOS</span>
+      </div>
+    </div>
+    <div>
+      <div class="hdr-price">$24,07</div>
+      <div class="hdr-chg">▼ −33,1% (52 semanas)</div>
+      <div class="hdr-date">· Actualizado 29 may 2026</div>
+    </div>
+  </div>
+</header>
+
+<!-- SCROLLABLE AREA -->
+<div class="sheet-area">
+
+  <!-- ═══════════════ HOJA 1: THE MOSAIC COMPANY ═══════════════ -->
+  <div id="sheet-mosaic" class="sheet active">
+    <div class="s1-inner">
+
+      <div class="metrics">
+        <div class="mc"><div class="mc-lbl">Máx. 52 sem.</div><div class="mc-val ca">$38,23</div><div class="mc-sub">Antes de la guerra</div></div>
+        <div class="mc"><div class="mc-lbl">Mín. 52 sem.</div><div class="mc-val cr">$20,89</div><div class="mc-sub">Plena crisis azufre</div></div>
+        <div class="mc"><div class="mc-lbl">BPA Q1 2026</div><div class="mc-val ca">$0,05</div><div class="mc-sub">vs $0,23 esperado</div></div>
+        <div class="mc"><div class="mc-lbl">Cap. mercado</div><div class="mc-val cb">$7,65B</div><div class="mc-sub">vs $11,5B pre-guerra</div></div>
+      </div>
+
+      <div class="itabs">
+        <button class="itab active" onclick="showITab('timeline',this)">Cronología bursátil</button>
+        <button class="itab" onclick="showITab('factores',this)">Factores clave</button>
+        <button class="itab" onclick="showITab('escenarios',this)">Escenarios post-guerra</button>
+        <button class="itab" onclick="showITab('analistas',this)">Precio objetivo analistas</button>
+        <button class="itab" onclick="showITab('miinfo',this)">⭐ Mi info importante</button>
+      </div>
+
+      <!-- TIMELINE -->
+      <div id="ipanel-timeline" class="ipanel active">
+        <div class="sl">Evolución del precio MOS — guerra de Irán</div>
+        <div class="cw" style="height:280px;">
+          <canvas id="chartTimeline" role="img" aria-label="Gráfico evolución precio MOS 2026">Precio MOS: ene 27,50 → feb 31,20 → mar 38,23 → abr 26,40 → may 21,17 → 24,07 USD</canvas>
+        </div>
+        <div class="sl">Hitos clave</div>
+        <div class="tl-item"><div class="tl-lc"><div class="tl-dot" style="border-color:var(--amber);background:var(--amber-bg);"></div><div class="tl-vt"></div></div><div class="tl-body"><div class="tl-date">Enero 2026</div><div class="tl-text">Pre-guerra — Scotiabank eleva rating a Outperform. Precio objetivo medio $33,10. Mosaic entra en el año con vientos favorables en potasa.</div><div class="tl-px ca">~$27,50</div></div></div>
+        <div class="tl-item"><div class="tl-lc"><div class="tl-dot" style="border-color:var(--blue);background:var(--blue-bg);"></div><div class="tl-vt"></div></div><div class="tl-body"><div class="tl-date">28 feb 2026</div><div class="tl-text">EE.UU. e Israel atacan Irán. Ormuz se bloquea. Mosaic sube +11% en días: el mercado anticipa precios del fosfato más altos ante la disrupción del suministro.</div><div class="tl-px cg">~$31,20 ↑</div></div></div>
+        <div class="tl-item"><div class="tl-lc"><div class="tl-dot" style="border-color:var(--green);background:var(--green-bg);"></div><div class="tl-vt"></div></div><div class="tl-body"><div class="tl-date">Marzo 2026 — Pico histórico</div><div class="tl-text">Máximo de 52 semanas. El mercado pondera solo el alza del fosfato. El azufre, insumo crítico del que más del 50% transita por Ormuz, empieza a dispararse silenciosamente.</div><div class="tl-px cg">$38,23 (máx. 52s)</div></div></div>
+        <div class="tl-item"><div class="tl-lc"><div class="tl-dot" style="border-color:var(--amber);background:var(--amber-bg);"></div><div class="tl-vt"></div></div><div class="tl-body"><div class="tl-date">8 abr 2026 — Alto el fuego</div><div class="tl-text">Trump acuerda tregua de 2 semanas con Irán. MOS cae 2,7%, CF Industries −8,3%, Yara −12%. El mercado descuenta el fin del ciclo alcista de fertilizantes.</div><div class="tl-px cr">~$26,40 ↓</div></div></div>
+        <div class="tl-item"><div class="tl-lc"><div class="tl-dot" style="border-color:var(--red);background:var(--red-bg);"></div><div class="tl-vt"></div></div><div class="tl-body"><div class="tl-date">11 may 2026 — Resultados Q1</div><div class="tl-text">Pérdida neta de $258 millones. BPA $0,05 vs $0,23 esperado (−78,6%). Ingresos $3B superaron previsiones (+3,8%) por volúmenes récord de fosfato. Pero azufre y amoníaco machacaron márgenes. Se retira guía de producción de fosfato. CapEx recortado de $1,5B a $1,25B.</div><div class="tl-px cr">$21,17 (mín. 52s)</div></div></div>
+        <div class="tl-item tl-last"><div class="tl-lc"><div class="tl-dot" style="border-color:var(--blue);background:var(--blue-bg);"></div><div class="tl-vt"></div></div><div class="tl-body"><div class="tl-date">29 may 2026 — Actualidad</div><div class="tl-text">Leve recuperación desde mínimos. RBC Capital eleva a Mejor Rendimiento. Precio objetivo mediana analistas: $31 (+29% potencial). Próximos resultados Q2: 3 de agosto 2026.</div><div class="tl-px cb">$24,07 (actual)</div></div></div>
+      </div>
+
+      <!-- FACTORES -->
+      <div id="ipanel-factores" class="ipanel">
+        <div class="sl">Factores negativos — presión mientras dure la guerra</div>
+        <div class="fl" style="margin-bottom:20px;">
+          <div class="fi"><div class="fi-ic">⚗</div><div class="fi-bd"><div class="fi-name">Precio del azufre en máximos históricos</div><div class="fi-desc">+115% en 2025 y sigue subiendo en 2026. Más del 50% del azufre de Mosaic transita normalmente por Ormuz. En dic 2025 tocó máximos de 17 años en Brasil, obligando a parar plantas.</div></div><div class="fi-bar"><div class="bt"><div class="bf" style="width:95%;background:var(--red);"></div></div><div class="bl cr">Muy alto</div></div></div>
+          <div class="fi"><div class="fi-ic">🏭</div><div class="fi-bd"><div class="fi-name">Curtailment de producción en EE.UU. y Brasil</div><div class="fi-desc">Desde mayo, recortes parciales de producción de fosfato. La guía de producción fue retirada completamente tras los resultados de Q1.</div></div><div class="fi-bar"><div class="bt"><div class="bf" style="width:80%;background:var(--red);"></div></div><div class="bl cr">Alto</div></div></div>
+          <div class="fi"><div class="fi-ic">📉</div><div class="fi-bd"><div class="fi-name">Pérdida neta Q1 de $258 millones</div><div class="fi-desc">BPA $0,05 vs $0,23 esperado — desviación del 78,6%. 4 analistas han revisado a la baja sus estimaciones para próximos periodos.</div></div><div class="fi-bar"><div class="bt"><div class="bf" style="width:75%;background:var(--red);"></div></div><div class="bl cr">Alto</div></div></div>
+          <div class="fi"><div class="fi-ic">🌎</div><div class="fi-bd"><div class="fi-name">Contracción prevista en Brasil (mercado clave)</div><div class="fi-desc">2026 será un año de contracción del uso de fertilizantes en Brasil, su mayor mercado de distribución, por falta de disponibilidad de nutrientes.</div></div><div class="fi-bar"><div class="bt"><div class="bf" style="width:60%;background:var(--amber);"></div></div><div class="bl ca">Medio</div></div></div>
+        </div>
+        <div class="divider"></div>
+        <div class="sl">Factores positivos — catalizadores de recuperación</div>
+        <div class="fl">
+          <div class="fi"><div class="fi-ic">🌱</div><div class="fi-bd"><div class="fi-name">Precios del fosfato en alza global</div><div class="fi-desc">La disrupción del suministro eleva los precios de venta del DAP y MAP. En Q1 las ventas de fosfato alcanzaron su volumen trimestral más alto en 5 años (1,9 Mt), liberando $120M de inventario.</div></div><div class="fi-bar"><div class="bt"><div class="bf" style="width:70%;background:var(--green);"></div></div><div class="bl cg">Positivo</div></div></div>
+          <div class="fi"><div class="fi-ic">⛏</div><div class="fi-bd"><div class="fi-name">Potasa — segmento sólido y diversificado</div><div class="fi-desc">Canpotex comprometido hasta junio y en línea para año récord en 2026. Precio MOP estable en $265/t. China reforzó compras con importaciones récord en Q1.</div></div><div class="fi-bar"><div class="bt"><div class="bf" style="width:65%;background:var(--green);"></div></div><div class="bl cg">Positivo</div></div></div>
+          <div class="fi"><div class="fi-ic">💰</div><div class="fi-bd"><div class="fi-name">Valoración en mínimos — posible suelo de precio</div><div class="fi-desc">Cap. de mercado en $7,65B frente a $11,5B pre-guerra. La mediana de 30 analistas implica un +29% desde el nivel actual. RBC acaba de mejorar su rating.</div></div><div class="fi-bar"><div class="bt"><div class="bf" style="width:55%;background:var(--blue);"></div></div><div class="bl cb">Potencial</div></div></div>
+        </div>
+      </div>
+
+      <!-- ESCENARIOS -->
+      <div id="ipanel-escenarios" class="ipanel">
+        <div class="sl">Proyección de precio MOS según escenario — horizonte 12 meses</div>
+        <div class="sg">
+          <div class="sc"><div class="bdg bdg-r">⚠ Pesimista · 25%</div><div class="sc-ttl">Guerra prolongada o reescalada</div><div class="sc-px cr">$15 – $20</div><div class="sc-pb">Probabilidad estimada: 25%</div><div class="sc-li">· Azufre sigue en máximos históricos<br>· Pérdidas continúan en Q2 y Q3<br>· Más curtailments de producción<br>· Analistas bajan objetivos (JPM ya en $19)<br>· Riesgo de recorte de dividendo</div></div>
+          <div class="sc ft"><div class="bdg bdg-b">★ Más probable · 50%</div><div class="sc-ttl">Paz + recuperación gradual</div><div class="sc-px cb">$28 – $36</div><div class="sc-pb">Probabilidad estimada: 50%</div><div class="sc-li">· Azufre baja al normalizarse Ormuz<br>· Costes de producción se reducen<br>· Fosfato mantiene precio elevado<br>· Vuelta a beneficios en H2 2026<br>· Brasil se reactiva en 2027<br>· Precio objetivo analistas: $31 mediana</div></div>
+          <div class="sc"><div class="bdg bdg-g">🚀 Optimista · 25%</div><div class="sc-ttl">Paz rápida + superciclo agrícola</div><div class="sc-px cg">$38 – $45</div><div class="sc-pb">Probabilidad estimada: 25%</div><div class="sc-li">· Resolución antes de agosto 2026<br>· Demanda represada explota<br>· Precio fosfato y potasa en máximos<br>· Cadena de suministro rebota fuerte<br>· UBS proyecta +60% desde niveles actuales</div></div>
+        </div>
+        <div class="leg">
+          <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:22px;height:2px;background:var(--blue);border-radius:1px;"></span>Escenario base</span>
+          <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:22px;border-top:2px dashed var(--green);"></span>Escenario optimista</span>
+          <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:22px;border-top:2px dashed var(--red);"></span>Escenario pesimista</span>
+        </div>
+        <div class="cw" style="height:280px;">
+          <canvas id="chartEscenarios" role="img" aria-label="Proyección precio MOS tres escenarios">Base 28-36, optimista 38-45, pesimista 15-20 USD.</canvas>
+        </div>
+        <div class="notice"><div class="ni">ℹ</div><div>Proyecciones orientativas. <strong>No constituyen recomendación de inversión.</strong> Próxima publicación de resultados: <strong>3 de agosto 2026</strong>.</div></div>
+      </div>
+
+      <!-- ANALISTAS -->
+      <div id="ipanel-analistas" class="ipanel">
+        <div class="rg">
+          <div class="mc"><div class="mc-lbl">Precio objetivo mediana</div><div class="mc-val ca">$31,00</div><div class="mc-sub">+29% sobre precio actual</div></div>
+          <div class="mc"><div class="mc-lbl">Objetivo más alto</div><div class="mc-val cg">$40,00</div><div class="mc-sub">UBS · Lucas Beaumont</div></div>
+          <div class="mc"><div class="mc-lbl">Objetivo más bajo</div><div class="mc-val cr">$19,00</div><div class="mc-sub">JP Morgan</div></div>
+        </div>
+        <div class="sl">Distribución de ratings — 30 analistas de Wall Street</div>
+        <div class="cw" style="height:190px;margin-bottom:20px;">
+          <canvas id="chartRatings" role="img" aria-label="Ratings analistas MOS">Compra: 7. Neutral: 21. Venta: 2.</canvas>
+        </div>
+        <div class="sl">Revisiones recientes de precio objetivo</div>
+        <div class="tw">
+          <table class="at">
+            <thead><tr><th>Banco</th><th>Rating</th><th>Objetivo</th><th>Revisión</th><th>Contexto</th></tr></thead>
+            <tbody>
+              <tr><td style="font-weight:500;color:var(--text);">RBC Capital</td><td><span class="pill pb">Outperform</span></td><td style="font-weight:500;">—</td><td><span class="du">↑ Upgrade reciente</span></td><td>Mejora de rating en mayo 2026 desde posición neutral</td></tr>
+              <tr><td style="font-weight:500;color:var(--text);">BMO Capital</td><td><span class="pill pb">Outperform</span></td><td style="font-weight:500;">$31</td><td><span class="dd">↓ desde $35</span></td><td>Mantiene visión positiva; recorta por presión del azufre</td></tr>
+              <tr><td style="font-weight:500;color:var(--text);">UBS</td><td><span class="pill pb">Buy</span></td><td style="font-weight:500;color:var(--green);">$40</td><td><span class="du">+66% potencial</span></td><td>El más optimista; ve recuperación estructural post-guerra</td></tr>
+              <tr><td style="font-weight:500;color:var(--text);">Scotiabank</td><td><span class="pill pb">Outperform</span></td><td style="font-weight:500;">$33</td><td><span class="du">↑ Upgrade feb 2026</span></td><td>Subió a Sector Outperform antes del inicio de la guerra</td></tr>
+              <tr><td style="font-weight:500;color:var(--text);">BofA</td><td><span class="pill pn">Neutral</span></td><td style="font-weight:500;">$29</td><td><span class="dd">↓ desde $30</span></td><td>Cauta; preocupada por costes de materias primas</td></tr>
+              <tr><td style="font-weight:500;color:var(--text);">CIBC</td><td><span class="pill pn">Neutral</span></td><td style="font-weight:500;">$27</td><td><span class="dd">↓ desde $32</span></td><td>Rebaja refleja deterioro de márgenes en Q1</td></tr>
+              <tr><td style="font-weight:500;color:var(--text);">Mizuho</td><td><span class="pill pn">Neutral</span></td><td style="font-weight:500;">$24</td><td><span class="dd">↓ desde $27</span></td><td>Prácticamente en precio actual; sin catalizador a corto plazo</td></tr>
+              <tr><td style="font-weight:500;color:var(--text);">JP Morgan</td><td><span class="pill pn">Neutral</span></td><td style="font-weight:500;color:var(--red);">$19</td><td><span class="dd">↓ desde $24</span></td><td>El más pesimista; ve riesgo de nuevas pérdidas si la guerra continúa</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="notice"><div class="ni">💡</div><div>El consenso es <strong>neutral-positivo</strong> con sesgo alcista en escenario de fin de guerra. Fecha clave: <strong>3 de agosto 2026</strong> (resultados Q2).</div></div>
+      </div>
+
+      <!-- MI INFO -->
+      <div id="ipanel-miinfo" class="ipanel">
+        <div class="sl">3 de agosto 2026 — fecha clave para Mosaic</div>
+        <div style="background:var(--amber-bg);border:1px solid rgba(186,117,23,.35);border-radius:var(--r-lg);padding:14px 18px;margin-bottom:18px;display:flex;align-items:center;gap:12px;">
+          <span style="font-size:22px;">📅</span>
+          <div><div style="font-size:13px;font-weight:600;color:var(--amber);margin-bottom:2px;">Próxima publicación de resultados Q2 2026</div><div style="font-size:12px;color:var(--text2);">Primera radiografía real del impacto de la tregua en los márgenes de Mosaic</div></div>
+        </div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 22px;line-height:1.8;font-size:14px;color:var(--text2);">
+          <p style="margin-bottom:14px;">El <strong style="color:var(--text);">3 de agosto</strong> es la próxima fecha de <strong style="color:var(--text);">resultados trimestrales de Mosaic (Q2 2026)</strong>, y es especialmente importante por varias razones que se acumulan en este momento concreto.</p>
+          <p style="font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;">Por qué es tan clave esta fecha</p>
+          <p style="margin-bottom:16px;">El <strong style="color:var(--text);">Q2 2026 cubre abril, mayo y junio</strong>. Precisamente ese período coincide con el <strong style="color:var(--amber);">alto el fuego temporal</strong> que Trump acordó con Irán el <strong style="color:var(--text);">8 de abril</strong>. Eso significa que los resultados del 3 de agosto serán la primera radiografía real de si el <strong style="color:var(--red);">coste del azufre ha empezado a ceder</strong> o no. Hasta ahora solo tenemos el Q1, que fue un desastre de márgenes porque el azufre se disparó con el <strong style="color:var(--red);">bloqueo de Ormuz</strong>, pero los inversores no saben todavía si la tregua ha dado algún alivio real a la <strong style="color:var(--text);">cadena de suministro</strong>.</p>
+          <p style="font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;">Qué mirará el mercado ese día</p>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+            <div style="display:flex;gap:12px;padding:11px 13px;background:var(--bg3);border-radius:var(--r);"><span style="color:var(--blue);font-weight:600;font-size:13px;min-width:20px;">1</span><div><span style="color:var(--text);font-weight:500;">Coste del azufre en los márgenes de fosfato.</span> <span style="color:var(--text2);">Si Mosaic muestra que sus costes han bajado aunque sea un poco, el mercado interpretará que <strong style="color:var(--green);">lo peor ha pasado</strong>. Si siguen igual, la acción puede volver a los <strong style="color:var(--red);">mínimos de $20–21</strong>.</span></div></div>
+            <div style="display:flex;gap:12px;padding:11px 13px;background:var(--bg3);border-radius:var(--r);"><span style="color:var(--blue);font-weight:600;font-size:13px;min-width:20px;">2</span><div><span style="color:var(--text);font-weight:500;">Restauración de la guía de producción de fosfato.</span> <span style="color:var(--text2);">Fue <strong style="color:var(--red);">retirada en Q1</strong>. Si la dirección la recupera, sería una señal muy positiva de confianza en el segundo semestre.</span></div></div>
+            <div style="display:flex;gap:12px;padding:11px 13px;background:var(--bg3);border-radius:var(--r);"><span style="color:var(--blue);font-weight:600;font-size:13px;min-width:20px;">3</span><div><span style="color:var(--text);font-weight:500;">Volumen de ventas en Brasil.</span> <span style="color:var(--text2);">La dirección ya avisó de que 2026 sería un año de <strong style="color:var(--amber);">contracción</strong> allí. El mercado querrá ver si esa contracción es <strong style="color:var(--text);">peor o mejor de lo esperado</strong>.</span></div></div>
+          </div>
+          <p style="font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;">El contexto que lo hace aún más volátil</p>
+          <p>El problema es que el <strong style="color:var(--amber);">alto el fuego de abril fue temporal</strong> y la situación en Ormuz ha seguido siendo inestable. Una Mosaic que muestre <strong style="color:var(--green);">mejora de márgenes</strong> en un contexto de guerra todavía activa puede <strong style="color:var(--green);">dispararse</strong>, porque implicaría que la empresa ha encontrado <strong style="color:var(--text);">rutas alternativas de azufre</strong>. Pero si la guerra se ha <strong style="color:var(--red);">reescalado</strong> para entonces, incluso unos buenos números pueden quedar eclipsados por el <strong style="color:var(--red);">miedo macro</strong>.</p>
+        </div>
+        <div class="notice" style="margin-top:14px;"><div class="ni">💡</div><div>En resumen: el <strong>3 de agosto</strong> es el primer examen real de si Mosaic ha <strong>tocado suelo</strong> o si el deterioro continúa. El veredicto depende casi tanto de lo que pase en el <strong>Golfo Pérsico</strong> como de lo que pase dentro de la empresa.</div></div>
+      </div>
+
+    </div>
+  </div><!-- /sheet-mosaic -->
+
+  <!-- ═══════════════ HOJA 2: CALENDARIO ═══════════════ -->
+  <div id="sheet-calendario" class="sheet">
+    <div class="s2-inner">
+
+      <div class="cal-header">
+        <div class="cal-nav">
+          <button onclick="changeMonth(-1)">&#8592;</button>
+          <div class="cal-month-title" id="calTitle"></div>
+          <button onclick="changeMonth(1)">&#8594;</button>
+        </div>
+        <button class="cal-add-btn" onclick="openModal()">+ Añadir fecha</button>
+      </div>
+
+      <!-- Calendario visual -->
+      <div class="cal-grid-wrap">
+        <div class="cal-dow">
+          <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
+        </div>
+        <div class="cal-days" id="calDays"></div>
+      </div>
+
+      <!-- Lista de eventos del mes -->
+      <div class="sl" id="evListLabel">Eventos de este mes</div>
+      <div class="ev-list" id="evList"></div>
+
+    </div>
+  </div><!-- /sheet-calendario -->
+
+</div><!-- /sheet-area -->
+
+<!-- EXCEL TAB BAR -->
+<div class="tabbar">
+  <button class="sheet-tab active" onclick="showSheet('mosaic',this)">📊 The Mosaic Company</button>
+  <button class="sheet-tab" onclick="showSheet('calendario',this)">📅 Calendario</button>
+</div>
+
+<!-- MODAL añadir evento -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>Nueva fecha importante</h3>
+    <label>Fecha</label>
+    <input type="date" id="evDate">
+    <label>Título</label>
+    <input type="text" id="evTitle" placeholder="Ej: Resultados Q2 Mosaic">
+    <label>Tipo</label>
+    <select id="evType">
+      <option value="resultados">📊 Resultados / Earnings</option>
+      <option value="guerra">⚔️ Evento bélico / Geopolítico</option>
+      <option value="macro">📈 Dato macroeconómico</option>
+      <option value="personal">⭐ Nota personal</option>
+      <option value="otro">📌 Otro</option>
+    </select>
+    <label>Descripción (opcional)</label>
+    <textarea id="evDesc" placeholder="Añade contexto o lo que quieras recordar..."></textarea>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-save" onclick="saveEvent()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── INNER TABS (hoja 1) ── */
+function showITab(id, btn) {
+  document.querySelectorAll('.itab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.ipanel').forEach(p => p.classList.remove('active'));
+  document.getElementById('ipanel-' + id).classList.add('active');
+  btn.classList.add('active');
+  renderCharts();
+}
+
+/* ── SHEET TABS ── */
+function showSheet(id, btn) {
+  document.querySelectorAll('.sheet-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.sheet').forEach(s => s.classList.remove('active'));
+  document.getElementById('sheet-' + id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'mosaic') renderCharts();
+  if (id === 'calendario') renderCalendar();
+}
+
+/* ── CHARTS ── */
+let chartsRendered = false;
+function renderCharts() {
+  if (chartsRendered) return;
+  chartsRendered = true;
+  const gc = 'rgba(255,255,255,0.06)', tc = '#666';
+  new Chart(document.getElementById('chartTimeline'), {
+    type:'line',
+    data:{
+      labels:['Ene 2026','28 Feb','Mar (pico)','8 Abr','11 May','29 May'],
+      datasets:[{
+        label:'Precio MOS', data:[27.50,31.20,38.23,26.40,21.17,24.07],
+        borderColor:'#378ADD', backgroundColor:'rgba(55,138,221,0.07)',
+        borderWidth:2, pointRadius:6, pointHoverRadius:8,
+        pointBackgroundColor:['#BA7517','#378ADD','#639922','#BA7517','#E24B4A','#378ADD'],
+        pointBorderColor:'#1a1a1a', pointBorderWidth:2, fill:true, tension:.35
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{backgroundColor:'#2e2e2e',borderColor:'rgba(255,255,255,.1)',borderWidth:1,titleColor:'#888',bodyColor:'#f0f0f0',callbacks:{label:c=>' $'+c.raw.toFixed(2)}} },
+      scales:{ x:{grid:{color:gc},ticks:{color:tc,font:{size:11}}}, y:{grid:{color:gc},ticks:{color:tc,callback:v=>'$'+v},min:15,max:45} }
+    }
+  });
+  new Chart(document.getElementById('chartEscenarios'), {
+    type:'line',
+    data:{
+      labels:['Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene 27','Feb','Mar','Abr','May'],
+      datasets:[
+        {label:'Base',    data:[25,26.5,28,30,31,32,33,34,35,35.5,36,35],  borderColor:'#378ADD',borderWidth:2,  pointRadius:2,tension:.4,fill:false},
+        {label:'Optimista',data:[26,29,33,36,38,40,42,43,44,44.5,45,44], borderColor:'#639922',borderWidth:1.5,pointRadius:2,tension:.4,fill:false,borderDash:[6,3]},
+        {label:'Pesimista',data:[23,22,20,19,18,17.5,17,16.5,16,15.5,15,16],borderColor:'#E24B4A',borderWidth:1.5,pointRadius:2,tension:.4,fill:false,borderDash:[3,3]}
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{backgroundColor:'#2e2e2e',borderColor:'rgba(255,255,255,.1)',borderWidth:1,titleColor:'#888',bodyColor:'#f0f0f0',callbacks:{label:c=>' '+c.dataset.label+': $'+c.raw.toFixed(1)}} },
+      scales:{ x:{grid:{color:gc},ticks:{color:tc,font:{size:11}}}, y:{grid:{color:gc},ticks:{color:tc,callback:v=>'$'+v},min:10,max:50} }
+    }
+  });
+  new Chart(document.getElementById('chartRatings'), {
+    type:'bar',
+    data:{ labels:['Compra (Buy)','Neutral / Mantener','Venta (Sell)'], datasets:[{data:[7,21,2],backgroundColor:['#639922','#BA7517','#E24B4A'],borderRadius:6,borderSkipped:false}] },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{backgroundColor:'#2e2e2e',borderColor:'rgba(255,255,255,.1)',borderWidth:1,titleColor:'#888',bodyColor:'#f0f0f0',callbacks:{label:c=>' '+c.raw+' analistas'}} },
+      scales:{ x:{grid:{color:gc},ticks:{color:tc,stepSize:5},max:25}, y:{grid:{display:false},ticks:{color:tc,font:{size:12}}} }
+    }
+  });
+}
+
+/* ── CALENDAR ── */
+const MONTHS_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+let calYear = 2026, calMonth = 7; // agosto 2026
+
+// Eventos iniciales
+let events = [
+  { id:1, date:'2026-08-03', title:'Resultados Q2 Mosaic', type:'resultados', desc:'Primera radiografía post-tregua. Ver: coste azufre, guía fosfato, Brasil.' },
+  { id:2, date:'2026-04-08', title:'Alto el fuego EE.UU.–Irán', type:'guerra', desc:'Trump acuerda tregua de 2 semanas. MOS cae 2,7%, Yara −12%.' },
+  { id:3, date:'2026-05-11', title:'Resultados Q1 Mosaic', type:'resultados', desc:'Pérdida neta $258M. BPA $0,05 vs $0,23 esperado.' },
+  { id:4, date:'2026-02-28', title:'Inicio guerra Irán / Bloqueo Ormuz', type:'guerra', desc:'EE.UU. e Israel atacan Irán. Ormuz bloqueado.' },
+];
+let nextId = 5;
+
+function renderCalendar() {
+  document.getElementById('calTitle').textContent = MONTHS_ES[calMonth] + ' ' + calYear;
+  const days = document.getElementById('calDays');
+  days.innerHTML = '';
+  const today = new Date();
+  const first = new Date(calYear, calMonth, 1);
+  let startDow = first.getDay(); // 0=dom
+  startDow = startDow === 0 ? 6 : startDow - 1; // lunes=0
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  const daysInPrev = new Date(calYear, calMonth, 0).getDate();
+  const total = Math.ceil((startDow + daysInMonth) / 7) * 7;
+
+  for (let i = 0; i < total; i++) {
+    let d, m, y, other = false;
+    if (i < startDow) {
+      d = daysInPrev - startDow + 1 + i; m = calMonth - 1; y = calYear; other = true;
+      if (m < 0) { m = 11; y--; }
+    } else if (i >= startDow + daysInMonth) {
+      d = i - startDow - daysInMonth + 1; m = calMonth + 1; y = calYear; other = true;
+      if (m > 11) { m = 0; y++; }
+    } else {
+      d = i - startDow + 1; m = calMonth; y = calYear;
+    }
+    const dateStr = y + '-' + String(m+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+    const isToday = (d === today.getDate() && m === today.getMonth() && y === today.getFullYear());
+    const cell = document.createElement('div');
+    cell.className = 'cal-day' + (other ? ' other-month' : '') + (isToday ? ' today' : '');
+    cell.innerHTML = `<div class="cal-day-num">${d}</div>`;
+    const dayEvents = events.filter(e => e.date === dateStr);
+    dayEvents.forEach(ev => {
+      const el = document.createElement('div');
+      el.className = 'cal-event type-' + ev.type;
+      el.textContent = ev.title;
+      el.title = ev.desc || ev.title;
+      cell.appendChild(el);
+    });
+    cell.addEventListener('dblclick', () => openModal(dateStr));
+    days.appendChild(cell);
+  }
+  renderEvList();
+}
+
+function renderEvList() {
+  const list = document.getElementById('evList');
+  const label = document.getElementById('evListLabel');
+  const monthStr = String(calMonth+1).padStart(2,'0');
+  const monthEvents = events
+    .filter(e => e.date.startsWith(calYear+'-'+monthStr))
+    .sort((a,b) => a.date.localeCompare(b.date));
+  label.textContent = monthEvents.length
+    ? `Eventos de ${MONTHS_ES[calMonth]} ${calYear} (${monthEvents.length})`
+    : `Sin eventos en ${MONTHS_ES[calMonth]} ${calYear}`;
+  list.innerHTML = '';
+  if (!monthEvents.length) {
+    list.innerHTML = '<div style="font-size:13px;color:var(--text3);padding:16px 0;">Haz doble clic en un día del calendario para añadir una fecha, o usa el botón + Añadir fecha.</div>';
+    return;
+  }
+  monthEvents.forEach(ev => {
+    const parts = ev.date.split('-');
+    const day = parseInt(parts[2]);
+    const monthName = MONTHS_ES[parseInt(parts[1])-1].slice(0,3);
+    const item = document.createElement('div');
+    item.className = 'ev-item';
+    item.innerHTML = `
+      <div class="ev-date-col"><div class="ev-day">${day}</div><div class="ev-month">${monthName}</div></div>
+      <div style="width:8px;height:8px;border-radius:50%;margin-top:6px;flex-shrink:0;background:${typeColor(ev.type)};"></div>
+      <div class="ev-body"><div class="ev-title">${ev.title}</div>${ev.desc?`<div class="ev-desc">${ev.desc}</div>`:''}</div>
+      <button class="ev-del" onclick="deleteEvent(${ev.id})" title="Eliminar">×</button>
+    `;
+    list.appendChild(item);
+  });
+}
+
+function typeColor(t) {
+  return {resultados:'#378ADD',guerra:'#E24B4A',macro:'#BA7517',personal:'#639922',otro:'#888'}[t]||'#888';
+}
+
+function changeMonth(dir) {
+  calMonth += dir;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  if (calMonth < 0)  { calMonth = 11; calYear--; }
+  renderCalendar();
+}
+
+function deleteEvent(id) {
+  events = events.filter(e => e.id !== id);
+  renderCalendar();
+}
+
+/* ── MODAL ── */
+let prefillDate = '';
+function openModal(date) {
+  prefillDate = date || '';
+  if (date) document.getElementById('evDate').value = date;
+  else document.getElementById('evDate').value = calYear+'-'+String(calMonth+1).padStart(2,'0')+'-01';
+  document.getElementById('evTitle').value = '';
+  document.getElementById('evDesc').value = '';
+  document.getElementById('evType').value = 'resultados';
+  document.getElementById('modalOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('evTitle').focus(), 50);
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+function saveEvent() {
+  const date = document.getElementById('evDate').value;
+  const title = document.getElementById('evTitle').value.trim();
+  if (!date || !title) { alert('Por favor rellena al menos la fecha y el título.'); return; }
+  events.push({ id: nextId++, date, title, type: document.getElementById('evType').value, desc: document.getElementById('evDesc').value.trim() });
+  events.sort((a,b) => a.date.localeCompare(b.date));
+  closeModal();
+  // Si el mes del evento no es el actual, navegar a él
+  const parts = date.split('-');
+  calYear = parseInt(parts[0]); calMonth = parseInt(parts[1])-1;
+  renderCalendar();
+}
+document.getElementById('modalOverlay').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+// Iniciar
+renderCharts();
+renderCalendar();
+</script>
+</body>
+</html>
