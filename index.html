@@ -129,7 +129,7 @@ body{
 .dd{color:var(--red);font-size:12px;}
 
 /* ── SHEET 2: CALENDARIO ── */
-.s2-inner{max-width:1200px;margin:0 auto;padding:28px 44px 40px;}
+.s2-inner{max-width:100%;margin:0 auto;padding:28px 44px 40px;}
 .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
 .cal-nav{display:flex;align-items:center;gap:12px;}
 .cal-nav button{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);color:var(--text2);cursor:pointer;padding:6px 14px;font-size:13px;font-family:inherit;transition:all .15s;}
@@ -140,9 +140,9 @@ body{
 .cal-grid-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;}
 .cal-layout{display:flex;gap:24px;align-items:flex-start;margin-top:0;}
 .cal-left{flex:1;min-width:0;}
-.cal-right{width:280px;flex-shrink:0;position:sticky;top:16px;align-self:flex-start;}
+.cal-right{flex:0 0 420px;position:sticky;top:16px;align-self:flex-start;}
 .cal-right .sl{margin-bottom:14px;}
-@media(max-width:900px){.cal-layout{flex-direction:column;}.cal-right{width:100%;}}
+@media(max-width:900px){.cal-layout{flex-direction:column;}.cal-right{flex:none;width:100%;}}
 .cal-dow{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--border);}
 .cal-dow span{padding:10px 0;text-align:center;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);}
 .cal-days{display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:90px;}
