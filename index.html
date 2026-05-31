@@ -886,6 +886,212 @@ body{
     </div>
   </div><!-- /sheet-calendario -->
 
+  <!-- ═══════════════ HOJA: ORMUZ — SECTORES ═══════════════ -->
+  <div id="sheet-ormuz" class="sheet">
+    <div class="s1-inner">
+
+      <div class="metrics">
+        <div class="mc"><div class="mc-lbl">Comercio global bloqueado</div><div class="mc-val ca">20%</div><div class="mc-sub">del total mundial pasa por Ormuz</div></div>
+        <div class="mc"><div class="mc-lbl">Brent máximo</div><div class="mc-val cr">$126/barril</div><div class="mc-sub">pico crisis may 2026</div></div>
+        <div class="mc"><div class="mc-lbl">Sectores perjudicados</div><div class="mc-val cr">7</div><div class="mc-sub">aerolíneas, química, gas…</div></div>
+        <div class="mc"><div class="mc-lbl">Sectores beneficiados</div><div class="mc-val cg">4</div><div class="mc-sub">defensa, petróleo, renovables…</div></div>
+      </div>
+
+      <div class="itabs">
+        <button class="itab active" onclick="showITabSheet('orm','orm-perjudicados',this)">⚠️ Perjudicados</button>
+        <button class="itab" onclick="showITabSheet('orm','orm-beneficiados',this)">✅ Beneficiados</button>
+        <button class="itab" onclick="showITabSheet('orm','orm-paz',this)">🕊️ Escenario paz</button>
+        <button class="itab" onclick="showITabSheet('orm','orm-acciones',this)">📌 Acciones concretas</button>
+      </div>
+
+      <!-- PANEL: PERJUDICADOS -->
+      <div id="orm-perjudicados" class="ipanel active">
+        <div class="sl">Sectores perjudicados por el bloqueo de Ormuz</div>
+
+        <div class="sect-card">
+          <div class="sect-head"><span class="sect-icon">✈️</span><span class="sect-name">Aerolíneas y transporte aéreo</span><span class="sect-tag tag-bad">MUY PERJUDICADO</span></div>
+          <div class="sect-body">
+            <div class="sc-guerra-box"><div class="sc-lbl">Guerra</div><div class="sc-txt">Costes de combustible +30-40%. Rutas Oriente Medio y Asia restringidas. Sobrecoste operativo directo.</div></div>
+            <div class="sc-paz-box"><div class="sc-lbl">Paz</div><div class="sc-txt">Normalización del Jet-A en semanas. Recuperación de rutas. Rebote rápido en cotizaciones.</div></div>
+          </div>
+          <div class="imp-row"><span class="imp-lbl">Impacto</span><div class="imp-bar"><div class="imp-fill" style="width:90%;background:var(--red);"></div></div><span class="imp-pct cr">−25 a −35%</span></div>
+        </div>
+
+        <div class="sect-card">
+          <div class="sect-head"><span class="sect-icon">🧪</span><span class="sect-name">Industria química y plásticos</span><span class="sect-tag tag-bad">MUY PERJUDICADO</span></div>
+          <div class="sect-body">
+            <div class="sc-guerra-box"><div class="sc-lbl">Guerra</div><div class="sc-txt">Nafta y etano del Golfo bloqueados. Paradas de plantas petroquímicas en Europa y Asia.</div></div>
+            <div class="sc-paz-box"><div class="sc-lbl">Paz</div><div class="sc-txt">Reapertura de suministros. Precios de feedstock normalizados en 4-8 semanas.</div></div>
+          </div>
+          <div class="imp-row"><span class="imp-lbl">Impacto</span><div class="imp-bar"><div class="imp-fill" style="width:85%;background:var(--red);"></div></div><span class="imp-pct cr">−20 a −30%</span></div>
+        </div>
+
+        <div class="sect-card">
+          <div class="sect-head"><span class="sect-icon">🏗️</span><span class="sect-name">Acero y metalurgia</span><span class="sect-tag tag-bad">PERJUDICADO</span></div>
+          <div class="sect-body">
+            <div class="sc-guerra-box"><div class="sc-lbl">Guerra</div><div class="sc-txt">Carbón coquizable y mineral de hierro de Oriente Medio encarecidos. Márgenes comprimidos.</div></div>
+            <div class="sc-paz-box"><div class="sc-lbl">Paz</div><div class="sc-txt">Normalización gradual de costes energéticos. Rebote moderado en demanda de construcción.</div></div>
+          </div>
+          <div class="imp-row"><span class="imp-lbl">Impacto</span><div class="imp-bar"><div class="imp-fill" style="width:70%;background:var(--red);"></div></div><span class="imp-pct cr">−15 a −25%</span></div>
+        </div>
+
+        <div class="sect-card">
+          <div class="sect-head"><span class="sect-icon">🌾</span><span class="sect-name">Alimentación y fertilizantes</span><span class="sect-tag tag-mix">MIXTO</span></div>
+          <div class="sect-body">
+            <div class="sc-guerra-box"><div class="sc-lbl">Guerra</div><div class="sc-txt">Gas como materia prima del amoniaco encarecido. Costes de producción de fertilizantes nitrogenados al alza. Mosaic (MOS) puede beneficiarse si la potasa sube.</div></div>
+            <div class="sc-paz-box"><div class="sc-lbl">Paz</div><div class="sc-txt">Reducción de costes de urea y DAP. Beneficio neto para márgenes agrícolas.</div></div>
+          </div>
+          <div class="imp-row"><span class="imp-lbl">Impacto</span><div class="imp-bar"><div class="imp-fill" style="width:55%;background:var(--amber);"></div></div><span class="imp-pct ca">−10 a +10%</span></div>
+        </div>
+
+        <div class="sect-card">
+          <div class="sect-head"><span class="sect-icon">🔩</span><span class="sect-name">Aluminio</span><span class="sect-tag tag-bad">PERJUDICADO</span></div>
+          <div class="sect-body">
+            <div class="sc-guerra-box"><div class="sc-lbl">Guerra</div><div class="sc-txt">Fundición intensiva en energía. Gas del Golfo clave para electricidad en Oriente Medio. Producción reducida.</div></div>
+            <div class="sc-paz-box"><div class="sc-lbl">Paz</div><div class="sc-txt">Energía más barata. Producción de aluminio primario se normaliza. Precios LME a la baja.</div></div>
+          </div>
+          <div class="imp-row"><span class="imp-lbl">Impacto</span><div class="imp-bar"><div class="imp-fill" style="width:65%;background:var(--red);"></div></div><span class="imp-pct cr">−15 a −20%</span></div>
+        </div>
+
+        <div class="sect-card">
+          <div class="sect-head"><span class="sect-icon">💾</span><span class="sect-name">Semiconductores</span><span class="sect-tag tag-bad">PERJUDICADO</span></div>
+          <div class="sect-body">
+            <div class="sc-guerra-box"><div class="sc-lbl">Guerra</div><div class="sc-txt">Gases especiales (neón, argón, xenón) con origen en la región encarecidos. Costes de fabs al alza.</div></div>
+            <div class="sc-paz-box"><div class="sc-lbl">Paz</div><div class="sc-txt">Cadenas de suministro restabilizadas. Beneficio especial para empresas láser (Lumentum LITE).</div></div>
+          </div>
+          <div class="imp-row"><span class="imp-lbl">Impacto</span><div class="imp-bar"><div class="imp-fill" style="width:50%;background:var(--amber);"></div></div><span class="imp-pct ca">−8 a −15%</span></div>
+        </div>
+
+        <div class="sect-card">
+          <div class="sect-head"><span class="sect-icon">🔥</span><span class="sect-name">Gas natural y GNL</span><span class="sect-tag tag-bad">MUY PERJUDICADO</span></div>
+          <div class="sect-body">
+            <div class="sc-guerra-box"><div class="sc-lbl">Guerra</div><div class="sc-txt">Qatar exporta ~77 bcm/año por Ormuz. Bloqueo dispara precios TTF y Henry Hub. Europa en riesgo.</div></div>
+            <div class="sc-paz-box"><div class="sc-lbl">Paz</div><div class="sc-txt">Rebote bajista en precios de gas. Reservas europeas se recargan. Caída rápida de TTF.</div></div>
+          </div>
+          <div class="imp-row"><span class="imp-lbl">Impacto</span><div class="imp-bar"><div class="imp-fill" style="width:88%;background:var(--red);"></div></div><span class="imp-pct cr">−30 a −40%</span></div>
+        </div>
+      </div>
+
+      <!-- PANEL: BENEFICIADOS -->
+      <div id="orm-beneficiados" class="ipanel">
+        <div class="sl">Sectores beneficiados por la crisis del Estrecho</div>
+
+        <div class="sect-card">
+          <div class="sect-head"><span class="sect-icon">🛡️</span><span class="sect-name">Defensa y seguridad</span><span class="sect-tag tag-good">MUY BENEFICIADO</span></div>
+          <div class="sect-body">
+            <div class="sc-guerra-box"><div class="sc-lbl">Durante conflicto</div><div class="sc-txt">Presupuestos de defensa al alza en todo el mundo. Contratos de drones, misiles y ciberseguridad naval disparados.</div></div>
+            <div class="sc-paz-box"><div class="sc-lbl">Post-paz</div><div class="sc-txt">Contratos ya firmados siguen en ejecución. La demanda estructural de defensa no cae aunque haya paz.</div></div>
+          </div>
+          <div class="imp-row"><span class="imp-lbl">Beneficio</span><div class="imp-bar"><div class="imp-fill" style="width:90%;background:var(--green);"></div></div><span class="imp-pct cg">+20 a +40%</span></div>
+        </div>
+
+        <div class="sect-card">
+          <div class="sect-head"><span class="sect-icon">🛢️</span><span class="sect-name">Productores de petróleo (fuera del Golfo)</span><span class="sect-tag tag-good">MUY BENEFICIADO</span></div>
+          <div class="sect-body">
+            <div class="sc-guerra-box"><div class="sc-lbl">Durante conflicto</div><div class="sc-txt">EE.UU. (shale), Noruega, Nigeria y Canadá ganan cuota de mercado. Brent &gt;$100 mejora FCF masivamente.</div></div>
+            <div class="sc-paz-box"><div class="sc-lbl">Post-paz</div><div class="sc-txt">Precio cae pero la disciplina de capex mantiene dividendos. Beneficios acumulados durante el conflicto.</div></div>
+          </div>
+          <div class="imp-row"><span class="imp-lbl">Beneficio</span><div class="imp-bar"><div class="imp-fill" style="width:85%;background:var(--green);"></div></div><span class="imp-pct cg">+15 a +35%</span></div>
+        </div>
+
+        <div class="sect-card">
+          <div class="sect-head"><span class="sect-icon">☀️</span><span class="sect-name">Energías renovables</span><span class="sect-tag tag-good">BENEFICIADO</span></div>
+          <div class="sect-body">
+            <div class="sc-guerra-box"><div class="sc-lbl">Durante conflicto</div><div class="sc-txt">Urgencia energética acelera instalaciones de solar y eólico. Subsidios de emergencia en Europa y Asia.</div></div>
+            <div class="sc-paz-box"><div class="sc-lbl">Post-paz</div><div class="sc-txt">Los proyectos aprobados durante la crisis siguen adelante. Tendencia estructural intacta.</div></div>
+          </div>
+          <div class="imp-row"><span class="imp-lbl">Beneficio</span><div class="imp-bar"><div class="imp-fill" style="width:65%;background:var(--green);"></div></div><span class="imp-pct cg">+10 a +25%</span></div>
+        </div>
+
+        <div class="sect-card">
+          <div class="sect-head"><span class="sect-icon">🌱</span><span class="sect-name">Fertilizantes fuera del Golfo</span><span class="sect-tag tag-good">BENEFICIADO</span></div>
+          <div class="sect-body">
+            <div class="sc-guerra-box"><div class="sc-lbl">Durante conflicto</div><div class="sc-txt">Mosaic (MOS), Nutrien (NTR) y Yara se benefician del alza en precios de potasa y fosfatos. Alternativas al amoniaco del Golfo.</div></div>
+            <div class="sc-paz-box"><div class="sc-lbl">Post-paz</div><div class="sc-txt">Precios normalizan pero volúmenes de cuota ganada pueden mantenerse a medio plazo.</div></div>
+          </div>
+          <div class="imp-row"><span class="imp-lbl">Beneficio</span><div class="imp-bar"><div class="imp-fill" style="width:60%;background:var(--green);"></div></div><span class="imp-pct cg">+10 a +20%</span></div>
+        </div>
+      </div>
+
+      <!-- PANEL: ESCENARIO PAZ -->
+      <div id="orm-paz" class="ipanel">
+        <div class="sl">Rebote estimado por sector — escenario de acuerdo de paz</div>
+        <div class="notice" style="margin-bottom:20px;"><span class="ni">ℹ</span><span>Estimaciones de rebote desde niveles de crisis. Se asume acuerdo en 30-60 días, reapertura gradual del Estrecho de Ormuz y normalización de precios del crudo hacia $80-90/barril.</span></div>
+        <div class="orm-paz-grid">
+          <div class="orm-paz-card">
+            <div class="icon">✈️</div>
+            <div class="sector">Aerolíneas</div>
+            <div class="rebound">+28%</div>
+            <div class="desc">Caída de combustible directa. Reapertura de rutas asiáticas. IAG, Ryanair, Lufthansa.</div>
+          </div>
+          <div class="orm-paz-card">
+            <div class="icon">🧪</div>
+            <div class="sector">Química / Petroquímica</div>
+            <div class="rebound">+22%</div>
+            <div class="desc">Feedstock normalizado. Márgenes recuperan en 4-8 semanas. BASF, LyondellBasell.</div>
+          </div>
+          <div class="orm-paz-card">
+            <div class="icon">🔥</div>
+            <div class="sector">Gas / GNL</div>
+            <div class="rebound">−18%</div>
+            <div class="desc">Caída de TTF y Henry Hub. Perjudica a productores de GNL. Qatar Energy, Cheniere.</div>
+          </div>
+          <div class="orm-paz-card">
+            <div class="icon">💾</div>
+            <div class="sector">Semiconductores</div>
+            <div class="rebound">+15%</div>
+            <div class="desc">Cadena de suministro estabilizada. Gases industriales normalizados. ASML, TSMC, LITE.</div>
+          </div>
+          <div class="orm-paz-card">
+            <div class="icon">🔩</div>
+            <div class="sector">Aluminio / Metales</div>
+            <div class="rebound">+12%</div>
+            <div class="desc">Energía más barata. Producción en Oriente Medio se reactiva. Alumar, Rusal, ALCOA.</div>
+          </div>
+          <div class="orm-paz-card">
+            <div class="icon">🌾</div>
+            <div class="sector">Fertilizantes</div>
+            <div class="rebound">−8%</div>
+            <div class="desc">El alza de la crisis se revierte parcialmente. Mosaic puede corregir tras rebote de guerra.</div>
+          </div>
+        </div>
+        <div class="notice"><span class="ni">⚠</span><span>Los sectores "beneficiados durante la guerra" (defensa, petróleo fuera del Golfo) <strong>caerán</strong> con un acuerdo de paz. Esta tabla refleja el movimiento esperado desde el pico de crisis.</span></div>
+      </div>
+
+      <!-- PANEL: ACCIONES CONCRETAS -->
+      <div id="orm-acciones" class="ipanel">
+        <div class="sl">Acciones concretas a vigilar — escenario paz</div>
+        <div class="tw" style="margin-bottom:20px;">
+          <table class="orm-acc-table">
+            <thead>
+              <tr>
+                <th>Empresa</th>
+                <th>Ticker</th>
+                <th>Sector</th>
+                <th>Rebote estimado</th>
+                <th>Tesis</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>International Airlines Group</td><td class="cb">IAG</td><td>Aerolíneas</td><td class="cg">+30 a +40%</td><td>Mayor exposición a rutas ME/Asia. Alta beta al crudo.</td></tr>
+              <tr><td>Ryanair</td><td class="cb">RYAAY</td><td>Aerolíneas</td><td class="cg">+25 a +35%</td><td>Cobertura de fuel parcial. Modelo low-cost resiliente.</td></tr>
+              <tr><td>Lufthansa</td><td class="cb">LHA</td><td>Aerolíneas</td><td class="cg">+20 a +30%</td><td>Alta exposición a rutas asiáticas. Recupera yields.</td></tr>
+              <tr><td>BASF</td><td class="cb">BAS</td><td>Química</td><td class="cg">+18 a +28%</td><td>Nafta y gas como insumos clave. Margen operativo mejora.</td></tr>
+              <tr><td>Lumentum Holdings</td><td class="cg">LITE</td><td>Semiconductores</td><td class="cg">+15 a +25%</td><td>Cadena de suministro de gases especiales normalizada.</td></tr>
+              <tr><td>ASML Holding</td><td class="cb">ASML</td><td>Semiconductores</td><td class="cg">+12 a +20%</td><td>Demanda litografía EUV: reducción de incertidumbre.</td></tr>
+              <tr><td>Mosaic Company</td><td class="ca">MOS</td><td>Fertilizantes</td><td class="ca">−5 a +8%</td><td>Mixto: baja el gas pero sube la demanda agrícola global.</td></tr>
+              <tr><td>Alcoa</td><td class="cb">AA</td><td>Aluminio</td><td class="cg">+10 a +18%</td><td>Energía más barata mejora costes de fundición.</td></tr>
+              <tr><td>Lockheed Martin</td><td class="cr">LMT</td><td>Defensa</td><td class="cr">−5 a −15%</td><td>Paz reduce prima de riesgo. Contratos ya firmados aguantan.</td></tr>
+              <tr><td>RTX Corporation</td><td class="cr">RTX</td><td>Defensa</td><td class="cr">−5 a −10%</td><td>Backlog robusto. Menor caída que pura-play defensa.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="notice"><span class="ni">⚠</span><span>Estas estimaciones son orientativas. Los rebotes dependen del momento de entrada, la velocidad del acuerdo de paz y la credibilidad del alto el fuego. No son recomendaciones de inversión.</span></div>
+      </div>
+
+    </div>
+  </div><!-- /sheet-ormuz -->
+
 </div><!-- /sheet-area -->
 
 <!-- EXCEL TAB BAR -->
