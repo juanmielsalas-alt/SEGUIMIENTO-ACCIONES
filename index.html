@@ -164,10 +164,19 @@ body{
 
 /* NEWS FEED */
 .news-section{margin-top:32px;}
-.news-filters{display:flex;gap:6px;flex-wrap:wrap;}
-.nf-btn{padding:5px 13px;font-size:12px;font-family:inherit;border:1px solid var(--border2);border-radius:20px;cursor:pointer;background:transparent;color:var(--text3);transition:all .15s;}
-.nf-btn:hover{background:var(--bg3);color:var(--text2);}
-.nf-btn.active{background:var(--bg3);color:var(--text);font-weight:500;border-color:var(--blue);}
+.news-filter-wrap{position:relative;display:inline-flex;align-items:center;}
+.news-filter-btn{display:flex;align-items:center;gap:6px;padding:5px 10px;font-size:12px;font-family:inherit;border:1px solid var(--border2);border-radius:var(--r);cursor:pointer;background:var(--bg3);color:var(--text2);transition:all .15s;}
+.news-filter-btn:hover{background:var(--bg4);color:var(--text);}
+.news-filter-btn.has-filter{border-color:var(--blue);color:var(--blue);}
+.news-filter-icon{font-size:14px;line-height:1;}
+.news-filter-label{font-size:12px;font-weight:500;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.news-filter-dropdown{display:none;position:absolute;top:calc(100% + 6px);right:0;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r-lg);padding:6px;min-width:170px;z-index:50;box-shadow:0 8px 24px rgba(0,0,0,.4);}
+.news-filter-dropdown.open{display:block;}
+.nf-opt{display:flex;align-items:center;gap:8px;padding:7px 10px;font-size:13px;font-family:inherit;border:none;border-radius:var(--r);cursor:pointer;background:transparent;color:var(--text2);width:100%;text-align:left;transition:background .12s;}
+.nf-opt:hover{background:var(--bg3);color:var(--text);}
+.nf-opt.active{background:var(--bg3);color:var(--blue);font-weight:500;}
+.nf-opt-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-left:auto;display:none;}
+.nf-opt.active .nf-opt-dot{display:block;background:var(--blue);}
 .news-feed{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
 .news-item{display:flex;gap:14px;padding:14px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);transition:border-color .15s;}
 .news-item:hover{border-color:var(--border2);}
