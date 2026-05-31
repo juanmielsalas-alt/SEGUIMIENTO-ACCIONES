@@ -1584,13 +1584,55 @@ const NEWS = [
   { id:'n30', date:'2026-02-05', company:'lumentum', co:'LITE', coClass:'co-lum', sentiment:'pos', title:'Blue Whale Growth Fund — actualización febrero 2026: Lumentum entra en el Top 10', summary:'Hargreaves Lansdown publica la actualización mensual del fondo de Stephen Yiu. Lumentum entra en las 10 mayores posiciones del fondo. Yiu destaca el monopolio en EMLs de InP y el catalizador de Co-Packaged Optics (CPO) previsto para 2027 como tesis de inversión a largo plazo.', source:'Hargreaves Lansdown — Blue Whale Feb 2026', url:'https://www.hl.co.uk/funds/research-and-news/blue-whale-growth-february-2026-fund-update' },
 ];
 
+/* ── NEWS FILTER DROPDOWN ── */
+// Para añadir empresa nueva: añade una entrada a NEWS_COMPANIES
+const NEWS_COMPANIES = [
+  { id:'all',       label:'Todas',      icon:'📋' },
+  { id:'mosaic',    label:'MOS',        icon:'📊' },
+  { id:'anthropic', label:'Anthropic',  icon:'🤖' },
+  { id:'openai',    label:'OpenAI',     icon:'🧠' },
+  { id:'spacex',    label:'SpaceX',     icon:'🚀' },
+  { id:'lumentum',  label:'Lumentum',   icon:'🔦' },
+];
+
 let activeNewsFilter = 'all';
-function filterNews(company, btn) {
+
+function buildNewsDropdown() {
+  const dd = document.getElementById('newsFilterDropdown');
+  if (!dd) return;
+  dd.innerHTML = NEWS_COMPANIES.map(c => `
+    <button class="nf-opt${activeNewsFilter === c.id ? ' active' : ''}"
+            onclick="filterNews('${c.id}')">
+      <span>${c.icon}</span>
+      <span>${c.label}</span>
+      <span class="nf-opt-dot"></span>
+    </button>`).join('');
+}
+
+function toggleNewsDropdown() {
+  const dd = document.getElementById('newsFilterDropdown');
+  dd.classList.toggle('open');
+  buildNewsDropdown();
+}
+
+function filterNews(company) {
   activeNewsFilter = company;
-  document.querySelectorAll('.nf-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  const co = NEWS_COMPANIES.find(c => c.id === company) || NEWS_COMPANIES[0];
+  const btn = document.getElementById('newsFilterBtn');
+  const lbl = document.getElementById('newsFilterLabel');
+  lbl.textContent = co.label;
+  btn.classList.toggle('has-filter', company !== 'all');
+  document.getElementById('newsFilterDropdown').classList.remove('open');
+  buildNewsDropdown();
   renderNews();
 }
+
+document.addEventListener('click', e => {
+  const wrap = document.getElementById('newsFilterWrap');
+  if (wrap && !wrap.contains(e.target)) {
+    document.getElementById('newsFilterDropdown').classList.remove('open');
+  }
+});
 
 function renderNews() {
   const feed = document.getElementById('newsFeed');
