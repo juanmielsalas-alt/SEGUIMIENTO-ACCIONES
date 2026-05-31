@@ -1462,8 +1462,32 @@ function renderNews() {
 /* ── TAB DRAG-AND-DROP ── */
 (function() {
   let dragged = null;
-
   const tabbar = document.getElementById('tabbar');
+  const STORAGE_KEY = 'acciones_tab_order';
+
+  function getTabId(tab) {
+    const m = tab.getAttribute('onclick').match(/showSheet\('(\w+)'/);
+    return m ? m[1] : null;
+  }
+
+  function saveOrder() {
+    const order = [...tabbar.querySelectorAll('.sheet-tab')].map(getTabId).filter(Boolean);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(order));
+  }
+
+  function restoreOrder() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return;
+    let order;
+    try { order = JSON.parse(saved); } catch(e) { return; }
+    const tabs = [...tabbar.querySelectorAll('.sheet-tab')];
+    order.forEach(id => {
+      const tab = tabs.find(t => getTabId(t) === id);
+      if (tab) tabbar.appendChild(tab);
+    });
+  }
+
+  restoreOrder();
 
   tabbar.addEventListener('dragstart', e => {
     const tab = e.target.closest('.sheet-tab');
@@ -1503,6 +1527,7 @@ function renderNews() {
     if (fromIdx < toIdx) tabbar.insertBefore(dragged, target.nextSibling);
     else                 tabbar.insertBefore(dragged, target);
     target.classList.remove('drag-over');
+    saveOrder();
   });
 })();
 
