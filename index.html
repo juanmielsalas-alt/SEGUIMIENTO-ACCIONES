@@ -1334,13 +1334,14 @@ const HDR_DATA = {
 };
 function updateHeader(id) {
   const d = HDR_DATA[id] || HDR_DATA.mosaic;
+  document.title = d.name + ' — Seguimiento';
   document.getElementById('hdr-lbl').textContent = d.lbl;
   document.getElementById('hdr-name').textContent = d.name;
   const sym = document.getElementById('hdr-sym');
   sym.textContent = d.sym;
-  sym.style.display = d.sym ? '' : 'none';
+  sym.style.display = '';
   sym.style.color = d.symColor;
-  sym.style.borderColor = d.symColor ? d.symColor : '';
+  sym.style.borderColor = d.symColor;
   document.getElementById('hdr-price').textContent = d.price;
   document.getElementById('hdr-chg').textContent = d.chg;
   document.getElementById('hdr-chg').style.color = d.chgColor;
