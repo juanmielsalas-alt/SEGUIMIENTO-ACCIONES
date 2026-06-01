@@ -1558,6 +1558,7 @@ function saveEvent() {
   if (!date || !title) { alert('Por favor rellena al menos la fecha y el título.'); return; }
   events.push({ id: nextId++, date, title, type: document.getElementById('evType').value, desc: document.getElementById('evDesc').value.trim() });
   events.sort((a,b) => a.date.localeCompare(b.date));
+  saveEvents();
   closeModal();
   // Si el mes del evento no es el actual, navegar a él
   const parts = date.split('-');
