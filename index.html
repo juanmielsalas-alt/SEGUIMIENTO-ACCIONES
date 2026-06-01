@@ -1297,6 +1297,11 @@ body{
 </div>
 
 <script>
+/* ── UTILS ── */
+function escapeHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
 /* ── INNER TABS (hoja 1) ── */
 function showITab(id, btn) {
   document.querySelectorAll('.itab').forEach(b => b.classList.remove('active'));
