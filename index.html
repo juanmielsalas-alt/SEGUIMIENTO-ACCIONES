@@ -1304,8 +1304,9 @@ function escapeHtml(str) {
 
 /* ── INNER TABS (hoja 1) ── */
 function showITab(id, btn) {
-  document.querySelectorAll('.itab').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.ipanel').forEach(p => p.classList.remove('active'));
+  const sheet = btn.closest('.s1-inner');
+  sheet.querySelectorAll('.itab').forEach(b => b.classList.remove('active'));
+  sheet.querySelectorAll('.ipanel').forEach(p => p.classList.remove('active'));
   document.getElementById('ipanel-' + id).classList.add('active');
   btn.classList.add('active');
   renderCharts();
