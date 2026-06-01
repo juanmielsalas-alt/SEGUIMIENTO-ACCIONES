@@ -1501,7 +1501,7 @@ function renderEvList() {
     item.innerHTML = `
       <div class="ev-date-col"><div class="ev-day">${day}</div><div class="ev-month">${monthName}</div></div>
       <div style="width:8px;height:8px;border-radius:50%;margin-top:6px;flex-shrink:0;background:${typeColor(ev.type)};"></div>
-      <div class="ev-body"><div class="ev-title">${ev.title}</div>${ev.desc?`<div class="ev-desc">${ev.desc}</div>`:''}</div>
+      <div class="ev-body"><div class="ev-title">${escapeHtml(ev.title)}</div>${ev.desc?`<div class="ev-desc">${escapeHtml(ev.desc)}</div>`:''}</div>
       <button class="ev-del" onclick="deleteEvent(${ev.id})" title="Eliminar">×</button>
     `;
     list.appendChild(item);
