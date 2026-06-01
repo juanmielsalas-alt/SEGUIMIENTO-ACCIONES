@@ -1361,10 +1361,9 @@ function showSheet(id, btn) {
 }
 
 /* ── CHARTS ── */
-let chartsRendered = false;
+const _charts = {};
 function renderCharts() {
-  if (chartsRendered) return;
-  chartsRendered = true;
+  if (_charts.timeline) { Object.values(_charts).forEach(c => c.resize()); return; }
   const gc = 'rgba(255,255,255,0.06)', tc = '#666';
   new Chart(document.getElementById('chartTimeline'), {
     type:'line',
