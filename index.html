@@ -1350,6 +1350,7 @@ function updateHeader(id) {
 
 /* ── SHEET TABS ── */
 function showSheet(id, btn) {
+  document.querySelector('.sheet-area').scrollTop = 0;
   document.querySelectorAll('.sheet-tab').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.sheet').forEach(s => s.classList.remove('active'));
   document.getElementById('sheet-' + id).classList.add('active');
