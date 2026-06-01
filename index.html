@@ -1657,21 +1657,27 @@ function buildNewsDropdown() {
     </button>`).join('');
 }
 
+function updateNewsDropdownActive() {
+  document.querySelectorAll('#newsFilterDropdown .nf-opt').forEach(btn => {
+    const id = btn.getAttribute('onclick').match(/filterNews\('(\w+)'\)/)?.[1];
+    btn.classList.toggle('active', id === activeNewsFilter);
+  });
+}
+
 function toggleNewsDropdown() {
   const dd = document.getElementById('newsFilterDropdown');
+  if (!dd.children.length) buildNewsDropdown();
   dd.classList.toggle('open');
-  buildNewsDropdown();
 }
 
 function filterNews(company) {
   activeNewsFilter = company;
   const co = NEWS_COMPANIES.find(c => c.id === company) || NEWS_COMPANIES[0];
-  const btn = document.getElementById('newsFilterBtn');
   const lbl = document.getElementById('newsFilterLabel');
   lbl.textContent = co.label;
-  btn.classList.toggle('has-filter', company !== 'all');
+  document.getElementById('newsFilterBtn').classList.toggle('has-filter', company !== 'all');
   document.getElementById('newsFilterDropdown').classList.remove('open');
-  buildNewsDropdown();
+  updateNewsDropdownActive();
   renderNews();
 }
 
