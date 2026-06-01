@@ -1437,6 +1437,18 @@ let events = [
 ];
 let nextId = 15;
 
+function saveEvents() {
+  localStorage.setItem('acciones_events', JSON.stringify(events));
+  localStorage.setItem('acciones_events_nextid', nextId);
+}
+function loadEvents() {
+  try {
+    const saved = localStorage.getItem('acciones_events');
+    if (saved) { events = JSON.parse(saved); nextId = parseInt(localStorage.getItem('acciones_events_nextid')) || nextId; }
+  } catch(e) {}
+}
+loadEvents();
+
 function renderCalendar() {
   document.getElementById('calTitle').textContent = MONTHS_ES[calMonth] + ' ' + calYear;
   const days = document.getElementById('calDays');
