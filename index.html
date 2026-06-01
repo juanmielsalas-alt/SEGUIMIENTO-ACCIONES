@@ -1547,7 +1547,7 @@ function openModal(date) {
   document.getElementById('evDesc').value = '';
   document.getElementById('evType').value = 'resultados';
   document.getElementById('modalOverlay').classList.add('open');
-  setTimeout(() => document.getElementById('evTitle').focus(), 50);
+  setTimeout(() => document.getElementById('evTitle').focus(), 50); // wait for CSS transition
 }
 function closeModal() {
   document.getElementById('modalOverlay').classList.remove('open');
