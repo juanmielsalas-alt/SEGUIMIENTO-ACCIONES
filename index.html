@@ -1726,7 +1726,9 @@ function renderNews() {
   const STORAGE_KEY = 'acciones_tab_order';
 
   function getTabId(tab) {
-    const m = tab.getAttribute('onclick').match(/showSheet\('(\w+)'/);
+    const onclick = tab.getAttribute('onclick');
+    if (!onclick) return null;
+    const m = onclick.match(/showSheet\('(\w+)'/);
     return m ? m[1] : null;
   }
 
