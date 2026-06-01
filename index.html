@@ -1399,7 +1399,7 @@ function renderCharts() {
       scales:{ x:{grid:{color:gc},ticks:{color:tc,font:{size:11}}}, y:{grid:{color:gc},ticks:{color:tc,callback:v=>'$'+v},min:10,max:50} }
     }
   });
-  new Chart(document.getElementById('chartRatings'), {
+  _charts.ratings = new Chart(document.getElementById('chartRatings'), {
     type:'bar',
     data:{ labels:['Compra (Buy)','Neutral / Mantener','Venta (Sell)'], datasets:[{data:[7,21,2],backgroundColor:['#639922','#BA7517','#E24B4A'],borderRadius:6,borderSkipped:false}] },
     options:{
