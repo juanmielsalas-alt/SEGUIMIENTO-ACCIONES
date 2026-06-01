@@ -1533,6 +1533,7 @@ function changeMonth(dir) {
 
 function deleteEvent(id) {
   events = events.filter(e => e.id !== id);
+  saveEvents();
   renderCalendar();
 }
 
