@@ -1383,7 +1383,7 @@ function renderCharts() {
       scales:{ x:{grid:{color:gc},ticks:{color:tc,font:{size:11}}}, y:{grid:{color:gc},ticks:{color:tc,callback:v=>'$'+v},min:15,max:45} }
     }
   });
-  new Chart(document.getElementById('chartEscenarios'), {
+  _charts.escenarios = new Chart(document.getElementById('chartEscenarios'), {
     type:'line',
     data:{
       labels:['Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene 27','Feb','Mar','Abr','May'],
