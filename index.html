@@ -1365,7 +1365,7 @@ const _charts = {};
 function renderCharts() {
   if (_charts.timeline) { Object.values(_charts).forEach(c => c.resize()); return; }
   const gc = 'rgba(255,255,255,0.06)', tc = '#666';
-  new Chart(document.getElementById('chartTimeline'), {
+  _charts.timeline = new Chart(document.getElementById('chartTimeline'), {
     type:'line',
     data:{
       labels:['Ene 2026','28 Feb','Mar (pico)','8 Abr','11 May','29 May'],
