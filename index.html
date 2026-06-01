@@ -1566,7 +1566,12 @@ function saveEvent() {
   renderCalendar();
 }
 document.getElementById('modalOverlay').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeModal();
+    document.getElementById('newsFilterDropdown').classList.remove('open');
+  }
+});
 
 /* ── NEWS FEED ── */
 // Para añadir nueva empresa: añade entradas con company:'nuevo-id' y añade botón filtro en el HTML
