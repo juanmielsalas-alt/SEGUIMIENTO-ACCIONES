@@ -1356,6 +1356,20 @@ function updateHeader(id) {
   document.getElementById('hdr-chg').textContent = d.chg;
   document.getElementById('hdr-chg').style.color = d.chgColor;
   document.getElementById('hdr-date').textContent = d.date;
+  const fscoreWrap = document.getElementById('hdr-fscore');
+  const fscoreBadge = document.getElementById('hdr-fscore-badge');
+  const fscoreLbl = document.getElementById('hdr-fscore-lbl');
+  if (d.fscore !== null && d.fscore !== undefined) {
+    fscoreWrap.style.display = '';
+    const score = d.fscore;
+    const cls = score >= 6 ? 'fscore-strong' : score >= 3 ? 'fscore-neutral' : 'fscore-weak';
+    const lbl = score >= 6 ? 'Sólido' : score >= 3 ? 'Neutral' : 'Débil';
+    fscoreBadge.className = 'fscore-badge ' + cls;
+    fscoreBadge.textContent = score;
+    fscoreLbl.textContent = 'Piotroski F-Score — ' + lbl;
+  } else {
+    fscoreWrap.style.display = 'none';
+  }
 }
 
 /* ── SHEET TABS ── */
