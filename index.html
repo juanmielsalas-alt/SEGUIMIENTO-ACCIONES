@@ -1617,8 +1617,11 @@ let events = [
   // Anthropic IPO
   { id:13, date:'2026-10-01', title:'🤖 Anthropic — Resultados Q3 (examen definitivo)', type:'resultados', desc:'Primer trimestre pagando precio completo a SpaceX ($1,25B/mes). Si mantiene beneficio → narrativa IPO se consolida. Si no → posible corrección fuerte pre-IPO.' },
   { id:14, date:'2026-10-23', title:'🤖 Anthropic — IPO estimada', type:'resultados', desc:'Fecha estimada de debut bursátil. Sería la primera IPO de modelo IA fundacional rentable. Valoración objetivo: ~$965B.' },
+  // IAG
+  { id:15, date:'2026-06-25', title:'✈️ IAG — Ex-dividendo', type:'resultados', desc:'Fecha ex-dividendo IAG. Hay que estar en el registro antes del 24 jun para cobrar ~3p/acción. Yield ~1,5% anual.' },
+  { id:16, date:'2026-07-31', title:'✈️ IAG — Resultados Q2 2026', type:'resultados', desc:'Primera radiografía del impacto de la guerra de Irán en márgenes. Cubre el pico de verano. Vigilar: cobertura combustible, guidance, tráfico LATAM y transatlántico.' },
 ];
-let nextId = 15;
+let nextId = 17;
 
 function saveEvents() {
   localStorage.setItem('acciones_events', JSON.stringify(events));
