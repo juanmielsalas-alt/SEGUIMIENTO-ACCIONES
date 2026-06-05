@@ -1600,9 +1600,12 @@ body{
   <div id="sheet-onsemi" class="sheet">
     <div class="s1-inner">
 
+      <!-- ── CABECERA ───────────────────────────────────────── -->
       <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:24px;">
         <div>
-          <div style="font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;">Análisis · Nasdaq: ON · Scottsdale, Arizona</div>
+          <div style="font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;">
+            Análisis · Nasdaq: ON · Scottsdale, Arizona · Actualizado junio 2026
+          </div>
           <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;">
             <span style="font-size:22px;font-weight:500;">ON Semiconductor <span style="font-size:15px;color:var(--text3);">(onsemi)</span></span>
             <span style="font-size:12px;color:var(--blue);border:1px solid rgba(55,138,221,.4);border-radius:4px;padding:1px 7px;">ON</span>
@@ -1610,58 +1613,395 @@ body{
           </div>
         </div>
         <div style="text-align:right;">
-          <div style="font-size:32px;font-weight:300;letter-spacing:-.02em;">~$106</div>
-          <div style="font-size:13px;color:var(--green);margin-top:1px;">+143% en 12 meses</div>
-          <div style="font-size:11px;color:var(--text3);margin-top:1px;">52s: $36 – $124 · Próx. earnings: agosto 2026</div>
+          <div style="font-size:32px;font-weight:300;letter-spacing:-.02em;">~$116</div>
+          <div style="font-size:13px;color:var(--green);margin-top:1px;">+35% en 3 semanas · Mayo 2026</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:1px;">52s: $31 – $116 · Cap: ~$47B · Prox. earnings: agosto 2026</div>
         </div>
       </div>
 
-      <!-- MÉTRICAS -->
-      <div style="margin-bottom:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;">
-        <div class="mc"><div class="mc-lbl">Revenue TTM</div><div class="mc-val">$6,7B</div><div class="mc-sub cr">−14% YoY</div></div>
-        <div class="mc"><div class="mc-lbl">Margen bruto</div><div class="mc-val cg">38,5%</div><div class="mc-sub cg">↑ vs 36% hace 3Qs</div></div>
-        <div class="mc"><div class="mc-lbl">EPS 2026e</div><div class="mc-val ca">$3,10</div><div class="mc-sub">P/E fwd ~34x</div></div>
-        <div class="mc"><div class="mc-lbl">Market Cap</div><div class="mc-val cb">~$23B</div><div class="mc-sub">Nasdaq: ON</div></div>
-        <div class="mc"><div class="mc-lbl">Objetivo margen LT</div><div class="mc-val cb">53%</div><div class="mc-sub">Estrategia Fab-Right</div></div>
-        <div class="mc"><div class="mc-lbl">Segmento clave</div><div class="mc-val ca">SiC</div><div class="mc-sub">EVs + AI infra</div></div>
+      <!-- ── NAVEGACIÓN INTERNA ─────────────────────────────── -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:14px;">
+        <button onclick="onsShowPanel('ons-miinfo')" id="ons-btn-miinfo"
+          style="font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid var(--blue);background:var(--blue-bg);color:var(--blue);cursor:pointer;font-weight:600;">⭐ Mi análisis</button>
+        <button onclick="onsShowPanel('ons-metricas')" id="ons-btn-metricas"
+          style="font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;">📊 Métricas</button>
+        <button onclick="onsShowPanel('ons-fabright')" id="ons-btn-fabright"
+          style="font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;">🏭 Fab-Right</button>
+        <button onclick="onsShowPanel('ons-segmentos')" id="ons-btn-segmentos"
+          style="font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;">🔌 Segmentos</button>
+        <button onclick="onsShowPanel('ons-analistas')" id="ons-btn-analistas"
+          style="font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;">🎯 Analistas</button>
+        <button onclick="onsShowPanel('ons-riesgos')" id="ons-btn-riesgos"
+          style="font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;">⚠️ Riesgos</button>
       </div>
 
-      <!-- TESIS -->
-      <div style="margin-bottom:20px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;font-size:13px;color:var(--text2);line-height:1.75;">
-        <div class="sl" style="margin-bottom:10px;">Tesis de inversión</div>
-        <p style="margin-bottom:10px;">Onsemi es el líder mundial emergente en <strong style="color:var(--text);">carburo de silicio (SiC)</strong>, el semiconductor de potencia que sustituye al silicio convencional en vehículos eléctricos e infraestructura de IA. Cada EV de gama alta necesita entre 30–60 chips SiC; cada rack de servidores AI también. La empresa está en mitad de una transición de márgenes (Fab-Right) que, si se completa, la convertiría en una de las empresas más rentables del sector.</p>
-        <p>Eso explica la discrepancia entre bajistas (ven el precio actual como caro dado el revenue actual) y alcistas (valoran lo que será en 2027–2028). La clave es si el margen bruto sigue expandiendo hacia el objetivo del 53%.</p>
+      <script>
+        function onsShowPanel(id) {
+          ['ons-miinfo','ons-metricas','ons-fabright','ons-segmentos','ons-analistas','ons-riesgos'].forEach(function(p) {
+            var el = document.getElementById(p);
+            var btn = document.getElementById('ons-btn-' + p.replace('ons-',''));
+            if (el) el.style.display = (p === id) ? 'block' : 'none';
+            if (btn) {
+              btn.style.borderColor = (p === id) ? 'var(--blue)' : 'var(--border)';
+              btn.style.background  = (p === id) ? 'var(--blue-bg)' : 'transparent';
+              btn.style.color       = (p === id) ? 'var(--blue)' : 'var(--text2)';
+              btn.style.fontWeight  = (p === id) ? '600' : '400';
+            }
+          });
+        }
+      </script>
+
+      <!-- ══════════════════════════════════════════════════════
+           PANEL 1: MI ANÁLISIS
+      ══════════════════════════════════════════════════════ -->
+      <div id="ons-miinfo">
+
+        <div style="background:var(--blue-bg);border:1px solid rgba(55,138,221,.3);border-radius:var(--r-lg);padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;">
+          <span style="font-size:22px;">⭐</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--blue);margin-bottom:2px;">Mis notas sobre ON Semiconductor</div>
+            <div style="font-size:12px;color:var(--text2);">Basado en resultados Q1 2026 y call con analistas · mayo 2026</div>
+          </div>
+        </div>
+
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;font-size:14px;color:var(--text2);line-height:1.85;">
+          <p style="margin-bottom:14px;"><strong style="color:var(--text);">¿Por qué es interesante ahora mismo?</strong></p>
+          <p style="margin-bottom:14px;">
+            Onsemi acaba de declarar el <strong style="color:var(--text);">punto de inflexión del ciclo</strong>. Tras 7 trimestres de caídas en automotive y 2 años de downturn en semiconductores de potencia, Q1 2026 fue el primer trimestre con crecimiento YoY en automotive (+5%) y el margen bruto lleva 3 trimestres subiendo consecutivamente. El CEO lo dijo en el earnings call: <em>"hemos superado el fondo del ciclo"</em>.
+          </p>
+          <p style="margin-bottom:14px;">
+            La parte más interesante es el <strong style="color:var(--green);">negocio de IA</strong>: creció +30% secuencial en Q1 2026 y se espera que duplique ingresos en todo 2026 respecto a 2025. Ya superaron los $250M anuales en 2025 y van camino de $500M+ en 2026. Esto no es narrativa — son contratos reales con hyperscalers.
+          </p>
+          <p style="margin-bottom:0;">
+            La diferencia frente a Texas Instruments (también semiconductores analógicos) es que onsemi está más concentrada en los dos ciclos seculares más fuertes del momento: <strong style="color:var(--green);">EVs + AI data centers</strong>. TXN es más estable; onsemi tiene más beta y más upside potencial. El riesgo es que el mercado de EVs en EE.UU. sigue débil por la política actual de la administración sobre coches eléctricos.
+          </p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+          <div style="background:var(--bg2);border:1px solid rgba(99,153,34,.3);border-radius:var(--r);padding:12px 14px;">
+            <div style="font-size:11px;font-weight:600;color:var(--green);margin-bottom:6px;text-transform:uppercase;letter-spacing:.07em;">✅ A favor</div>
+            <ul style="margin:0;padding-left:16px;font-size:12px;color:var(--text2);line-height:1.8;">
+              <li>Inflexión de ciclo confirmada Q1 2026</li>
+              <li>IA data center duplicando ingresos</li>
+              <li>Margen bruto subiendo 3 trimestres seguidos</li>
+              <li>Free cash flow récord (24% margen en 2025)</li>
+              <li>Recompra agresiva de acciones ($346M en Q1)</li>
+              <li>GaN funnel supera $1.500M</li>
+            </ul>
+          </div>
+          <div style="background:var(--bg2);border:1px solid rgba(231,76,60,.3);border-radius:var(--r);padding:12px 14px;">
+            <div style="font-size:11px;font-weight:600;color:var(--red);margin-bottom:6px;text-transform:uppercase;letter-spacing:.07em;">⚠️ En contra</div>
+            <ul style="margin:0;padding-left:16px;font-size:12px;color:var(--text2);line-height:1.8;">
+              <li>GAAP negativo por costes Fab-Right</li>
+              <li>Revenue 2026 aún por debajo de 2024</li>
+              <li>EV lento en EE.UU. por política federal</li>
+              <li>Competencia Sony en sensores de imagen</li>
+              <li>SiC bajo presión de STMicro e Infineon</li>
+              <li>Guidance Q2 margen bruto: 36–38% (ligera bajada)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;padding:10px 14px;background:var(--bg3);border-radius:var(--r);font-size:12px;color:var(--text2);line-height:1.6;">
+          <strong style="color:var(--text);">Ticker en DEGIRO:</strong> busca <strong style="color:var(--blue);">"ON"</strong> → selecciona <strong style="color:var(--text);">Nasdaq · USD · ISIN: US6821891009</strong> · Próximos resultados Q2 2026: <strong style="color:var(--text);">agosto 2026</strong>
+        </div>
       </div>
 
-      <!-- TABLA ANALISTAS -->
-      <div style="margin-bottom:20px;">
-        <div class="sl" style="margin-bottom:10px;">Consenso de analistas</div>
-        <div class="tw">
-          <table class="at">
-            <thead><tr><th>Casa</th><th>Rating</th><th>Precio objetivo</th><th>Tesis</th></tr></thead>
+      <!-- ══════════════════════════════════════════════════════
+           PANEL 2: MÉTRICAS
+      ══════════════════════════════════════════════════════ -->
+      <div id="ons-metricas" style="display:none;">
+
+        <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;">Últimos resultados — Q1 2026 (4 mayo 2026)</div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:20px;">
+          <div class="mc"><div class="mc-lbl">Revenue Q1 2026</div><div class="mc-val">$1.513B</div><div class="mc-sub cg">+5% YoY ✓ guidance</div></div>
+          <div class="mc"><div class="mc-lbl">Margen bruto</div><div class="mc-val cg">38.5%</div><div class="mc-sub cg">3er trimestre consecutivo ↑</div></div>
+          <div class="mc"><div class="mc-lbl">EPS non-GAAP</div><div class="mc-val cg">$0.64</div><div class="mc-sub">vs $0.55 hace 1 año</div></div>
+          <div class="mc"><div class="mc-lbl">EPS GAAP</div><div class="mc-val cr">−$0.08</div><div class="mc-sub">$329M en reestructuración</div></div>
+          <div class="mc"><div class="mc-lbl">Free Cash Flow</div><div class="mc-val">$217M</div><div class="mc-sub">Margen FCF 14%</div></div>
+          <div class="mc"><div class="mc-lbl">Recompra acciones</div><div class="mc-val cb">$346M</div><div class="mc-sub">160% del FCF trimestral</div></div>
+        </div>
+
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;margin-bottom:16px;">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;">Evolución margen bruto (non-GAAP)</div>
+          <div style="display:flex;align-items:flex-end;gap:8px;height:80px;">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <div style="width:100%;background:var(--green);border-radius:3px 3px 0 0;height:calc(45.3% * 1.6);opacity:.7;"></div>
+              <div style="font-size:10px;color:var(--text3);white-space:nowrap;">Q4 '24</div>
+              <div style="font-size:11px;font-weight:600;color:var(--green);">45.3%</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <div style="width:100%;background:var(--amber);border-radius:3px 3px 0 0;height:calc(40.0% * 1.6);opacity:.7;"></div>
+              <div style="font-size:10px;color:var(--text3);white-space:nowrap;">Q1 '25</div>
+              <div style="font-size:11px;font-weight:600;color:var(--amber);">40.0%</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <div style="width:100%;background:var(--amber);border-radius:3px 3px 0 0;height:calc(37.6% * 1.6);opacity:.7;"></div>
+              <div style="font-size:10px;color:var(--text3);white-space:nowrap;">Q2 '25</div>
+              <div style="font-size:11px;font-weight:600;color:var(--amber);">37.6%</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <div style="width:100%;background:var(--green);border-radius:3px 3px 0 0;height:calc(38.0% * 1.6);opacity:.8;"></div>
+              <div style="font-size:10px;color:var(--text3);white-space:nowrap;">Q3 '25</div>
+              <div style="font-size:11px;font-weight:600;color:var(--green);">38.0%</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <div style="width:100%;background:var(--green);border-radius:3px 3px 0 0;height:calc(38.2% * 1.6);opacity:.9;"></div>
+              <div style="font-size:10px;color:var(--text3);white-space:nowrap;">Q4 '25</div>
+              <div style="font-size:11px;font-weight:600;color:var(--green);">38.2%</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <div style="width:100%;background:var(--green);border-radius:3px 3px 0 0;height:calc(38.5% * 1.6);border:2px solid var(--green);"></div>
+              <div style="font-size:10px;color:var(--blue);font-weight:600;white-space:nowrap;">Q1 '26</div>
+              <div style="font-size:11px;font-weight:700;color:var(--green);">38.5%</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <div style="width:100%;background:var(--text3);border-radius:3px 3px 0 0;height:calc(37.0% * 1.6);opacity:.4;border:1px dashed var(--text3);"></div>
+              <div style="font-size:10px;color:var(--text3);white-space:nowrap;">Q2 '26e</div>
+              <div style="font-size:11px;font-weight:600;color:var(--text3);">36–38%</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;font-size:11px;color:var(--text3);">Objetivo largo plazo (Fab-Right): <strong style="color:var(--blue);">53%</strong></div>
+        </div>
+
+        <div style="background:var(--bg2);border:1px solid rgba(55,138,221,.3);border-radius:var(--r);padding:14px 16px;">
+          <div style="font-size:11px;font-weight:600;color:var(--blue);margin-bottom:8px;">📅 Guidance Q2 2026</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;font-size:13px;">
+            <div><div style="color:var(--text3);font-size:11px;margin-bottom:3px;">Revenue</div><strong>$1.535B – $1.635B</strong></div>
+            <div><div style="color:var(--text3);font-size:11px;margin-bottom:3px;">Margen bruto</div><strong>36% – 38%</strong></div>
+            <div><div style="color:var(--text3);font-size:11px;margin-bottom:3px;">EPS non-GAAP</div><strong>$0.65 – $0.77</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════
+           PANEL 3: FAB-RIGHT
+      ══════════════════════════════════════════════════════ -->
+      <div id="ons-fabright" style="display:none;">
+
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:16px;">
+          <p style="margin-bottom:12px;"><strong style="color:var(--text);">¿Qué es Fab-Right?</strong></p>
+          <p style="margin-bottom:12px;">Es la estrategia de reestructuración de fabricación lanzada por el CEO Hassane El-Khoury para transformar onsemi de una empresa de semis genérica y bajos márgenes a una de <strong style="color:var(--text);">alto valor y alto margen</strong>. El nombre viene de "fabricar lo correcto, en el lugar correcto": cerrar fábricas antiguas ineficientes y concentrar la producción donde tienen ventaja real (SiC, GaN, power management).</p>
+          <p style="margin-bottom:0;">El coste de esta transformación es lo que genera los enormes cargos en el GAAP (−$329M en Q1 2026). Es decir, están pagando ahora para ganar mucho más margen en 2027–2028.</p>
+        </div>
+
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;margin-bottom:16px;">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;">¿Cuánto vale el salto de margen?</div>
+          <table style="width:100%;border-collapse:collapse;font-size:13px;">
+            <thead>
+              <tr style="border-bottom:1px solid var(--border);">
+                <th style="text-align:left;padding:6px 8px;color:var(--text3);font-weight:500;">Escenario</th>
+                <th style="text-align:center;padding:6px 8px;color:var(--text3);font-weight:500;">Margen bruto</th>
+                <th style="text-align:center;padding:6px 8px;color:var(--text3);font-weight:500;">Revenue estimado</th>
+                <th style="text-align:right;padding:6px 8px;color:var(--text3);font-weight:500;">Beneficio bruto</th>
+              </tr>
+            </thead>
             <tbody>
-              <tr><td style="font-weight:500;color:var(--text);">Needham</td><td><span class="pill pb">Strong Buy</span></td><td style="color:var(--green);">$160</td><td style="color:var(--text2);">SiC ciclo multi-año, liderazgo EV</td></tr>
-              <tr><td style="font-weight:500;color:var(--text);">Morgan Stanley</td><td><span class="pill pb">Overweight</span></td><td style="color:var(--green);">$145</td><td style="color:var(--text2);">Expansión margen + AI data center</td></tr>
-              <tr><td style="font-weight:500;color:var(--text);">Deutsche Bank</td><td><span class="pill pn">Hold</span></td><td style="color:var(--amber);">$110</td><td style="color:var(--text2);">Recuperación automotive incierta H2</td></tr>
-              <tr><td style="font-weight:500;color:var(--text);">Simply Wall St.</td><td><span class="pill pn">Reducir</span></td><td style="color:var(--red);">$73–$85</td><td style="color:var(--text2);">29% downside · AI ya descontado en precio</td></tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:8px;color:var(--text2);">Hoy (2026)</td>
+                <td style="text-align:center;padding:8px;color:var(--amber);">38.5%</td>
+                <td style="text-align:center;padding:8px;">~$6.2B</td>
+                <td style="text-align:right;padding:8px;color:var(--amber);">~$2.4B</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:8px;color:var(--text2);">Objetivo LT (Fab-Right)</td>
+                <td style="text-align:center;padding:8px;color:var(--green);">53%</td>
+                <td style="text-align:center;padding:8px;">~$8B (2028e)</td>
+                <td style="text-align:right;padding:8px;color:var(--green);">~$4.2B</td>
+              </tr>
+              <tr>
+                <td style="padding:8px;font-weight:600;color:var(--text);">Mejora potencial</td>
+                <td style="text-align:center;padding:8px;font-weight:600;color:var(--blue);">+14.5pp</td>
+                <td style="text-align:center;padding:8px;color:var(--text3);">+revenue ciclo</td>
+                <td style="text-align:right;padding:8px;font-weight:600;color:var(--blue);">+$1.8B más</td>
+              </tr>
             </tbody>
           </table>
         </div>
+
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;">Comparativa márgenes brutos en el sector</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:90px;font-size:12px;color:var(--text2);">Nvidia</div>
+              <div style="flex:1;background:var(--bg3);border-radius:4px;height:18px;overflow:hidden;">
+                <div style="width:75%;height:100%;background:var(--green);border-radius:4px;display:flex;align-items:center;padding-left:8px;">
+                  <span style="font-size:11px;font-weight:600;color:white;">~75%</span>
+                </div>
+              </div>
+              <div style="font-size:11px;color:var(--text3);width:120px;">Diseño puro (fabless)</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:90px;font-size:12px;color:var(--text2);">Texas Instr.</div>
+              <div style="flex:1;background:var(--bg3);border-radius:4px;height:18px;overflow:hidden;">
+                <div style="width:58%;height:100%;background:var(--green);opacity:.8;border-radius:4px;display:flex;align-items:center;padding-left:8px;">
+                  <span style="font-size:11px;font-weight:600;color:white;">~58%</span>
+                </div>
+              </div>
+              <div style="font-size:11px;color:var(--text3);width:120px;">Referente analógicos</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:90px;font-size:12px;color:var(--blue);font-weight:600;">onsemi obj.</div>
+              <div style="flex:1;background:var(--bg3);border-radius:4px;height:18px;overflow:hidden;">
+                <div style="width:53%;height:100%;background:var(--blue);opacity:.7;border-radius:4px;display:flex;align-items:center;padding-left:8px;border:1px dashed var(--blue);">
+                  <span style="font-size:11px;font-weight:600;color:white;">53%</span>
+                </div>
+              </div>
+              <div style="font-size:11px;color:var(--blue);width:120px;">← Meta Fab-Right</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:90px;font-size:12px;color:var(--amber);font-weight:600;">onsemi hoy</div>
+              <div style="flex:1;background:var(--bg3);border-radius:4px;height:18px;overflow:hidden;">
+                <div style="width:38.5%;height:100%;background:var(--amber);border-radius:4px;display:flex;align-items:center;padding-left:8px;">
+                  <span style="font-size:11px;font-weight:600;color:white;">38.5%</span>
+                </div>
+              </div>
+              <div style="font-size:11px;color:var(--text3);width:120px;">Q1 2026</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:90px;font-size:12px;color:var(--text2);">Intel</div>
+              <div style="flex:1;background:var(--bg3);border-radius:4px;height:18px;overflow:hidden;">
+                <div style="width:38%;height:100%;background:var(--text3);opacity:.5;border-radius:4px;display:flex;align-items:center;padding-left:8px;">
+                  <span style="font-size:11px;font-weight:600;color:white;">~38%</span>
+                </div>
+              </div>
+              <div style="font-size:11px;color:var(--text3);width:120px;">En dificultades</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- MI INFO -->
-      <div style="background:var(--blue-bg);border:1px solid rgba(55,138,221,.3);border-radius:var(--r-lg);padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;">
-        <span style="font-size:22px;">⭐</span>
-        <div><div style="font-size:13px;font-weight:600;color:var(--blue);margin-bottom:2px;">Mis notas sobre ON Semiconductor</div><div style="font-size:12px;color:var(--text2);">Actualizado junio 2026</div></div>
+      <!-- ══════════════════════════════════════════════════════
+           PANEL 4: SEGMENTOS
+      ══════════════════════════════════════════════════════ -->
+      <div id="ons-segmentos" style="display:none;">
+
+        <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;">3 divisiones de negocio — Q1 2026</div>
+
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;margin-bottom:12px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">PSG — Power Solutions Group</div>
+              <div style="font-size:12px;color:var(--text3);margin-top:2px;">Chips SiC, GaN e inteligencia de potencia</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:18px;font-weight:500;">$736M</div>
+              <div style="font-size:12px;color:var(--green);">+14% YoY</div>
+            </div>
+          </div>
+          <div style="font-size:13px;color:var(--text2);line-height:1.7;">Es el corazón de la tesis. Los chips SiC son los semiconductores que necesitan los EVs para gestionar la energía eficientemente. La plataforma <strong style="color:var(--text);">Treo</strong> (soluciones inteligentes de potencia para IA) creció 2,5x secuencial en Q1 2026. El funnel de GaN supera ya los <strong style="color:var(--text);">$1.500M</strong>. Automotive subió gracias a ganancias de cuota en China a pesar de que las ventas de coches cayeron un 6%.</div>
+        </div>
+
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;margin-bottom:12px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">AMG — Analog &amp; Mixed-Signal Group</div>
+              <div style="font-size:12px;color:var(--text3);margin-top:2px;">Señal mixta, gestión de energía, audio</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:18px;font-weight:500;">$540M</div>
+              <div style="font-size:12px;color:var(--red);">−5% YoY</div>
+            </div>
+          </div>
+          <div style="font-size:13px;color:var(--text2);line-height:1.7;">Segmento más maduro y con mayor presión de inventario. Incluye los chips analógicos para industrial y comunicaciones. Aquí está la presión de competidores como Texas Instruments. No es el motor de crecimiento pero genera caja estable.</div>
+        </div>
+
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">ISG — Intelligent Sensing Group</div>
+              <div style="font-size:12px;color:var(--text3);margin-top:2px;">Sensores CMOS, LiDAR, visión artificial</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:18px;font-weight:500;">$236M</div>
+              <div style="font-size:12px;color:var(--green);">+1% YoY</div>
+            </div>
+          </div>
+          <div style="font-size:13px;color:var(--text2);line-height:1.7;">Sensores de imagen para coches autónomos, cámaras industriales y ADAS. El riesgo aquí es la creciente competencia de <strong style="color:var(--amber);">Sony</strong> en CMOS image sensors. Onsemi compensó adquiriendo tecnología Vcore de Aura Semiconductor en sept. 2025 para fortalecer la cadena de alimentación en IA.</div>
+        </div>
       </div>
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:14px;">
-        <p style="margin-bottom:14px;"><strong style="color:var(--text);">Por qué es interesante — y el riesgo real</strong></p>
-        <p style="margin-bottom:14px;">Onsemi es una empresa en transformación real — no es narrativa vacía. La subida del margen bruto del <strong style="color:var(--text);">36% → 38,5% en tres trimestres consecutivos</strong> demuestra que la estrategia Fab-Right está funcionando. El objetivo del 53% a largo plazo, si se cumple, implicaría un EPS de ~$6–7 en 2028 — lo que haría que el precio actual de $106 pareciera barato.</p>
-        <p style="margin-bottom:14px;">El gran riesgo que hay que monitorizar es si <strong style="color:var(--amber);">Automotive bookings</strong> se debilitan en H2 2026. Ya ocurrió una vez (2023–2024) y hundió la acción un 60%. Si el CEO confirma solidez en automotive en los próximos resultados, la tesis se consolida.</p>
-        <p style="margin-bottom:0;">La diferencia frente a Texas Instruments es que onsemi está más enfocada y con mayor exposición a los dos ciclos seculares más fuertes del momento: <strong style="color:var(--green);">EVs + AI data centers</strong>. TXN es más diversificada y estable; onsemi tiene más beta y más upside potencial.</p>
+
+      <!-- ══════════════════════════════════════════════════════
+           PANEL 5: ANALISTAS
+      ══════════════════════════════════════════════════════ -->
+      <div id="ons-analistas" style="display:none;">
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+          <div style="background:var(--bg2);border:1px solid rgba(99,153,34,.3);border-radius:var(--r);padding:14px;text-align:center;">
+            <div style="font-size:28px;font-weight:300;color:var(--green);">12</div>
+            <div style="font-size:12px;color:var(--green);font-weight:600;">BUY</div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px;text-align:center;">
+            <div style="font-size:28px;font-weight:300;color:var(--amber);">22</div>
+            <div style="font-size:12px;color:var(--amber);font-weight:600;">HOLD</div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid rgba(231,76,60,.2);border-radius:var(--r);padding:14px;text-align:center;">
+            <div style="font-size:28px;font-weight:300;color:var(--text3);">0</div>
+            <div style="font-size:12px;color:var(--text3);font-weight:600;">SELL</div>
+          </div>
+        </div>
+
+        <div style="background:var(--bg2);border:1px solid rgba(55,138,221,.3);border-radius:var(--r);padding:12px 14px;margin-bottom:16px;text-align:center;">
+          <span style="font-size:12px;color:var(--text3);">Precio objetivo medio (45 analistas): </span>
+          <span style="font-size:18px;font-weight:600;color:var(--blue);">$70 – $104</span>
+          <span style="font-size:12px;color:var(--text3);"> · Rango: $56 – $130</span>
+        </div>
+
+        <div class="tw">
+          <table class="at">
+            <thead>
+              <tr>
+                <th>Casa</th>
+                <th>Rating</th>
+                <th>Precio obj.</th>
+                <th>Tesis</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="font-weight:600;color:var(--text);">Barclays (T. O'Malley)</td><td><span class="pill pb">Buy</span></td><td style="color:var(--green);font-weight:600;">$130</td><td style="color:var(--text2);font-size:12px;">Más alcista · Inflexión IA+auto</td></tr>
+              <tr><td style="font-weight:600;color:var(--text);">Susquehanna</td><td><span class="pill pb">Buy</span></td><td style="color:var(--green);font-weight:600;">$110–125</td><td style="color:var(--text2);font-size:12px;">IA data center 2x en 2026</td></tr>
+              <tr><td style="font-weight:600;color:var(--text);">Goldman Sachs</td><td><span class="pill pb">Buy</span></td><td style="color:var(--green);font-weight:600;">$64–77</td><td style="color:var(--text2);font-size:12px;">Optimista cauteloso tras downturn</td></tr>
+              <tr><td style="font-weight:600;color:var(--text);">Needham</td><td><span class="pill pb">Buy</span></td><td style="color:var(--green);font-weight:600;">$50–57</td><td style="color:var(--text2);font-size:12px;">SiC ciclo multi-año</td></tr>
+              <tr><td style="font-weight:600;color:var(--text);">Deutsche Bank</td><td><span class="pill pn">Hold</span></td><td style="color:var(--amber);font-weight:600;">~$85</td><td style="color:var(--text2);font-size:12px;">Recuperación auto incierta H2</td></tr>
+              <tr><td style="font-weight:600;color:var(--text);">Morgan Stanley</td><td><span class="pill pn" style="background:rgba(231,76,60,.1);color:var(--red);border-color:rgba(231,76,60,.3);">Underweight</span></td><td style="color:var(--red);font-weight:600;">$44–52</td><td style="color:var(--text2);font-size:12px;">Más bajista · Valoración cara</td></tr>
+              <tr><td style="font-weight:600;color:var(--text);">Citigroup</td><td><span class="pill pn">Neutral</span></td><td style="color:var(--amber);font-weight:600;">$40–52</td><td style="color:var(--text2);font-size:12px;">EV lento en EE.UU.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:12px;padding:10px 12px;background:var(--bg3);border-radius:var(--r);font-size:11px;color:var(--text3);">
+          ⚠️ La gran dispersión de precios objetivo ($44–$130) refleja una empresa en transición: bajistas ven el precio actual como caro dado el revenue actual; alcistas valoran lo que será en 2027–2028. Fuentes: S&amp;P Global · Ticker Nerd · MarketBeat · mayo–junio 2026.
+        </div>
       </div>
-      <div style="padding:10px 12px;background:var(--bg3);border-radius:var(--r);font-size:12px;color:var(--text2);line-height:1.6;">
-        <strong style="color:var(--text);">Ticker en DEGIRO:</strong> busca <strong style="color:var(--blue);">"ON"</strong> o <strong style="color:var(--blue);">"ON Semiconductor"</strong> → selecciona <strong style="color:var(--text);">Nasdaq · USD · ISIN: US6821891009</strong>. Próximos resultados Q2 2026: agosto 2026.
+
+      <!-- ══════════════════════════════════════════════════════
+           PANEL 6: RIESGOS
+      ══════════════════════════════════════════════════════ -->
+      <div id="ons-riesgos" style="display:none;">
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="background:var(--bg2);border-left:3px solid var(--red);border-radius:0 var(--r) var(--r) 0;padding:14px 16px;">
+            <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px;">🔴 Política EV en EE.UU.</div>
+            <div style="font-size:13px;color:var(--text2);line-height:1.7;">La administración actual no favorece los vehículos eléctricos, lo que debilita la demanda de chips SiC para el mercado americano. Onsemi compensa con China (donde sí crece EV) pero añade riesgo geopolítico.</div>
+          </div>
+          <div style="background:var(--bg2);border-left:3px solid var(--red);border-radius:0 var(--r) var(--r) 0;padding:14px 16px;">
+            <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px;">🔴 Competencia en SiC</div>
+            <div style="font-size:13px;color:var(--text2);line-height:1.7;">STMicroelectronics e Infineon tienen cuotas de mercado similares o superiores en chips SiC. Si el ciclo tarda en recuperarse, la guerra de precios puede erosionar márgenes antes de alcanzar el 53%.</div>
+          </div>
+          <div style="background:var(--bg2);border-left:3px solid var(--amber);border-radius:0 var(--r) var(--r) 0;padding:14px 16px;">
+            <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px;">🟡 Gap GAAP vs non-GAAP</div>
+            <div style="font-size:13px;color:var(--text2);line-height:1.7;">Los cargos de reestructuración Fab-Right hacen que el resultado GAAP sea negativo (−$0.08 en Q1 2026) mientras el non-GAAP es positivo ($0.64). Los inversores más conservadores no aceptan este ajuste.</div>
+          </div>
+          <div style="background:var(--bg2);border-left:3px solid var(--amber);border-radius:0 var(--r) var(--r) 0;padding:14px 16px;">
+            <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px;">🟡 Sony en sensores de imagen</div>
+            <div style="font-size:13px;color:var(--text2);line-height:1.7;">Sony está ganando cuota en CMOS image sensors (negocio ISG de onsemi). Si esta presión se intensifica, podría reducir márgenes del tercer segmento.</div>
+          </div>
+          <div style="background:var(--bg2);border-left:3px solid var(--green);border-radius:0 var(--r) var(--r) 0;padding:14px 16px;">
+            <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px;">🟢 Factor positivo a vigilar: guidance H2 2026</div>
+            <div style="font-size:13px;color:var(--text2);line-height:1.7;">Management espera que la segunda mitad de 2026 supere a la primera, con expansión secuencial de margen bruto en cada trimestre. Si Q2 confirma esta trayectoria en agosto, la tesis alcista se consolida significativamente.</div>
+          </div>
+        </div>
       </div>
 
     </div>
