@@ -313,6 +313,255 @@ body{
 .nav-item.active{background:var(--blue-bg);color:var(--blue);font-weight:500;border-left-color:var(--blue);}
 .nav-icon{font-size:14px;flex-shrink:0;}
 .tabbar{display:none;}
+
+/* ══ ALPHABET TREE ══ */
+.alph-tree-wrap {
+  --bg: #0a0c10; --bg2: #111318; --bg3: #181b22;
+  --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.13);
+  --text: #e8e6df; --text2: #9b9990; --text3: #5a5855;
+  --blue: #4a9eff; --blue-bg: rgba(74,158,255,0.08);
+  --green: #4ade80; --green-bg: rgba(74,222,128,0.08);
+  --amber: #fbbf24; --amber-bg: rgba(251,191,36,0.08);
+  --teal: #2dd4bf; --teal-bg: rgba(45,212,191,0.08);
+  --purple: #a78bfa; --purple-bg: rgba(167,139,250,0.08);
+  --red: #f87171; --red-bg: rgba(248,113,113,0.08);
+  --coral: #fb923c; --coral-bg: rgba(251,146,60,0.08);
+  position: relative; overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 13px; line-height: 1.5;
+  background: #0a0c10; color: #e8e6df;
+  min-height: 600px;
+}
+
+
+  /* ── HEADER ── */
+  .header {
+    padding: 28px 32px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 100;
+  }
+  .header-left h1 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .header-left p { font-size: 12px; color: var(--text3); }
+  .total-badge {
+    background: var(--blue-bg);
+    border: 1px solid rgba(74,158,255,0.25);
+    border-radius: 6px;
+    padding: 8px 14px;
+    text-align: right;
+  }
+  .total-badge .num { font-size: 26px; font-weight: 300; color: var(--blue); letter-spacing: -0.02em; }
+  .total-badge .lbl { font-size: 10px; color: var(--text3); margin-top: 1px; }
+
+  /* ── LEGEND ── */
+  .legend {
+    padding: 10px 32px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text3); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ── TREE WRAPPER ── */
+  .tree-scroll { padding: 28px 32px 48px; min-width: 1200px; }
+
+  /* ── NODES ── */
+  .node {
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    background: var(--bg2);
+    padding: 10px 12px 9px;
+    position: relative;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+    width: 172px;
+  }
+  .node:hover { border-color: var(--border2); background: var(--bg3); }
+  .node.root { width: 200px; border-color: rgba(74,158,255,.3); background: rgba(74,158,255,.05); }
+  .node.cat { width: 160px; }
+  .node.active { outline: 2px solid rgba(74,158,255,.5); outline-offset: 1px; }
+
+  .node-eyebrow { font-size: 9px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--text3); margin-bottom: 3px; }
+  .node-name { font-size: 12px; font-weight: 600; color: var(--text); line-height: 1.3; margin-bottom: 5px; }
+  .node-amount { font-size: 15px; font-weight: 300; letter-spacing: -0.01em; }
+  .node-desc { font-size: 10px; color: var(--text2); margin-top: 4px; line-height: 1.5; }
+  .node-tag {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-top: 4px;
+    margin-right: 2px;
+  }
+
+  /* color variants */
+  .node.c-blue  { border-color: rgba(74,158,255,.25); }
+  .node.c-green { border-color: rgba(74,222,128,.25); }
+  .node.c-amber { border-color: rgba(251,191,36,.25); }
+  .node.c-teal  { border-color: rgba(45,212,191,.25); }
+  .node.c-purple{ border-color: rgba(167,139,250,.25); }
+  .node.c-red   { border-color: rgba(248,113,113,.25); }
+  .node.c-coral { border-color: rgba(251,146,60,.25); }
+
+  .c-blue  .node-amount { color: var(--blue); }
+  .c-green .node-amount { color: var(--green); }
+  .c-amber .node-amount { color: var(--amber); }
+  .c-teal  .node-amount { color: var(--teal); }
+  .c-purple .node-amount { color: var(--purple); }
+  .c-red   .node-amount { color: var(--red); }
+  .c-coral .node-amount { color: var(--coral); }
+
+  .tag-blue   { background: var(--blue-bg);   color: var(--blue); }
+  .tag-green  { background: var(--green-bg);  color: var(--green); }
+  .tag-amber  { background: var(--amber-bg);  color: var(--amber); }
+  .tag-teal   { background: var(--teal-bg);   color: var(--teal); }
+  .tag-purple { background: var(--purple-bg); color: var(--purple); }
+  .tag-red    { background: var(--red-bg);    color: var(--red); }
+  .tag-coral  { background: var(--coral-bg);  color: var(--coral); }
+
+  /* ── SVG CONNECTOR LINES ── */
+  .tree-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+  .tree-container { position: relative; }
+
+  /* ── LAYOUT ROWS ── */
+  .row0 { display: flex; justify-content: center; margin-bottom: 0; }
+  .row1 { display: flex; justify-content: center; gap: 16px; margin-top: 48px; }
+  .row2 { display: flex; justify-content: flex-start; gap: 10px; margin-top: 42px; }
+  .row2-group { flex: 1; display: flex; flex-direction: column; gap: 10px; align-items: center; min-width: 0; }
+  .row2-group-title {
+    font-size: 9px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text3); text-align: center; margin-bottom: 6px;
+    padding: 3px 8px; border-radius: 3px; border: 1px solid var(--border);
+  }
+  .row2-nodes { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+
+  .sparkline { display: block; margin-top: 5px; }
+
+  /* ── SECTION DIVIDER ── */
+  .section-sep {
+    margin: 32px 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-sep-line { flex: 1; height: 1px; background: var(--border); }
+  .section-sep-label {
+    font-size: 10px; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--text3);
+    padding: 3px 10px; border: 1px solid var(--border); border-radius: 4px;
+  }
+
+  /* ── CAPEX BAR ── */
+  .capex-section {
+    margin-top: 36px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 18px 20px;
+  }
+  .capex-title { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); margin-bottom: 14px; }
+  .capex-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .capex-label { width: 200px; font-size: 12px; color: var(--text2); text-align: right; flex-shrink: 0; }
+  .capex-bar-wrap { flex: 1; height: 6px; background: rgba(255,255,255,.05); border-radius: 3px; overflow: hidden; }
+  .capex-bar { height: 100%; border-radius: 3px; transition: width .5s; }
+  .capex-val { width: 70px; font-size: 11px; font-weight: 500; flex-shrink: 0; }
+
+  /* ── TIMELINE ── */
+  .timeline { margin-top: 36px; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 18px 20px; }
+  .timeline-title { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); margin-bottom: 14px; }
+  .timeline-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+  .timeline-dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+  .timeline-text { font-size: 12px; color: var(--text2); line-height: 1.5; }
+  .timeline-text strong { color: var(--text); }
+
+  footer {
+    margin-top: 32px;
+    padding: 16px 0 0;
+    border-top: 1px solid var(--border);
+    font-size: 10px;
+    color: var(--text3);
+    line-height: 1.8;
+  }
+
+  /* ── SIDEBAR ── */
+  .alph-sb-panel {
+    position: absolute; right: 0; top: 0; bottom: 0;
+    width: 420px;
+    background: #111318;
+    border-left: 1px solid rgba(255,255,255,0.14);
+    box-shadow: -20px 0 60px rgba(0,0,0,0.7);
+    transform: translateX(100%);
+    transition: transform .28s cubic-bezier(.4,0,.2,1);
+    overflow-y: auto;
+    z-index: 9999;
+    display: flex; flex-direction: column;
+  }
+  .alph-sb-panel.open { transform: translateX(0); }
+  .sb-header {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    position: sticky; top: 0; background: #111318; z-index: 2;
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;
+  }
+  .sb-close {
+    width: 28px; height: 28px; border-radius: 6px;
+    background: #181b22; border: 1px solid rgba(255,255,255,0.07);
+    color: #5a5855; font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background .1s, color .1s;
+  }
+  .sb-close:hover { background: rgba(255,255,255,.08); color: #e8e6df; }
+  .sb-eyebrow { font-size: 9px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #5a5855; margin-bottom: 4px; }
+  .sb-title { font-size: 16px; font-weight: 600; color: #e8e6df; line-height: 1.3; }
+  .sb-body { padding: 18px 20px; flex: 1; }
+  .sb-amount { font-size: 26px; font-weight: 300; letter-spacing: -.02em; margin-bottom: 14px; }
+  .sb-int-badge { display: inline-block; font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 3px; background: rgba(167,139,250,.12); color: #a78bfa; margin-bottom: 10px; }
+  .sb-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 16px; }
+  .sb-stat { background: #181b22; border-radius: 8px; padding: 10px 12px; border: 1px solid rgba(255,255,255,0.07); }
+  .sb-stat-lbl { font-size: 9px; color: #5a5855; margin-bottom: 3px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; }
+  .sb-stat-val { font-size: 15px; font-weight: 500; }
+  .sb-stat-sub { font-size: 10px; color: #5a5855; margin-top: 1px; }
+  .sb-tags { margin-bottom: 16px; display: flex; flex-wrap: wrap; gap: 4px; }
+  .sb-tag { display: inline-block; font-size: 9px; font-weight: 500; padding: 2px 6px; border-radius: 3px; }
+  .sb-section { margin-bottom: 14px; }
+  .sb-sec-title {
+    font-size: 9px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase;
+    color: #5a5855; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .sb-sec-title::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.07); }
+  .sb-sec-text { font-size: 12px; color: #9b9990; line-height: 1.75; }
+  .sb-alpha { background: rgba(74,158,255,.06); border: 1px solid rgba(74,158,255,.18); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; }
+  .sb-alpha-lbl { font-size: 9px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #4a9eff; margin-bottom: 5px; }
+  .sb-alpha-txt { font-size: 11px; color: #9b9990; line-height: 1.6; }
+  .sb-risk { background: rgba(248,113,113,.06); border: 1px solid rgba(248,113,113,.18); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; }
+  .sb-risk-lbl { font-size: 9px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #f87171; margin-bottom: 5px; }
+  .sb-risk-txt { font-size: 11px; color: #9b9990; line-height: 1.6; }
+  .sb-comp-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .sb-comp-name { font-size: 11px; font-weight: 500; color: #e8e6df; width: 110px; flex-shrink: 0; }
+  .sb-comp-bw { flex: 1; height: 5px; background: rgba(255,255,255,.05); border-radius: 3px; overflow: hidden; }
+  .sb-comp-b { height: 100%; border-radius: 3px; }
+  .sb-comp-val { font-size: 10px; color: #5a5855; width: 36px; text-align: right; flex-shrink: 0; }
+  .sb-chart-wrap { position: relative; height: 90px; margin-top: 6px; }
+
+
 </style>
 </head>
 <body>
@@ -1177,6 +1426,7 @@ body{
         <button class="itab" onclick="showITabSheet('alp','ia',this)">Estrategia IA</button>
         <button class="itab" onclick="showITabSheet('alp','riesgos',this)">Riesgos</button>
         <button class="itab" onclick="showITabSheet('alp','escenarios',this)">Escenarios precio</button>
+        <button class="itab" onclick="showITabSheet('alp','arbol',this);setTimeout(alphDrawLines,120);">🌳 Árbol inversiones</button>
       </div>
 
       <!-- LOS 6 NEGOCIOS -->
@@ -1308,6 +1558,562 @@ body{
           </table>
         </div>
         <div class="notice"><div class="ni">💡</div><div>Alphabet es la única empresa de los Magnificent 7 con <strong>P/E ~21x</strong> — más barata que Microsoft (32x), Apple (28x), Meta (25x) y Nvidia (35x). Si el riesgo antimonopolio se despeja, hay una revalorización del múltiplo muy clara. Stephen Yiu la tiene en su Top 2: <strong>gran negocio a precio razonable</strong>.</div></div>
+      </div>
+
+      <!-- ÁRBOL INVERSIONES -->
+      <div id="alp-arbol" class="ipanel">
+        <div class="alph-tree-wrap">
+
+
+<div class="header">
+  <div class="header-left">
+    <h1>Alphabet — Árbol de inversiones 2026</h1>
+    <p>GOOG / GOOGL · Nasdaq · Actualizado junio 2026 · Fuentes: SEC filings, earnings calls, Bloomberg, CNBC</p>
+  </div>
+  <div class="total-badge">
+    <div class="num">$180–190B</div>
+    <div class="lbl">CapEx total 2026 guiado + $84.75B equity raise</div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>Chips e infraestructura</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Energía</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div>Inversiones estratégicas / stakes</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>Filiales (Other Bets)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>IA / Modelos</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--coral)"></div>Centros de datos / construcción</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Farmacia / Salud</div>
+</div>
+
+<div style="padding:8px 32px;background:#0a0c10;border-bottom:1px solid rgba(255,255,255,0.07);font-size:11px;color:#5a5855;display:flex;align-items:center;gap:8px;">
+  <span style="font-size:13px;">👆</span>
+  <span>Haz clic en cualquier nodo para ver análisis detallado en el panel lateral · <strong style="color:#4a9eff">35 nodos</strong> con datos reales · Fuentes: SEC filings, earnings calls · jun 2026 · Pulsa <kbd style="background:#181b22;border:1px solid rgba(255,255,255,0.1);border-radius:3px;padding:1px 5px;font-size:10px">Esc</kbd> para cerrar</span>
+</div>
+
+<div class="tree-scroll">
+<div class="tree-container" id="alph-tree">
+
+  <!-- SVG LINES rendered by JS -->
+  <svg class="tree-svg" id="alph-svg-lines"></svg>
+
+  <!-- ROW 0: ROOT -->
+  <div class="row0">
+    <div class="node root c-blue" id="n-root" onclick="alphOpenSb('n-root')">
+      <div class="node-eyebrow">GOOG · GOOGL · Nasdaq · Cap $4.5T</div>
+      <div class="node-name">Alphabet Inc.</div>
+      <div class="node-amount">$180–190B</div>
+      <div class="node-desc">CapEx 2026 guiado · Revenue Q1 2026: $109.9B (+22%) · Cloud backlog: $460B</div>
+      <canvas class="sparkline" id="alph-spark-root" width="176" height="32"></canvas>
+    </div>
+  </div>
+
+  <!-- ROW 1: 7 CATEGORIES -->
+  <div class="row1" id="row1">
+
+    <div class="node cat c-blue" id="n-chips" onclick="alphOpenSb('n-chips')">
+      <div class="node-eyebrow">~60% del CapEx</div>
+      <div class="node-name">Servidores + Chips</div>
+      <div class="node-amount">~$108B</div>
+      <div class="node-desc">TPUs propios + GPUs Nvidia + HBM</div>
+    </div>
+
+    <div class="node cat c-coral" id="n-dc" onclick="alphOpenSb('n-dc')">
+      <div class="node-eyebrow">~40% del CapEx</div>
+      <div class="node-name">Centros de datos</div>
+      <div class="node-amount">~$72B</div>
+      <div class="node-desc">Construcción global + networking</div>
+    </div>
+
+    <div class="node cat c-green" id="n-energy" onclick="alphOpenSb('n-energy')">
+      <div class="node-eyebrow">Adquisición + PPAs</div>
+      <div class="node-name">Energía</div>
+      <div class="node-amount">~$8B+</div>
+      <div class="node-desc">Nuclear · Solar · Gas + CCS</div>
+    </div>
+
+    <div class="node cat c-amber" id="n-stakes" onclick="alphOpenSb('n-stakes')">
+      <div class="node-eyebrow">Inversiones externas</div>
+      <div class="node-name">Stakes estratégicos</div>
+      <div class="node-amount">~$60B+</div>
+      <div class="node-desc">Anthropic · SpaceX · Berkshire in</div>
+    </div>
+
+    <div class="node cat c-teal" id="n-bets" onclick="alphOpenSb('n-bets')">
+      <div class="node-eyebrow">Other Bets</div>
+      <div class="node-name">Filiales</div>
+      <div class="node-amount">~$16B+</div>
+      <div class="node-desc">Waymo · Wing · Verily · Calico</div>
+    </div>
+
+    <div class="node cat c-purple" id="n-ai" onclick="alphOpenSb('n-ai')">
+      <div class="node-eyebrow">I+D Modelos IA</div>
+      <div class="node-name">IA / Modelos</div>
+      <div class="node-amount">~$13B R&D</div>
+      <div class="node-desc">DeepMind · Gemini · Robotics</div>
+    </div>
+
+    <div class="node cat c-red" id="n-health" onclick="alphOpenSb('n-health')">
+      <div class="node-eyebrow">Ciencias de la vida</div>
+      <div class="node-name">Salud / Bio</div>
+      <div class="node-amount">~$2B+</div>
+      <div class="node-desc">Isomorphic · Verily · Calico</div>
+    </div>
+
+  </div>
+
+  <!-- ROW 2: LEAF NODES PER CATEGORY -->
+  <div class="row2" id="row2">
+
+    <!-- CHIPS -->
+    <div class="row2-group" id="g-chips">
+      <div class="row2-group-title" style="color:var(--blue);border-color:rgba(74,158,255,.2)">Chips</div>
+      <div class="row2-nodes">
+
+        <div class="node c-blue" id="l-tpu" onclick="alphOpenSb('l-tpu')">
+          <div class="node-eyebrow">Google interno</div>
+          <div class="node-name">TPU v5p / Trillium / Ironwood</div>
+          <div class="node-amount">Principal</div>
+          <div class="node-desc">8ª gen · Clusters de 8.960 chips · Solo en Google Cloud</div>
+          <span class="node-tag tag-blue">Fabless design</span>
+          <span class="node-tag tag-blue">3nm TSMC</span>
+        </div>
+
+        <div class="node c-blue" id="l-nvda" onclick="alphOpenSb('l-nvda')">
+          <div class="node-eyebrow">NVDA · Nasdaq ~$135</div>
+          <div class="node-name">Nvidia GPUs</div>
+          <div class="node-amount">Multi-B$</div>
+          <div class="node-desc">H100 / H200 / B200 · Deal SpaceX: 110.000 GPUs</div>
+          <span class="node-tag tag-blue">H200 / B200</span>
+          <canvas class="sparkline" id="alph-spark-nvda" width="148" height="24"></canvas>
+        </div>
+
+        <div class="node c-blue" id="l-tsm" onclick="alphOpenSb('l-tsm')">
+          <div class="node-eyebrow">TSM · NYSE ~$205</div>
+          <div class="node-name">TSMC</div>
+          <div class="node-amount">Fab partner</div>
+          <div class="node-desc">Fabrica TPUs + Axion ARM en proceso 3nm · 68% cuota foundry</div>
+          <span class="node-tag tag-blue">3nm / 2nm</span>
+          <canvas class="sparkline" id="alph-spark-tsm" width="148" height="24"></canvas>
+        </div>
+
+        <div class="node c-blue" id="l-bcom" onclick="alphOpenSb('l-bcom')">
+          <div class="node-eyebrow">AVGO · Nasdaq ~$237</div>
+          <div class="node-name">Broadcom</div>
+          <div class="node-amount">ASIC custom</div>
+          <div class="node-desc">Diseña ASICs propietarios + networking · conecta pods TPU</div>
+          <span class="node-tag tag-blue">TPU networking</span>
+          <canvas class="sparkline" id="alph-spark-avgo" width="148" height="24"></canvas>
+        </div>
+
+        <div class="node c-blue" id="l-hbm" onclick="alphOpenSb('l-hbm')">
+          <div class="node-eyebrow">Samsung / SK Hynix</div>
+          <div class="node-name">Memoria HBM3e</div>
+          <div class="node-amount">Componente clave</div>
+          <div class="node-desc">High Bandwidth Memory para TPUs y GPUs de IA · esencial</div>
+          <span class="node-tag tag-blue">HBM3e</span>
+        </div>
+
+        <div class="node c-blue" id="l-axion" onclick="alphOpenSb('l-axion')">
+          <div class="node-eyebrow">Google interno</div>
+          <div class="node-name">Axion (ARM)</div>
+          <div class="node-amount">Serv. CPU</div>
+          <div class="node-desc">CPU ARM custom para cargas no-IA en data centers propios · 3nm TSMC</div>
+          <span class="node-tag tag-blue">ARM Neoverse</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DATA CENTERS -->
+    <div class="row2-group" id="g-dc">
+      <div class="row2-group-title" style="color:var(--coral);border-color:rgba(251,146,60,.2)">Centros de datos</div>
+      <div class="row2-nodes">
+
+        <div class="node c-coral" id="l-us" onclick="alphOpenSb('l-us')">
+          <div class="node-eyebrow">EE.UU.</div>
+          <div class="node-name">Expansión EEUU</div>
+          <div class="node-amount">~$30B+</div>
+          <div class="node-desc">Virginia · Iowa · Texas · Oregon · South Carolina · Nevada</div>
+          <span class="node-tag tag-coral">Multi-estado</span>
+        </div>
+
+        <div class="node c-coral" id="l-eu" onclick="alphOpenSb('l-eu')">
+          <div class="node-eyebrow">Europa</div>
+          <div class="node-name">Expansión Europa</div>
+          <div class="node-amount">Multi-B$</div>
+          <div class="node-desc">Países Bajos · Irlanda · Bélgica · Alemania · Finlandia</div>
+          <span class="node-tag tag-coral">GDPR compliant</span>
+        </div>
+
+        <div class="node c-coral" id="l-apac" onclick="alphOpenSb('l-apac')">
+          <div class="node-eyebrow">Asia-Pacífico</div>
+          <div class="node-name">APAC</div>
+          <div class="node-amount">Multi-B$</div>
+          <div class="node-desc">Singapur · Japón · Taiwan · Australia · India</div>
+          <span class="node-tag tag-coral">Cloud expansion</span>
+        </div>
+
+        <div class="node c-coral" id="l-sa" onclick="alphOpenSb('l-sa')">
+          <div class="node-eyebrow">Oriente Medio</div>
+          <div class="node-name">Arabia Saudí</div>
+          <div class="node-amount">Nuevo</div>
+          <div class="node-desc">Primer data center en KSA · partnership transformación digital Vision 2030</div>
+          <span class="node-tag tag-coral">Vision 2030</span>
+        </div>
+
+        <div class="node c-coral" id="l-texas" onclick="alphOpenSb('l-texas')">
+          <div class="node-eyebrow">Haskell County, TX</div>
+          <div class="node-name">Hyperion Cluster</div>
+          <div class="node-amount">$10B</div>
+          <div class="node-desc">Co-localizado con planta de energía Intersect · primer DC+power integrado</div>
+          <span class="node-tag tag-coral">DC + Power</span>
+          <span class="node-tag tag-green">Co-location</span>
+        </div>
+
+        <div class="node c-coral" id="l-louisiana" onclick="alphOpenSb('l-louisiana')">
+          <div class="node-eyebrow">Louisiana</div>
+          <div class="node-name">Hyperion Louisiana</div>
+          <div class="node-amount">$10B</div>
+          <div class="node-desc">Cluster iniciado dic 2024 · uno de los mayores de EE.UU.</div>
+          <span class="node-tag tag-coral">2026 online</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ENERGY -->
+    <div class="row2-group" id="g-energy">
+      <div class="row2-group-title" style="color:var(--green);border-color:rgba(74,222,128,.2)">Energía</div>
+      <div class="row2-nodes">
+
+        <div class="node c-green" id="l-intersect" onclick="alphOpenSb('l-intersect')">
+          <div class="node-eyebrow">Adquisición dic 2025</div>
+          <div class="node-name">Intersect Power</div>
+          <div class="node-amount">$4.75B</div>
+          <div class="node-desc">Desarrollador energía limpia · varios GW en desarrollo + construcción</div>
+          <span class="node-tag tag-green">Solar + GAS+CCS</span>
+          <span class="node-tag tag-green">Adquisición</span>
+        </div>
+
+        <div class="node c-green" id="l-kairos" onclick="alphOpenSb('l-kairos')">
+          <div class="node-eyebrow">Nuclear SMR</div>
+          <div class="node-name">Kairos Power + TVA</div>
+          <div class="node-amount">500MW</div>
+          <div class="node-desc">1er deal nuclear de Google · Hermes 2 en Oak Ridge, TN · online 2028+</div>
+          <span class="node-tag tag-green">Nuclear SMR</span>
+          <span class="node-tag tag-amber">2028+</span>
+        </div>
+
+        <div class="node c-green" id="l-geo" onclick="alphOpenSb('l-geo')">
+          <div class="node-eyebrow">Geotérmica</div>
+          <div class="node-name">Geotérmica avanzada</div>
+          <div class="node-amount">Programa</div>
+          <div class="node-desc">Fervo Energy partner · geotérmica de próxima gen · Nevada y Utah</div>
+          <span class="node-tag tag-green">Fervo Energy</span>
+        </div>
+
+        <div class="node c-green" id="l-ppa" onclick="alphOpenSb('l-ppa')">
+          <div class="node-eyebrow">Power Purchase Agreements</div>
+          <div class="node-name">PPAs renovables</div>
+          <div class="node-amount">Multi-B$</div>
+          <div class="node-desc">Contratos eólicos y solares globales · objetivo 24/7 carbon-free</div>
+          <span class="node-tag tag-green">Wind + Solar</span>
+        </div>
+
+        <div class="node c-green" id="l-battery" onclick="alphOpenSb('l-battery')">
+          <div class="node-eyebrow">Almacenamiento</div>
+          <div class="node-name">Baterías LDES</div>
+          <div class="node-amount">Programa</div>
+          <div class="node-desc">Long Duration Energy Storage · inversión GV en Malta Inc. y Form Energy</div>
+          <span class="node-tag tag-green">Grid storage</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- STAKES -->
+    <div class="row2-group" id="g-stakes">
+      <div class="row2-group-title" style="color:var(--amber);border-color:rgba(251,191,36,.2)">Stakes</div>
+      <div class="row2-nodes">
+
+        <div class="node c-amber" id="l-anthropic" onclick="alphOpenSb('l-anthropic')">
+          <div class="node-eyebrow">Privada · IPO 2026e · val. $350B</div>
+          <div class="node-name">Anthropic</div>
+          <div class="node-amount">hasta $40B</div>
+          <div class="node-desc">$10B inmediato + $30B condicional · 14% stake · 5GW TPU compute · Claude / Mythos</div>
+          <span class="node-tag tag-amber">Stake 14%</span>
+          <span class="node-tag tag-purple">TPU anchor</span>
+        </div>
+
+        <div class="node c-amber" id="l-spacex" onclick="alphOpenSb('l-spacex')">
+          <div class="node-eyebrow">Privada · IPO 2026e · val. $1.75T</div>
+          <div class="node-name">SpaceX</div>
+          <div class="node-amount">~6.11% stake</div>
+          <div class="node-desc">Valor stake: $100-122B · Cloud deal: $920M/mes × 32 meses = $29.4B</div>
+          <span class="node-tag tag-amber">$100-122B paper</span>
+          <span class="node-tag tag-blue">Cloud client</span>
+        </div>
+
+        <div class="node c-amber" id="l-bh" onclick="alphOpenSb('l-bh')">
+          <div class="node-eyebrow">BRK.B · NYSE · ~$521</div>
+          <div class="node-name">Berkshire Hathaway</div>
+          <div class="node-amount">$10B in</div>
+          <div class="node-desc">Greg Abel compra $10B acciones GOOG · colocación privada jun 2026 · $351/acc</div>
+          <span class="node-tag tag-amber">Inversor nuevo</span>
+        </div>
+
+        <div class="node c-amber" id="l-blackstone" onclick="alphOpenSb('l-blackstone')">
+          <div class="node-eyebrow">BX · NYSE · ~$142</div>
+          <div class="node-name">Blackstone JV</div>
+          <div class="node-amount">$5B JV</div>
+          <div class="node-desc">Joint venture para alquilar TPUs como servicio · 500MW capacidad 2027</div>
+          <span class="node-tag tag-amber">TPU-as-a-service</span>
+        </div>
+
+        <div class="node c-amber" id="l-gv" onclick="alphOpenSb('l-gv')">
+          <div class="node-eyebrow">Venture capital</div>
+          <div class="node-name">GV + CapitalG</div>
+          <div class="node-amount">~$1-2B/año</div>
+          <div class="node-desc">Bedrock Robotics $270M · Form Energy · Agile Robots · +500 startups portfolio</div>
+          <span class="node-tag tag-amber">500+ startups</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- OTHER BETS / FILIALES -->
+    <div class="row2-group" id="g-bets">
+      <div class="row2-group-title" style="color:var(--teal);border-color:rgba(45,212,191,.2)">Filiales</div>
+      <div class="row2-nodes">
+
+        <div class="node c-teal" id="l-waymo" onclick="alphOpenSb('l-waymo')">
+          <div class="node-eyebrow">Filial 100% · val. $126B</div>
+          <div class="node-name">Waymo</div>
+          <div class="node-amount">$16B ronda</div>
+          <div class="node-desc">+500.000 viajes autónomos/semana · robotaxi SF, LA, Phoenix, Austin</div>
+          <span class="node-tag tag-teal">500k rides/sem</span>
+        </div>
+
+        <div class="node c-teal" id="l-wing" onclick="alphOpenSb('l-wing')">
+          <div class="node-eyebrow">Filial Alphabet</div>
+          <div class="node-name">Wing</div>
+          <div class="node-amount">Operativo</div>
+          <div class="node-desc">Entrega por drones · Australia, EE.UU., Finlandia · +3M entregas</div>
+          <span class="node-tag tag-teal">Drone delivery</span>
+        </div>
+
+        <div class="node c-teal" id="l-intrinsic" onclick="alphOpenSb('l-intrinsic')">
+          <div class="node-eyebrow">Integrada en Google feb 2026</div>
+          <div class="node-name">Intrinsic</div>
+          <div class="node-amount">Robótica</div>
+          <div class="node-desc">Software IA para robots industriales · integrada con DeepMind y Gemini</div>
+          <span class="node-tag tag-teal">Industrial AI</span>
+          <span class="node-tag tag-purple">DeepMind integrado</span>
+        </div>
+
+        <div class="node c-teal" id="l-xlab" onclick="alphOpenSb('l-xlab')">
+          <div class="node-eyebrow">Moonshot factory</div>
+          <div class="node-name">X (Google X)</div>
+          <div class="node-amount">Laboratorio</div>
+          <div class="node-desc">Origen de Waymo, Wing, Intrinsic · proyectos pre-comerciales en marcha</div>
+          <span class="node-tag tag-teal">Moonshots</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- AI / MODELS -->
+    <div class="row2-group" id="g-ai">
+      <div class="row2-group-title" style="color:var(--purple);border-color:rgba(167,139,250,.2)">IA</div>
+      <div class="row2-nodes">
+
+        <div class="node c-purple" id="l-deepmind" onclick="alphOpenSb('l-deepmind')">
+          <div class="node-eyebrow">Google DeepMind</div>
+          <div class="node-name">DeepMind / Brain</div>
+          <div class="node-amount">Core R&D</div>
+          <div class="node-desc">Fusión DeepMind + Brain (2023) · Gemini 3 · Nobel AI · Demis Hassabis CEO</div>
+          <span class="node-tag tag-purple">Gemini 3</span>
+          <span class="node-tag tag-purple">Nobel 2024</span>
+        </div>
+
+        <div class="node c-purple" id="l-gemini" onclick="alphOpenSb('l-gemini')">
+          <div class="node-eyebrow">Producto IA</div>
+          <div class="node-name">Gemini App</div>
+          <div class="node-amount">750M MAU</div>
+          <div class="node-desc">16B tokens/min API · 350M suscripciones pago · Gemini Enterprise +40% QoQ</div>
+          <span class="node-tag tag-purple">750M usuarios</span>
+        </div>
+
+        <div class="node c-purple" id="l-agile" onclick="alphOpenSb('l-agile')">
+          <div class="node-eyebrow">Robótica IA</div>
+          <div class="node-name">Agile Robots</div>
+          <div class="node-amount">Partnership</div>
+          <div class="node-desc">Integra modelos Gemini Robotics con hardware · robots humanoides para industria</div>
+          <span class="node-tag tag-purple">Humanoid robots</span>
+        </div>
+
+        <div class="node c-purple" id="l-quantum" onclick="alphOpenSb('l-quantum')">
+          <div class="node-eyebrow">Quantum AI</div>
+          <div class="node-name">Willow (Quantum)</div>
+          <div class="node-amount">Investigación</div>
+          <div class="node-desc">Chip cuántico Willow (dic 2024) · 105 qubits · reduce errores exponencialmente</div>
+          <span class="node-tag tag-purple">105 qubits</span>
+          <span class="node-tag tag-amber">2025+ comercial</span>
+        </div>
+
+        <div class="node c-purple" id="l-apple" onclick="alphOpenSb('l-apple')">
+          <div class="node-eyebrow">Partnership nov 2025</div>
+          <div class="node-name">Apple · Siri + Gemini</div>
+          <div class="node-amount">Deal</div>
+          <div class="node-desc">Google AI impulsa Siri en 2.500M devices · uno de los mayores deals de distribución IA</div>
+          <span class="node-tag tag-purple">2.5B devices</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HEALTH / BIO -->
+    <div class="row2-group" id="g-health">
+      <div class="row2-group-title" style="color:var(--red);border-color:rgba(248,113,113,.2)">Salud</div>
+      <div class="row2-nodes">
+
+        <div class="node c-red" id="l-isomorphic" onclick="alphOpenSb('l-isomorphic')">
+          <div class="node-eyebrow">Spinoff DeepMind</div>
+          <div class="node-name">Isomorphic Labs</div>
+          <div class="node-amount">$600M ronda</div>
+          <div class="node-desc">Drug discovery IA · IsoDDE · Eli Lilly + Novartis deals $3B · trials oncología 2026</div>
+          <span class="node-tag tag-red">AlphaFold 3</span>
+          <span class="node-tag tag-amber">Lilly + Novartis</span>
+        </div>
+
+        <div class="node c-red" id="l-verily" onclick="alphOpenSb('l-verily')">
+          <div class="node-eyebrow">Filial Alphabet</div>
+          <div class="node-name">Verily</div>
+          <div class="node-amount">Operativo</div>
+          <div class="node-desc">Ciencias de la vida · wearables médicos · studies de salud · Baseline Study</div>
+          <span class="node-tag tag-red">Life sciences</span>
+        </div>
+
+        <div class="node c-red" id="l-calico" onclick="alphOpenSb('l-calico')">
+          <div class="node-eyebrow">Filial Alphabet</div>
+          <div class="node-name">Calico</div>
+          <div class="node-amount">Investigación</div>
+          <div class="node-desc">Longevidad y envejecimiento · partnership AbbVie · investigación básica</div>
+          <span class="node-tag tag-red">Longevity</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /row2 -->
+
+  <!-- CAPEX BREAKDOWN -->
+  <div class="section-sep">
+    <div class="section-sep-line"></div>
+    <div class="section-sep-label">Evolución CapEx Alphabet</div>
+    <div class="section-sep-line"></div>
+  </div>
+
+  <div class="capex-section">
+    <div class="capex-title">CapEx anual — escala de inversión</div>
+    <div class="capex-row">
+      <div class="capex-label">2023</div>
+      <div class="capex-bar-wrap"><div class="capex-bar" style="width:17%;background:#4a5568"></div></div>
+      <div class="capex-val" style="color:var(--text3)">$32.3B</div>
+    </div>
+    <div class="capex-row">
+      <div class="capex-label">2024</div>
+      <div class="capex-bar-wrap"><div class="capex-bar" style="width:28%;background:#4a6580"></div></div>
+      <div class="capex-val" style="color:var(--text2)">$52.5B</div>
+    </div>
+    <div class="capex-row">
+      <div class="capex-label">2025</div>
+      <div class="capex-bar-wrap"><div class="capex-bar" style="width:48%;background:var(--blue);opacity:.6"></div></div>
+      <div class="capex-val" style="color:var(--blue);opacity:.7">$91.4B</div>
+    </div>
+    <div class="capex-row">
+      <div class="capex-label" style="color:var(--blue);font-weight:600">2026 guiado</div>
+      <div class="capex-bar-wrap"><div class="capex-bar" style="width:96%;background:var(--blue)"></div></div>
+      <div class="capex-val" style="color:var(--blue);font-weight:600">$180–190B</div>
+    </div>
+    <div style="margin-top:12px;font-size:11px;color:var(--text3);line-height:1.6">
+      En 3 años Alphabet multiplica su CapEx por 5.7x · Además: $84.75B en equity raise (jun 2026) para financiar la expansión
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="timeline">
+    <div class="timeline-title">Hitos de inversión clave — cronología</div>
+
+    <div class="timeline-row">
+      <div class="timeline-dot" style="background:var(--text3)"></div>
+      <div class="timeline-text"><strong>Dic 2024</strong> · Inicio construcción Hyperion Louisiana ($10B)</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-dot" style="background:var(--green)"></div>
+      <div class="timeline-text"><strong>Dic 2025</strong> · Adquisición Intersect Power ($4.75B) · integración energía vertical</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-dot" style="background:var(--teal)"></div>
+      <div class="timeline-text"><strong>Feb 2026</strong> · Waymo levanta $16B liderado por Alphabet · valoración $126B · 500k rides/semana</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-dot" style="background:var(--teal)"></div>
+      <div class="timeline-text"><strong>Feb 2026</strong> · Intrinsic (robótica) se integra en Google DeepMind</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-dot" style="background:var(--blue)"></div>
+      <div class="timeline-text"><strong>Abr 2026</strong> · Google invierte hasta $40B en Anthropic · 5GW TPU compute · mayor deal IA privado de la historia</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-dot" style="background:var(--blue)"></div>
+      <div class="timeline-text"><strong>Abr 2026</strong> · Q1 2026 CapEx: $35.7B solo en un trimestre · Cloud revenue +63% a $20B · backlog $460B</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-dot" style="background:var(--amber)"></div>
+      <div class="timeline-text"><strong>May 2026</strong> · JV con Blackstone para TPU-as-a-service ($5B inicial · 500MW en 2027)</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-dot" style="background:var(--purple)"></div>
+      <div class="timeline-text"><strong>Jun 2026</strong> · Equity raise $84.75B · Berkshire Hathaway invierte $10B · SpaceX cloud deal $920M/mes</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-dot" style="background:var(--amber)"></div>
+      <div class="timeline-text"><strong>2026–2027</strong> · IPO SpaceX (~$1.75T) + Anthropic (~$1T) · Alphabet podría reconocer $100-122B en ganancias SpaceX</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-dot" style="background:var(--green)"></div>
+      <div class="timeline-text"><strong>2028+</strong> · Kairos Power nuclear online (500MW) · Intersect GW-scale energy parks operativos</div>
+    </div>
+  </div>
+
+  <footer>
+    Fuentes: SEC EDGAR (Form 8-K Q1 2026, Q4 2025) · Alphabet Earnings Calls · Bloomberg · CNBC · Fortune · TechCrunch · The Street · Investing.com · Reuters · mayo–junio 2026<br>
+    Precios de acciones aproximados a junio 2026. Los stakes y valoraciones privadas son estimaciones basadas en rondas de financiación públicas. No es asesoramiento financiero.
+  </footer>
+
+</div><!-- /tree-container -->
+</div><!-- /tree-scroll -->
+
+
+
+
+<!-- SIDEBAR PANEL -->
+<div class="alph-sb-panel" id="alph-sb-panel">
+  <div class="sb-header">
+    <div>
+      <div class="sb-eyebrow" id="alph-sb-eyebrow"></div>
+      <div class="sb-title" id="alph-sb-title"></div>
+    </div>
+    <button class="sb-close" onclick="alphCloseSb()" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="sb-body" id="alph-sb-body"></div>
+</div>
+
+
+
+        </div>
       </div>
 
     </div>
@@ -2663,6 +3469,501 @@ function renderNews() {
 updateHeader('calendario');
 renderCalendar();
 renderNews();
+
+/* ══ ALPHABET TREE JS ══ */
+
+/* ── SPARKLINES ── */
+function alphSpark(id, data, color, w, h) {
+  var c = document.getElementById(id);
+  if (!c) return;
+  c.width = w * 2; c.height = h * 2;
+  c.style.width = w + 'px'; c.style.height = h + 'px';
+  var ctx = c.getContext('2d');
+  ctx.scale(2, 2);
+  var min = Math.min.apply(null, data), max = Math.max.apply(null, data), range = max - min || 1;
+  var xStep = (w - 4) / (data.length - 1);
+  ctx.beginPath();
+  data.forEach(function(v, i) {
+    var x = 2 + i * xStep;
+    var y = h - 3 - ((v - min) / range) * (h - 6);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.strokeStyle = color; ctx.lineWidth = 1.5; ctx.lineJoin = 'round'; ctx.stroke();
+  var lx = 2 + (data.length - 1) * xStep;
+  var ly = h - 3 - ((data[data.length-1] - min) / range) * (h - 6);
+  ctx.beginPath(); ctx.arc(lx, ly, 2, 0, Math.PI*2);
+  ctx.fillStyle = color; ctx.fill();
+}
+
+alphSpark('alph-spark-root', [162,175,190,210,240,280,310,345,380,408,390,375,363], '#4a9eff', 176, 32);
+alphSpark('alph-spark-nvda',  [72,85,95,105,118,128,135,130,138,133,135], '#4ade80', 148, 24);
+alphSpark('alph-spark-tsm',  [95,110,120,130,140,158,175,185,198,205], '#4a9eff', 148, 24);
+alphSpark('alph-spark-avgo', [120,135,148,162,178,195,218,233,237], '#fbbf24', 148, 24);
+
+/* ── SVG CONNECTOR LINES ── */
+function alphDrawLines() {
+  var svg = document.getElementById('alph-svg-lines');
+  var container = document.getElementById('alph-tree');
+  var cRect = container.getBoundingClientRect();
+
+  function midBottom(el) {
+    var r = el.getBoundingClientRect();
+    return { x: r.left - cRect.left + r.width/2, y: r.bottom - cRect.top };
+  }
+  function midTop(el) {
+    var r = el.getBoundingClientRect();
+    return { x: r.left - cRect.left + r.width/2, y: r.top - cRect.top };
+  }
+  function midLeft(el) {
+    var r = el.getBoundingClientRect();
+    return { x: r.left - cRect.left, y: r.top - cRect.top + r.height/2 };
+  }
+
+  var svgW = container.scrollWidth, svgH = container.scrollHeight;
+  svg.setAttribute('viewBox', '0 0 ' + svgW + ' ' + svgH);
+  svg.style.width = svgW + 'px';
+  svg.style.height = svgH + 'px';
+  svg.innerHTML = '';
+
+  var col = 'rgba(255,255,255,0.1)';
+  var catColors = {
+    'n-chips': '#4a9eff', 'n-dc': '#fb923c', 'n-energy': '#4ade80',
+    'n-stakes': '#fbbf24', 'n-bets': '#2dd4bf', 'n-ai': '#a78bfa', 'n-health': '#f87171'
+  };
+
+  var row1Cats = ['n-chips','n-dc','n-energy','n-stakes','n-bets','n-ai','n-health'];
+  var leafMap = {
+    'n-chips':  ['l-tpu','l-nvda','l-tsm','l-bcom','l-hbm','l-axion'],
+    'n-dc':     ['l-us','l-eu','l-apac','l-sa','l-texas','l-louisiana'],
+    'n-energy': ['l-intersect','l-kairos','l-geo','l-ppa','l-battery'],
+    'n-stakes': ['l-anthropic','l-spacex','l-bh','l-blackstone','l-gv'],
+    'n-bets':   ['l-waymo','l-wing','l-intrinsic','l-xlab'],
+    'n-ai':     ['l-deepmind','l-gemini','l-agile','l-quantum','l-apple'],
+    'n-health': ['l-isomorphic','l-verily','l-calico']
+  };
+
+  function line(x1, y1, x2, y2, stroke, w) {
+    var el = document.createElementNS('http://www.w3.org/2000/svg','line');
+    el.setAttribute('x1', x1); el.setAttribute('y1', y1);
+    el.setAttribute('x2', x2); el.setAttribute('y2', y2);
+    el.setAttribute('stroke', stroke || col);
+    el.setAttribute('stroke-width', w || 1);
+    el.setAttribute('stroke-opacity', '0.5');
+    svg.appendChild(el);
+  }
+  function path(d, stroke, w) {
+    var el = document.createElementNS('http://www.w3.org/2000/svg','path');
+    el.setAttribute('d', d);
+    el.setAttribute('fill', 'none');
+    el.setAttribute('stroke', stroke || col);
+    el.setAttribute('stroke-width', w || 1);
+    el.setAttribute('stroke-opacity', '0.4');
+    svg.appendChild(el);
+  }
+
+  var root = document.getElementById('n-root');
+  if (!root) return;
+  var rootB = midBottom(root);
+
+  row1Cats.forEach(function(id) {
+    var cat = document.getElementById(id);
+    if (!cat) return;
+    var catT = midTop(cat);
+    var catColor = catColors[id] || col;
+    var midY = (rootB.y + catT.y) / 2;
+    path('M '+rootB.x+' '+rootB.y+' C '+rootB.x+' '+midY+' '+catT.x+' '+midY+' '+catT.x+' '+catT.y, catColor, 1.5);
+
+    var leaves = leafMap[id] || [];
+    var catB = midBottom(cat);
+    leaves.forEach(function(lid) {
+      var leaf = document.getElementById(lid);
+      if (!leaf) return;
+      var leafT = midTop(leaf);
+      var midY2 = (catB.y + leafT.y) / 2;
+      path('M '+catB.x+' '+catB.y+' C '+catB.x+' '+midY2+' '+leafT.x+' '+midY2+' '+leafT.x+' '+leafT.y, catColor, 0.8);
+    });
+  });
+}
+
+
+window.addEventListener('resize', function() { if (document.getElementById('alp-arbol') && document.getElementById('alp-arbol').classList.contains('active')) alphDrawLines(); });
+
+
+var ALPH_SB_DATA = {
+
+  'n-root': {
+    eyebrow: 'GOOG · GOOGL · Nasdaq · Market Cap $4.5T',
+    title: 'Alphabet Inc.',
+    amount: '$180–190B CapEx 2026',
+    amountColor: '#4a9eff',
+    stats: [
+      {l:'Revenue Q1 2026',v:'$109.9B',s:'+22% YoY · 11º trim. doble dígito',c:'#4a9eff'},
+      {l:'Google Cloud',v:'$20B',s:'+63% YoY · backlog $460B',c:'#4ade80'},
+      {l:'EPS Q1 2026',v:'$5.11',s:'+82% YoY · batió estimados',c:'#fbbf24'},
+      {l:'Equity raise jun 2026',v:'$84.75B',s:'Mayor ampliación tech de la historia',c:'#a78bfa'}
+    ],
+    tags:[{l:'GOOG/GOOGL',c:'#4a9eff'},{l:'+22% revenue',c:'#4ade80'},{l:'Cloud +63%',c:'#4ade80'},{l:'$460B backlog',c:'#fbbf24'}],
+    alpha:'Alphabet es la empresa matriz que dirige toda la inversión. En 2026 está ejecutando la mayor expansión de infraestructura de IA de su historia: $180–190B en CapEx más $84.75B en ampliación de capital. Revenue anual supera $400B por primera vez en 2025.',
+    sections:[
+      {t:'Resultados Q1 2026',x:'Revenue $109.9B (+22%), operating income $39.7B (+30%), margen operativo 36.1% (+2pp). Google Cloud +63% a $20B por primera vez. Backlog Cloud casi se duplica a $460B. 350M suscripciones de pago. Gemini App: 750M MAU.'},
+      {t:'La gran apuesta: CapEx x5.7 en 3 años',x:'De $32B en 2023 a $180–190B en 2026. El 60% va a servidores y chips, el 40% a centros de datos y networking. Además: $40B en Anthropic, $16B en Waymo, $4.75B en Intersect Power. La tesis es que la infraestructura de IA generará retornos durante décadas.'}
+    ],
+    risk:'El mercado teme que el CapEx crezca más rápido que los retornos. En Q3 2025 el free cash flow cayó a $5.3B desde $13.5B. Si la demanda de IA se ralentiza antes de que la infraestructura se amortice, las acciones podrían sufrir una corrección severa.',
+    comps:[{n:'Google Cloud',s:18,c:'#4a9eff'},{n:'AWS',s:33,c:'#fbbf24'},{n:'Azure',s:25,c:'#4ade80'},{n:'Otros',s:24,c:'#5a5855'}],
+    compLbl:'Cuota mercado cloud (estimada 2026)',
+    chart:[90.2,96.4,101.3,113.8,109.9], chartLbl:'Revenue Alphabet ($B) últimos 5 trimestres', chartCol:'#4a9eff'
+  },
+
+  'n-chips': {
+    eyebrow: '~60% del CapEx total · Servidores y chips',
+    title: 'Servidores + Chips',
+    amount: '~$108B en 2026',
+    amountColor: '#4a9eff',
+    stats:[
+      {l:'% del CapEx',v:'~60%',s:'Confirmado por CFO Ashkenazi',c:'#4a9eff'},
+      {l:'Importe estimado',v:'~$108B',s:'Solo en 2026',c:'#4a9eff'},
+      {l:'Chips propios',v:'TPU + Axion',s:'Diseño interno, fab TSMC 3nm',c:'#a78bfa'},
+      {l:'Chips externos',v:'Nvidia + HBM',s:'H200/B200 + SK Hynix/Samsung',c:'#4ade80'}
+    ],
+    tags:[{l:'TPU Ironwood',c:'#a78bfa'},{l:'Nvidia H200/B200',c:'#4ade80'},{l:'TSMC 3nm',c:'#4a9eff'},{l:'HBM3e',c:'#2dd4bf'}],
+    alpha:'Esta categoría es el motor de toda la estrategia de IA de Alphabet. Los chips y servidores son lo que permite entrenar Gemini, servir búsquedas con IA, y ofrecer Google Cloud a empresas. Sin esta inversión, nada del ecosistema IA funciona.',
+    sections:[
+      {t:'Desglose del gasto',x:'~60% del CapEx va a servidores y equipos de red. De ese 60%, la mayoría son TPUs (chips propios de Google fabricados por TSMC) y GPUs de Nvidia. El resto son componentes como memoria HBM, CPUs ARM (Axion), y equipamiento de networking.'},
+      {t:'Estrategia dual: propio + externo',x:'Google compra GPUs de Nvidia para los clientes de Cloud que prefieren CUDA, mientras desarrolla TPUs propios para sus workloads internos y para vender acceso externo. Esta estrategia reduce la dependencia de Nvidia a largo plazo sin sacrificar compatibilidad a corto plazo.'}
+    ],
+    risk:'Si Nvidia lanza una generación significativamente superior antes de que los TPUs de Google estén listos, Google podría perder clientes de Cloud. También: la escasez de HBM3e puede limitar la producción de TPUs.',
+    comps:[{n:'TPU propios',s:40,c:'#a78bfa'},{n:'Nvidia GPUs',s:45,c:'#4ade80'},{n:'Otros',s:15,c:'#5a5855'}],
+    compLbl:'Mix estimado gasto chips Google 2026',
+    chart:[52.5,68,82,91.4,108], chartLbl:'Gasto estimado chips Alphabet ($B) 2022–2026e', chartCol:'#4a9eff'
+  },
+
+  'l-tpu': {
+    eyebrow:'Google interno · Chip IA propietario · No cotiza',
+    title:'TPU v5p / Trillium / Ironwood',
+    isInternal:true,
+    amount:'Inversión central',
+    amountColor:'#a78bfa',
+    stats:[
+      {l:'Generación actual',v:'Ironwood (8ª)',s:'v5p en producción masiva',c:'#a78bfa'},
+      {l:'Chips por cluster',v:'8.960',s:'Mayor cluster IA del mundo',c:'#4ade80'},
+      {l:'Proceso fab',v:'3nm · TSMC',s:'Confirmado TrendForce oct 2025',c:'#4a9eff'},
+      {l:'Revenue TPU 2026e',v:'$3B',s:'$25B estimado en 2027',c:'#fbbf24'}
+    ],
+    tags:[{l:'Fabless design',c:'#a78bfa'},{l:'3nm TSMC',c:'#4a9eff'},{l:'Solo Google Cloud',c:'#4a9eff'},{l:'Alternativa Nvidia',c:'#4ade80'},{l:'Anchor Anthropic',c:'#2dd4bf'}],
+    alpha:'El motor de toda la estrategia de Alphabet. Los TPUs entrenan Gemini, sirven búsquedas con IA y son la principal oferta de Google Cloud para empresas. Anthropic ya usa 1M TPUs y Meta negocia comprarlos. Revenue externo esperado: $3B en 2026 y $25B en 2027.',
+    sections:[
+      {t:'¿Qué es exactamente?',x:'Tensor Processing Unit — chip diseñado desde cero por Google para operaciones matriciales de IA. A diferencia de las GPUs de Nvidia que son de propósito general, los TPUs están optimizados exclusivamente para los cálculos de redes neuronales. Resultado: mayor rendimiento por vatio para workloads de IA, a menor coste por token que una GPU equivalente.'},
+      {t:'Evolución y ventaja competitiva',x:'La 8ª generación (Ironwood) puede combinarse en clusters de hasta 8.960 chips, superando cualquier configuración de Nvidia disponible comercialmente. La plataforma Treo para data centers creció 2.5x secuencial en Q1 2026. En mayo 2026, Blackstone firmó un JV de $5B para alquilar TPUs como servicio.'}
+    ],
+    risk:'Si Nvidia lanza Blackwell Ultra con ventajas superiores a Ironwood, Google podría perder clientes de Cloud que prefieran CUDA. El riesgo real es la inercia del ecosistema: CUDA tiene 10 años de ventaja en software que no se elimina fácilmente.',
+    comps:[{n:'Nvidia GPUs',s:70,c:'#4ade80'},{n:'Google TPU',s:15,c:'#a78bfa'},{n:'AWS Trainium',s:8,c:'#fbbf24'},{n:'MS Maia',s:4,c:'#4a9eff'}],
+    compLbl:'Cuota mercado chips IA (estimada 2026)',
+    chart:[0.2,0.5,0.8,1.5,2.5,3.0], chartLbl:'Revenue TPU externo estimado ($B)', chartCol:'#a78bfa'
+  },
+
+  'l-nvda': {
+    eyebrow:'NVDA · Nasdaq · Proveedor GPU IA',
+    title:'Nvidia Corporation',
+    amount:'~$135 / acción',
+    amountColor:'#4ade80',
+    stats:[
+      {l:'Precio acción',v:'~$135',s:'Jun 2026 · máx 52s: $153',c:'#4ade80'},
+      {l:'Market Cap',v:'~$5.4T',s:'2ª empresa más valiosa del mundo',c:'#4ade80'},
+      {l:'Revenue Q1 FY27',v:'$81.6B',s:'+85% YoY · récord absoluto',c:'#fbbf24'},
+      {l:'Data Center rev.',v:'$75.2B',s:'+92% YoY · 92% del total',c:'#4a9eff'}
+    ],
+    tags:[{l:'H100/H200/B200',c:'#4ade80'},{l:'Blackwell arch.',c:'#4ade80'},{l:'Margen bruto 75%',c:'#4ade80'},{l:'EPS $1.87',c:'#fbbf24'},{l:'Dividendo x25',c:'#2dd4bf'}],
+    alpha:'A pesar de sus TPUs propios, Google sigue comprando GPUs Nvidia masivamente. El deal con SpaceX incluye 110.000 GPUs H100/H200. Google Cloud ofrece acceso a GPUs Nvidia para clientes que prefieren CUDA — el ecosistema de software de Nvidia es irreemplazable a corto plazo para muchas cargas de trabajo.',
+    sections:[
+      {t:'Q1 FY27 (mayo 2026) — Resultados récord',x:'Revenue $81.6B (+85% YoY), batiendo estimaciones de $78.8B. Data Center llegó a $75.2B (+92%). Hyperscalers = ~50% del revenue. Margen bruto 74.9%. EPS $1.87. Anunció dividendo $0.25/trimestre (x25 vs anterior) y recompra $80B adicional.'},
+      {t:'Blackwell: el nuevo motor',x:'La arquitectura Blackwell (B200, GB200) está "off the charts" según Jensen Huang. NVLink para GB200/GB300 genera $11B solo en networking. China representa pérdida de $4.6B/trimestre por restricciones de exportación. Próxima generación: Rubin (2027).'}
+    ],
+    risk:'Dependencia del 50% de revenue en hyperscalers que desarrollan chips propios. Si Google, AWS y Microsoft aceleran la sustitución, el crecimiento podría ralentizarse. China: pérdida permanente de $4.6B/trimestre. Valoración 30x earnings forward exige ejecución perfecta.',
+    comps:[{n:'Nvidia',s:80,c:'#4ade80'},{n:'AMD MI300',s:10,c:'#f87171'},{n:'Google TPU',s:5,c:'#a78bfa'},{n:'AWS Trainium',s:3,c:'#fbbf24'}],
+    compLbl:'Cuota mercado GPU para IA (estimada 2026)',
+    chart:[44,52,61,68,74,81.6], chartLbl:'Revenue Nvidia total ($B) últimos 6 trimestres', chartCol:'#4ade80'
+  },
+
+  'l-tsm': {
+    eyebrow:'TSM · NYSE · Foundry líder mundial',
+    title:'TSMC — Taiwan Semiconductor',
+    amount:'~$390 / ADR',
+    amountColor:'#4a9eff',
+    stats:[
+      {l:'Precio ADR',v:'~$390',s:'Máx 52s: $390.20',c:'#4a9eff'},
+      {l:'Market Cap',v:'~$1.7T',s:'Récord abril 2026',c:'#4a9eff'},
+      {l:'Revenue Q1 2026',v:'$35.9B',s:'+40.6% YoY en USD · récord',c:'#fbbf24'},
+      {l:'Margen bruto',v:'66.2%',s:'Récord · supera guidance 63–65%',c:'#4ade80'}
+    ],
+    tags:[{l:'3nm (25% wafers)',c:'#4a9eff'},{l:'5nm (36% wafers)',c:'#4a9eff'},{l:'70.4% cuota foundry',c:'#2dd4bf'},{l:'Net income +58%',c:'#4ade80'},{l:'CapEx $52-56B',c:'#fbbf24'}],
+    alpha:'TSMC es el único fabricante capaz de producir los TPUs v5p de Google en proceso de 3nm. También fabrica los chips Axion ARM de Alphabet. Sin TSMC, Google no puede producir sus chips propietarios. Es una dependencia crítica sin alternativa a escala para 3nm.',
+    sections:[
+      {t:'Q1 2026 — Resultados récord',x:'Revenue $35.9B (+40.6% YoY en USD), superando guidance. Net income $18.2B (+58.3%). EPS $3.49/ADR vs estimado $3.30. Margen bruto 66.2% (record). Tecnología avanzada (7nm+) = 74% del revenue, con 3nm al 25%. Q2 guidance: $39–40.2B.'},
+      {t:'Expansión Arizona y geopolítica',x:'TSMC planea 12 fabs y 4 instalaciones de packaging en Arizona ($165B inversión). Gobierno EE.UU. ofrece exenciones arancelarias a cambio de más inversión local. El riesgo Taiwan-China es el mayor riesgo sistémico para toda la cadena de semiconductores IA a nivel global.'}
+    ],
+    risk:'Riesgo geopolítico Taiwan-China: si China bloquea o invade Taiwan, se paralizaría el 90% de la producción mundial de chips avanzados. La expansión en Arizona mitiga pero no elimina este riesgo en el horizonte 2026–2030.',
+    comps:[{n:'TSMC',s:70,c:'#4a9eff'},{n:'Samsung Found.',s:13,c:'#fbbf24'},{n:'Intel Foundry',s:5,c:'#f87171'},{n:'Otros',s:12,c:'#5a5855'}],
+    compLbl:'Cuota mercado foundry global (Q4 2025)',
+    chart:[22,25,28,31,33,35.9], chartLbl:'Revenue trimestral TSMC ($B)', chartCol:'#4a9eff'
+  },
+
+  'l-bcom': {
+    eyebrow:'AVGO · Nasdaq · ASIC + Networking IA',
+    title:'Broadcom Inc.',
+    amount:'~$334 / acción',
+    amountColor:'#fbbf24',
+    stats:[
+      {l:'Precio acción',v:'~$334',s:'Jun 2026',c:'#fbbf24'},
+      {l:'Market Cap',v:'~$1.6T',s:'6ª empresa más valiosa',c:'#fbbf24'},
+      {l:'AI Revenue Q1 FY26',v:'$8.4B',s:'+106% YoY · supera forecast',c:'#4ade80'},
+      {l:'AI backlog',v:'$73B',s:'18 meses de visibilidad',c:'#4a9eff'}
+    ],
+    tags:[{l:'TPU design Google',c:'#fbbf24'},{l:'Deal hasta 2031',c:'#fbbf24'},{l:'AI rev +106%',c:'#4ade80'},{l:'VMware software',c:'#4a9eff'},{l:'$100B AI 2027e',c:'#fb923c'}],
+    alpha:'Broadcom diseña los ASICs que físicamente componen los TPUs de Google, además de todos los componentes de networking que conectan los pods de TPUs. En marzo 2026 firmaron deal hasta 2031 para TPUs de próxima generación. CEO Hock Tan confirmó 1GW TPUs para Anthropic en 2026 y 3GW+ en 2027.',
+    sections:[
+      {t:'Q1 FY2026 (marzo 2026)',x:'Revenue total $19.31B (+29% YoY). AI revenue $8.4B (+106% YoY), por encima de su propio forecast. EPS non-GAAP $2.10 vs estimado $2.03. Guidance Q2: ~$22B (+47% YoY), muy por encima del consenso. CEO Tan: "AI chip revenue en exceso de $100B en 2027".'},
+      {t:'Modelo de negocio dual',x:'(1) Semiconductores: ASICs custom para Google, Meta, OpenAI, Anthropic + networking InfiniBand/Ethernet para clústeres IA. (2) Software VMware: controla infraestructura cloud privada del 90% del Fortune 500. Márgenes software >93%.'}
+    ],
+    risk:'Concentración en pocos clientes (Google, Meta, OpenAI, Apple ≈ 80% del revenue de chips). Si algún hyperscaler cambia de proveedor ASIC, el impacto sería significativo. También: integración VMware aún con fricción en algunos clientes enterprise.',
+    comps:[{n:'Broadcom ASIC',s:55,c:'#fbbf24'},{n:'Marvell ASIC',s:25,c:'#4a9eff'},{n:'Otros diseño',s:20,c:'#5a5855'}],
+    compLbl:'Cuota diseño ASIC custom para IA (estimada)',
+    chart:[7,10,14,16,19.3,22], chartLbl:'Revenue Broadcom total ($B) + Q2 guidance', chartCol:'#fbbf24'
+  },
+
+  'l-hbm': {
+    eyebrow:'KRX: SK Hynix · Samsung · Memoria IA',
+    title:'HBM3e / HBM4 — SK Hynix + Samsung',
+    amount:'~$300/stack HBM3e',
+    amountColor:'#2dd4bf',
+    stats:[
+      {l:'SK Hynix rev Q1 2026',v:'$39.3B',s:'+198% YoY · récord mundial',c:'#2dd4bf'},
+      {l:'Margen operativo SK Hynix',v:'72%',s:'Supera a Nvidia (65%)',c:'#4ade80'},
+      {l:'Cuota HBM SK Hynix',v:'50–55%',s:'Goldman: líder hasta 2026+',c:'#2dd4bf'},
+      {l:'Precio HBM3e',v:'~$300/stack',s:'5–6x precio DDR5 equivalente',c:'#fbbf24'}
+    ],
+    tags:[{l:'HBM3e producción',c:'#2dd4bf'},{l:'HBM4 lanzando',c:'#2dd4bf'},{l:'SK Hynix +198%',c:'#4ade80'},{l:'Escasez hasta 2028',c:'#fbbf24'},{l:'Samsung HBM4E',c:'#2dd4bf'}],
+    alpha:'Los TPUs v5p de Google requieren HBM3e integrado para funcionar. Sin este componente no existe el chip. Google es cliente directo de SK Hynix y Samsung. El precio y disponibilidad del HBM es uno de los mayores cuellos de botella en la expansión de IA de Alphabet.',
+    sections:[
+      {t:'Qué es HBM y por qué importa',x:'High Bandwidth Memory es DRAM apilada en 3D que se coloca directamente sobre el chip de cómputo (TPU/GPU) mediante TSVs. Ofrece ancho de banda de memoria 15-20x superior a la DRAM convencional. Sin HBM, los LLMs no pueden procesar los contextos largos. Es el cuello de botella físico de toda la IA generativa.'},
+      {t:'Escasez estructural hasta 2028',x:'Goldman Sachs reportó en abril 2026 la mayor escasez DRAM en 15 años (gap oferta-demanda del 4.9%). SK Hynix tiene toda su capacidad HBM 2026 vendida desde finales de 2025. Precio HBM3e ~$300/stack = 5–6x la DRAM convencional. Samsung envió primeras muestras HBM4E (estimado $500/stack).'}
+    ],
+    risk:'Samsung está acelerando HBM4 y podría cerrar la brecha con SK Hynix en Q4 2026, introduciendo competencia de precios. Si la demanda de IA cae bruscamente, los precios del HBM colapsarían — es el componente más expuesto al ciclo.',
+    comps:[{n:'SK Hynix',s:52,c:'#2dd4bf'},{n:'Samsung',s:36,c:'#4a9eff'},{n:'Micron',s:12,c:'#fbbf24'}],
+    compLbl:'Cuota mercado HBM (revenue, Q3 2025)',
+    chart:[8,11,15,21,28,39.3], chartLbl:'Revenue SK Hynix ($B equiv.) últimos 6 trimestres', chartCol:'#2dd4bf'
+  },
+
+  'l-axion': {
+    eyebrow:'Google interno · CPU ARM propietario · No cotiza',
+    title:'Google Axion (ARM Neoverse)',
+    isInternal:true,
+    amount:'CPU servers',
+    amountColor:'#a78bfa',
+    stats:[
+      {l:'Arquitectura',v:'ARM Neoverse V2',s:'Custom de Google sobre ARM',c:'#a78bfa'},
+      {l:'Proceso fab',v:'3nm · TSMC',s:'Confirmado oct 2025',c:'#4a9eff'},
+      {l:'Eficiencia vs x86',v:'+30–50%',s:'Rendimiento por vatio',c:'#4ade80'},
+      {l:'Disponibilidad',v:'Google Cloud',s:'C4A instances · 2025+',c:'#2dd4bf'}
+    ],
+    tags:[{l:'ARM Neoverse V2',c:'#a78bfa'},{l:'3nm TSMC',c:'#4a9eff'},{l:'C4A instances',c:'#2dd4bf'},{l:'+30% vs x86',c:'#4ade80'},{l:'Fabless',c:'#a78bfa'}],
+    alpha:'Axion es el CPU de propósito general que Google usa en sus servidores para cargas que no son directamente IA (almacenamiento, bases de datos, web serving). Al ser más eficiente que CPUs x86 de Intel/AMD, reduce el coste operativo de toda la infraestructura de Google Cloud.',
+    sections:[
+      {t:'Qué es Axion',x:'CPU personalizado basado en ARM Neoverse V2. Google lo diseña internamente y TSMC lo fabrica en 3nm. Disponible en Google Cloud como instancias C4A desde 2025. Ofrece 30–50% mejor rendimiento por vatio que CPUs x86 para cargas de propósito general.'},
+      {t:'Tendencia del sector',x:'Axion se suma a una tendencia clara: AWS tiene Graviton (ARM), Apple tiene M-series (ARM), Microsoft Cobalt (ARM). Los CPUs ARM están sustituyendo a Intel y AMD en data centers de hyperscalers para todo lo que no requiere CUDA.'}
+    ],
+    risk:'Compatibilidad de software: muchas aplicaciones empresariales están compiladas para x86 y requieren recompilación para ARM. Intel y AMD invierten masivamente en mejorar eficiencia energética de sus CPUs.',
+    comps:[{n:'Google Axion',s:15,c:'#a78bfa'},{n:'AWS Graviton',s:40,c:'#fbbf24'},{n:'Intel Xeon',s:30,c:'#f87171'},{n:'AMD EPYC',s:15,c:'#4a9eff'}],
+    compLbl:'Cuota CPU custom hyperscaler (estimada)',
+    chart:[2,5,10,18,28,40], chartLbl:'Adopción % instancias ARM en Google Cloud (est.)', chartCol:'#a78bfa'
+  },
+
+  'n-dc': {
+    eyebrow:'~40% del CapEx · Infraestructura física',
+    title:'Centros de datos',
+    amount:'~$72B en 2026',
+    amountColor:'#fb923c',
+    stats:[
+      {l:'% del CapEx',v:'~40%',s:'Confirmado por CFO Alphabet',c:'#fb923c'},
+      {l:'Importe estimado',v:'~$72B',s:'Solo en 2026',c:'#fb923c'},
+      {l:'Nuevos clusters',v:'2 x $10B',s:'Louisiana + Haskell TX',c:'#4ade80'},
+      {l:'Arabia Saudí',v:'Nuevo',s:'Primer DC en KSA · Vision 2030',c:'#fbbf24'}
+    ],
+    tags:[{l:'EE.UU. multi-estado',c:'#fb923c'},{l:'Europa GDPR',c:'#fb923c'},{l:'APAC expansión',c:'#fb923c'},{l:'Co-location energy',c:'#4ade80'}],
+    alpha:'Los centros de datos son la infraestructura física donde viven los TPUs y GPUs. Sin ellos, los chips son inútiles. Alphabet está construyendo los mayores data centers de su historia, co-localizando algunos con plantas de energía propias (Intersect Power) para evitar cuellos de botella eléctricos.',
+    sections:[
+      {t:'Distribución geográfica',x:'La mayor concentración está en EE.UU. (Virginia, Iowa, Texas, Oregon, SC, Nevada). En Europa: Países Bajos, Irlanda, Bélgica, Alemania, Finlandia. En APAC: Singapur, Japón, Taiwan, Australia, India. Nuevo en 2026: primer data center en Arabia Saudí (partnership Vision 2030).'},
+      {t:'Co-location con energía — estrategia nueva',x:'El Hyperion Cluster en Haskell County, Texas es el primero co-localizado directamente con una planta de energía de Intersect Power. Esto elimina el problema de conexión a la red eléctrica que retrasa la expansión de data centers entre 2 y 5 años.'}
+    ],
+    risk:'Regulación local, permisos de construcción y disponibilidad de agua refrigerante pueden retrasar proyectos. En Europa: regulación GDPR y restricciones de uso de energía. En Arabia Saudí: riesgo reputacional y de derechos humanos.',
+    comps:[{n:'AWS data centers',s:35,c:'#fbbf24'},{n:'Azure DCs',s:28,c:'#4a9eff'},{n:'Google Cloud DCs',s:20,c:'#fb923c'},{n:'Otros',s:17,c:'#5a5855'}],
+    compLbl:'Cuota capacidad cloud instalada (estimada)',
+    chart:[25,35,45,55,65,72], chartLbl:'Gasto estimado DCs Alphabet ($B) 2021–2026e', chartCol:'#fb923c'
+  },
+
+  'l-us': {eyebrow:'EE.UU. · Mayor concentración',title:'Expansión EE.UU.',amount:'~$30B+',amountColor:'#fb923c',stats:[{l:'Importe estimado',v:'~$30B+',s:'Mayor mercado cloud del mundo',c:'#fb923c'},{l:'Estados clave',v:'6+',s:'VA · IA · TX · OR · SC · NV',c:'#4a9eff'},{l:'Empleo generado',v:'Decenas de miles',s:'Construcción + operaciones',c:'#4ade80'},{l:'Incentivos fiscales',v:'Sí',s:'Estado y federal para data centers',c:'#fbbf24'}],tags:[{l:'Virginia (Ashburn)',c:'#fb923c'},{l:'Iowa',c:'#fb923c'},{l:'Oregon (The Dalles)',c:'#fb923c'},{l:'Texas',c:'#fb923c'}],alpha:'EE.UU. concentra la mayor parte del gasto en data centers. Virginia (Northern Virginia / Ashburn) es el mayor hub de data centers del mundo. Iowa alberga el campus más grande de Google en EE.UU. Texas tiene el nuevo Hyperion Cluster co-localizado con Intersect Power.',sections:[{t:'Expansión actual',x:'Google tiene data centers activos o en construcción en al menos 6 estados. El Hyperion Louisiana ($10B) inició construcción en dic 2024. El Hyperion Texas en Haskell County es el primer DC co-localizado con una planta de energía propia.'}],risk:'Cuellos de botella en la red eléctrica local. En algunas regiones la espera para nueva capacidad eléctrica supera los 3-5 años. La co-location con Intersect Power es la estrategia para esquivar este problema.',comps:[{n:'Ashburn VA',s:40,c:'#fb923c'},{n:'Iowa',s:20,c:'#fbbf24'},{n:'Texas',s:20,c:'#4ade80'},{n:'Otros',s:20,c:'#5a5855'}],compLbl:'Distribución estimada gasto DC en EE.UU.',chart:[5,8,12,18,25,30],chartLbl:'Gasto acumulado DCs EE.UU. ($B) (estimado)',chartCol:'#fb923c'},
+
+  'l-eu': {eyebrow:'Europa · Regulación GDPR',title:'Expansión Europa',amount:'Multi-B$',amountColor:'#fb923c',stats:[{l:'Países activos',v:'5+',s:'NL · IE · BE · DE · FI',c:'#fb923c'},{l:'Regulación clave',v:'GDPR',s:'Data residency obligatoria',c:'#f87171'},{l:'Energía renovable',v:'Alto %',s:'Objetivo 24/7 carbon-free',c:'#4ade80'},{l:'Empleos',v:'Miles',s:'Directos e indirectos',c:'#fbbf24'}],tags:[{l:'Países Bajos',c:'#fb923c'},{l:'Irlanda',c:'#fb923c'},{l:'Bélgica',c:'#fb923c'},{l:'GDPR compliant',c:'#f87171'}],alpha:'Europa es el segundo mayor mercado de Google Cloud. La regulación GDPR obliga a que los datos de usuarios europeos se almacenen en la UE, lo que hace necesarios los data centers locales. Irlanda es el hub principal por incentivos fiscales.',sections:[{t:'Contexto regulatorio',x:'El GDPR y el Data Act europeo exigen que los datos de ciudadanos de la UE se procesen en servidores dentro de la UE. Esto hace imprescindible la inversión en infraestructura local. Alemania y Francia presionan por "soberanía digital" que podría requerir más inversión local aún.'}],risk:'Reguladores europeos pueden imponer restricciones adicionales al procesamiento de datos por IA. Países Bajos ya limitó el crecimiento de data centers por consumo eléctrico y de agua.',comps:[{n:'Irlanda',s:35,c:'#fb923c'},{n:'Países Bajos',s:25,c:'#fbbf24'},{n:'Bélgica',s:20,c:'#4ade80'},{n:'Otros EU',s:20,c:'#5a5855'}],compLbl:'Distribución DCs Google en Europa',chart:[2,3,5,7,9,11],chartLbl:'Gasto estimado DCs Europa ($B)',chartCol:'#fb923c'},
+
+  'l-apac': {eyebrow:'Asia-Pacífico · Crecimiento acelerado',title:'Expansión APAC',amount:'Multi-B$',amountColor:'#fb923c',stats:[{l:'Países activos',v:'5+',s:'SG · JP · TW · AU · IN',c:'#fb923c'},{l:'Mayor mercado',v:'Singapur',s:'Hub regional principal',c:'#4a9eff'},{l:'Crecimiento',v:'Más rápido',s:'Cloud adoption acelerada',c:'#4ade80'},{l:'India',v:'Expansión',s:'Nuevo hub 2025–2026',c:'#fbbf24'}],tags:[{l:'Singapur hub',c:'#fb923c'},{l:'Japón',c:'#fb923c'},{l:'India expansión',c:'#fbbf24'},{l:'Australia',c:'#fb923c'}],alpha:'APAC es la región de más rápido crecimiento para Google Cloud. Singapur actúa como hub regional. India es el nuevo foco de expansión: gran mercado, gobierno favorable a la IA, y crecimiento de startups tech. La expansión en Taiwan es estratégicamente cercana a TSMC.',sections:[{t:'Prioridades regionales',x:'Singapur sigue siendo el hub principal por conectividad, marco regulatorio estable y talento técnico. India se convierte en foco de inversión por su gobierno pro-IA y el tamaño del mercado. Japón tiene deals con empresas como Mitsubishi para cloud IA.'}],risk:'Tensiones geopolíticas China-Taiwan podrían afectar operaciones en Taiwan. En India: burocracia y regulación de datos más compleja. En Singapur: restricciones de tierra y agua para nuevos data centers.',comps:[{n:'Singapur',s:30,c:'#fb923c'},{n:'Japón',s:25,c:'#fbbf24'},{n:'Australia',s:20,c:'#4ade80'},{n:'India+otros',s:25,c:'#4a9eff'}],compLbl:'Distribución gasto estimado DCs APAC',chart:[2,3,4,6,8,10],chartLbl:'Gasto estimado DCs APAC ($B)',chartCol:'#fb923c'},
+
+  'l-sa': {eyebrow:'Arabia Saudí · Oriente Medio · Nuevo 2026',title:'Arabia Saudí — KSA',amount:'Nuevo mercado',amountColor:'#fb923c',stats:[{l:'Tipo de acuerdo',v:'Partnership',s:'Vision 2030 · Digital KSA',c:'#fb923c'},{l:'Primer DC',v:'2026',s:'Riyadh · primer DC de Google en KSA',c:'#fbbf24'},{l:'Contexto competitivo',v:'AWS + Azure ya',s:'Google llega en tercer lugar',c:'#f87171'},{l:'Riesgo reputacional',v:'Alto',s:'DDHH y gobernanza',c:'#f87171'}],tags:[{l:'Vision 2030',c:'#fbbf24'},{l:'Primer DC KSA',c:'#fb923c'},{l:'NEOM project',c:'#fb923c'},{l:'Riesgo reputacional',c:'#f87171'}],alpha:'Arabia Saudí representa el acceso al mercado de Oriente Medio en rápido crecimiento. El gobierno saudí está invirtiendo masivamente en transformación digital como parte de Vision 2030. Google llega después de AWS y Azure pero con ventajas en IA generativa.',sections:[{t:'Por qué Arabia Saudí',x:'El gobierno saudí comprometió cientos de miles de millones en transformación digital. NEOM, la ciudad futurista, requiere infraestructura cloud masiva. El mercado de cloud en Oriente Medio crece al 25%+ anual. Google necesita presencia local para competir con AWS (ya en Riyadh) y Azure.'}],risk:'Riesgo reputacional por situación de derechos humanos en Arabia Saudí. Algunos empleados de Google ya protestaron por Project Nimbus (Israel). El gobierno saudí puede exigir acceso a datos — conflicto con políticas de privacidad de Google.',comps:[{n:'AWS (activo)',s:40,c:'#fbbf24'},{n:'Azure (activo)',s:35,c:'#4a9eff'},{n:'Google (nuevo)',s:15,c:'#fb923c'},{n:'Otros',s:10,c:'#5a5855'}],compLbl:'Cuota cloud Oriente Medio (estimada)',chart:[0.1,0.3,0.6,1.0,1.5,2.0],chartLbl:'Gasto estimado DC Arabia Saudí ($B)',chartCol:'#fb923c'},
+
+  'l-texas': {eyebrow:'Haskell County, TX · Co-location DC+Energía',title:'Hyperion Cluster — Texas',amount:'$10B',amountColor:'#fb923c',stats:[{l:'Inversión total',v:'$10B',s:'Uno de los mayores DCs de Google',c:'#fb923c'},{l:'Modelo',v:'Co-location',s:'DC + planta energía integrados',c:'#4ade80'},{l:'Partner energía',v:'Intersect Power',s:'Gas natural + solar · Haskell Co.',c:'#4ade80'},{l:'Status',v:'En construcción',s:'Inicio obras 2025',c:'#fbbf24'}],tags:[{l:'Primer DC+Power',c:'#fb923c'},{l:'Intersect Power',c:'#4ade80'},{l:'Gas + solar',c:'#4ade80'},{l:'$10B',c:'#fb923c'}],alpha:'Es el primer data center de Google co-localizado físicamente con una planta de generación de energía. Intersect Power (adquirida por $4.75B) gestiona la planta. Esto elimina el mayor cuello de botella en expansión de data centers: la conexión a la red eléctrica.',sections:[{t:'Por qué co-location es revolucionario',x:'Normalmente un data center espera 2-5 años para conectarse a la red eléctrica local. Al co-localizarse con una planta propia, Google tiene energía inmediata sin depender de la infraestructura eléctrica regional. Es el modelo que Intersect Power perfeccionó y que Google adquirió por $4.75B.'}],risk:'Dependencia de una sola tecnología de generación (gas + solar). Si hay problemas regulatorios con el gas natural con CCS, podría afectar el suministro. Texas tuvo cortes masivos en 2021 que evidencian fragilidad de la red local.',comps:[{n:'Capacidad energía',s:80,c:'#4ade80'},{n:'Pendiente conexión',s:20,c:'#5a5855'}],compLbl:'Capacidad energética disponible vs. pendiente',chart:[0,1,3,6,8,10],chartLbl:'Inversión acumulada Hyperion TX ($B)',chartCol:'#fb923c'},
+
+  'l-louisiana': {eyebrow:'Louisiana · Hyperion cluster',title:'Hyperion Louisiana',amount:'$10B',amountColor:'#fb923c',stats:[{l:'Inversión',v:'$10B',s:'Cluster de gran escala',c:'#fb923c'},{l:'Inicio construcción',v:'Dic 2024',s:'Ya en obras',c:'#fbbf24'},{l:'Tipo',v:'Cluster IA',s:'Optimizado para workloads de AI',c:'#4a9eff'},{l:'Status',v:'En obras',s:'Online estimado 2026–2027',c:'#4ade80'}],tags:[{l:'$10B inversión',c:'#fb923c'},{l:'IA optimizado',c:'#4a9eff'},{l:'Online 2026',c:'#4ade80'}],alpha:'Hyperion Louisiana es uno de los mayores data centers en construcción en EE.UU. Iniciado en diciembre 2024, forma parte de la expansión masiva del sur de EE.UU. junto con Texas. Louisiana ofrece incentivos fiscales agresivos y acceso a energía relativamente barata.',sections:[{t:'Contexto',x:'Louisiana compite con Virginia y Texas como destino para grandes data centers ofreciendo incentivos fiscales significativos y terreno disponible a precios más bajos. El cluster está diseñado para workloads de IA con alta densidad de TPUs y GPUs Nvidia.'}],risk:'Riesgo climático: Louisiana tiene historial de huracanes que podrían afectar operaciones. También: la infraestructura eléctrica del estado es menos robusta que Virginia o Iowa.',comps:[{n:'Louisiana',s:15,c:'#fb923c'},{n:'Virginia',s:40,c:'#fbbf24'},{n:'Iowa',s:25,c:'#4ade80'},{n:'Texas',s:20,c:'#4a9eff'}],compLbl:'Distribución DCs Google sur de EE.UU.',chart:[0,0.5,2,5,8,10],chartLbl:'Inversión acumulada Hyperion Louisiana ($B)',chartCol:'#fb923c'},
+
+  'n-energy': {eyebrow:'Adquisición + PPAs · Energía para IA',title:'Energía',amount:'~$8B+',amountColor:'#4ade80',stats:[{l:'Adquisición principal',v:'$4.75B',s:'Intersect Power · dic 2025',c:'#4ade80'},{l:'Nuclear SMR',v:'500MW',s:'Kairos Power + TVA · 2028+',c:'#fbbf24'},{l:'Objetivo energético',v:'24/7 CFE',s:'Carbon-free energy todo el tiempo',c:'#4ade80'},{l:'Consumo 2026e',v:'20+ GW',s:'Creciendo al 30%+ anual',c:'#f87171'}],tags:[{l:'Intersect Power',c:'#4ade80'},{l:'Nuclear SMR',c:'#fbbf24'},{l:'Solar + eólica',c:'#4ade80'},{l:'Geotérmica',c:'#2dd4bf'}],alpha:'La energía se ha convertido en el segundo factor más limitante para la expansión de IA, después de los chips. Google está verticalizando su suministro energético: adquiriendo Intersect Power, firmando deals nucleares (Kairos), invirtiendo en geotérmica (Fervo Energy) y firmando PPAs masivos.',sections:[{t:'Por qué la energía es estratégica',x:'Un data center de 100MW requiere energía suficiente para 80.000 hogares. La IA multiplica el consumo: un query de ChatGPT/Gemini consume 10x más energía que una búsqueda web tradicional. Google proyecta 20+ GW de consumo en 2026, creciendo al 30%+ anual. La red eléctrica convencional no puede seguir ese ritmo.'}],risk:'Si las fuentes de energía renovable no escalan al mismo ritmo que la demanda de cómputo, Google podría verse obligada a usar más gas natural y comprometer sus objetivos de carbono. El objetivo 24/7 CFE está actualmente lejos de ser alcanzado.',comps:[{n:'Renovables',s:60,c:'#4ade80'},{n:'Gas natural',s:25,c:'#fb923c'},{n:'Nuclear',s:5,c:'#fbbf24'},{n:'Red convencional',s:10,c:'#5a5855'}],compLbl:'Mix energético estimado Google 2026',chart:[2,3,4,5.5,7,8],chartLbl:'Gasto energía estratégica Alphabet ($B)',chartCol:'#4ade80'},
+
+  'l-intersect': {eyebrow:'Adquisición · Dic 2025 · $4.75B',title:'Intersect Power',amount:'$4.75B',amountColor:'#4ade80',stats:[{l:'Precio adquisición',v:'$4.75B',s:'+ deuda asumida',c:'#4ade80'},{l:'Cierre previsto',v:'H1 2026',s:'Sujeto a aprobación regulatoria',c:'#fbbf24'},{l:'Capacidad en desarrollo',v:'Multi-GW',s:'Energía + data centers',c:'#4ade80'},{l:'Primer proyecto co-loc',v:'Haskell, TX',s:'Gas + solar + DC integrado',c:'#4a9eff'}],tags:[{l:'Solar + Gas+CCS',c:'#4ade80'},{l:'Integración vertical',c:'#fbbf24'},{l:'Haskell TX',c:'#4a9eff'},{l:'CEO Sheldon Kimber',c:'#4ade80'}],alpha:'Primera gran adquisición de un desarrollador de energía por un hiperscaler. Google tenía ya una alianza estratégica con ellos desde 2023 (Google tomó participación minoritaria). La adquisición completa le da control total sobre el suministro energético de sus data centers, eliminando el cuello de botella más limitante para la expansión de IA.',sections:[{t:'El modelo de negocio de Intersect',x:'Intersect Power co-localiza demanda industrial (data centers) con generación de gas natural con captura de carbono (CCS) y energía solar. Esto permite energía constante y barata sin depender de la red eléctrica convencional. El primer proyecto co-localizado con Google está en Haskell County, Texas.'}],risk:'La tecnología de gas con captura de carbono (CCS) aún no está probada a escala comercial. Si el CCS no funciona como se espera, Google tendría un problema de reputación por usar gas en sus data centers sin la captura prometida.',comps:[{n:'Generación solar',s:40,c:'#4ade80'},{n:'Gas + CCS',s:40,c:'#fb923c'},{n:'Almacenamiento',s:20,c:'#2dd4bf'}],compLbl:'Mix de generación Intersect Power',chart:[0.2,0.5,1.0,1.8,3.0,4.75],chartLbl:'Valoración Intersect Power ($B) hasta adquisición',chartCol:'#4ade80'},
+
+  'l-kairos': {eyebrow:'Nuclear SMR · Deal ago 2025',title:'Kairos Power + TVA',amount:'500MW nuclear',amountColor:'#4ade80',stats:[{l:'Capacidad acordada',v:'500MW',s:'Small Modular Reactors',c:'#4ade80'},{l:'Ubicación',v:'Oak Ridge, TN',s:'Hermes 2 Plant · TVA network',c:'#4a9eff'},{l:'Primer reactor',v:'2028+',s:'SMRs no disponibles antes',c:'#fbbf24'},{l:'Tipo reactura',v:'SMR · Gen IV',s:'Fluoride salt reactor',c:'#4ade80'}],tags:[{l:'SMR Gen IV',c:'#4ade80'},{l:'Oak Ridge TN',c:'#4a9eff'},{l:'TVA partnership',c:'#2dd4bf'},{l:'2028+ online',c:'#fbbf24'}],alpha:'Primer deal nuclear de Google para alimentar sus data centers. Los SMRs (Small Modular Reactors) son el futuro de la energía para IA: energía constante 24/7, sin emisiones de carbono, sin dependencia del viento o el sol. Microsoft, Amazon y Meta también firmaron deals nucleares similares.',sections:[{t:'Por qué nuclear para IA',x:'Los data centers de IA necesitan energía constante 24/7 independientemente del clima. Las renovables (solar, eólico) son intermitentes. Los SMRs de nueva generación son más pequeños, más seguros y más rápidos de construir que los reactores convencionales. Kairos usa tecnología de sal fluorada (fluoride salt-cooled) considerada la más segura.'}],risk:'Los SMRs de nueva generación aún no han demostrado operación comercial a escala. El primer reactor Hermes 1 de Kairos es demostrativo. Hermes 2 (el de Google) sería el primero comercial. Riesgo de retrasos y sobrecostes en construcción nuclear.',comps:[{n:'Google+Kairos',s:25,c:'#4ade80'},{n:'Microsoft+CMR',s:35,c:'#4a9eff'},{n:'Amazon+Energy NW',s:30,c:'#fbbf24'},{n:'Meta+TerraPower',s:10,c:'#a78bfa'}],compLbl:'Capacidad nuclear acordada por hyperscaler (MW)',chart:[0,50,100,200,350,500],chartLbl:'Capacidad nuclear Google acordada (MW) · roadmap',chartCol:'#4ade80'},
+
+  'l-geo': {eyebrow:'Geotérmica avanzada · Partner Fervo Energy',title:'Geotérmica avanzada',amount:'Programa activo',amountColor:'#4ade80',stats:[{l:'Partner principal',v:'Fervo Energy',s:'Líder geotérmica enhanced',c:'#4ade80'},{l:'Ubicaciones',v:'Nevada · Utah',s:'EGS Enhanced Geothermal',c:'#4a9eff'},{l:'Tipo',v:'EGS',s:'Enhanced Geothermal Systems',c:'#4ade80'},{l:'Ventaja',v:'24/7 baseload',s:'Constante como nuclear',c:'#fbbf24'}],tags:[{l:'Fervo Energy',c:'#4ade80'},{l:'EGS technology',c:'#4ade80'},{l:'Nevada + Utah',c:'#4a9eff'},{l:'24/7 baseload',c:'#fbbf24'}],alpha:'Google firmó el primer PPA de energía geotérmica enhanced (EGS) del mundo con Fervo Energy. La EGS inyecta agua en roca caliente para generar vapor y electricidad. A diferencia de la geotérmica convencional, funciona en casi cualquier lugar. Google usa su experiencia en perforación horizontal del gas shale para mejorar la EGS.',sections:[{t:'Qué es la EGS y por qué importa',x:'Enhanced Geothermal Systems inyectan agua en roca caliente a varios km de profundidad para generar vapor y electricidad 24/7. No requiere sol, viento, ni agua superficial. Fervo Energy usa técnicas de perforación horizontal del gas shale para hacerla más eficiente. Google firmó el primer PPA comercial de EGS en 2022 en Nevada.'}],risk:'La EGS sigue siendo tecnología emergente con pocos proyectos a escala comercial. Fervo Energy está en fase temprana. Si la tecnología no escala como se espera, Google tendrá que depender más de gas u otras fuentes.',comps:[{n:'Solar',s:60,c:'#4ade80'},{n:'Eólica',s:20,c:'#4a9eff'},{n:'Geotérmica EGS',s:5,c:'#2dd4bf'},{n:'Nuclear',s:15,c:'#fbbf24'}],compLbl:'Mix renovables Google (estimado 2026)',chart:[0.1,0.2,0.3,0.5,0.8,1.2],chartLbl:'Capacidad geotérmica EGS Google (GW)',chartCol:'#4ade80'},
+
+  'l-ppa': {eyebrow:'Power Purchase Agreements · Global',title:'PPAs Renovables',amount:'Multi-B$',amountColor:'#4ade80',stats:[{l:'Capacidad contratada',v:'>20GW',s:'Mayor portfolio renovable corporativo',c:'#4ade80'},{l:'Países',v:'30+',s:'Contratos en todos los continentes',c:'#4a9eff'},{l:'Objetivo',v:'24/7 CFE',s:'Carbon-free energy all the time',c:'#4ade80'},{l:'Status',v:'~70% logrado',s:'Aún no 100% en horario pico',c:'#fbbf24'}],tags:[{l:'Eólica offshore',c:'#4a9eff'},{l:'Solar utility-scale',c:'#fbbf24'},{l:'30+ países',c:'#4ade80'},{l:'Objetivo 24/7 CFE',c:'#4ade80'}],alpha:'Google tiene el mayor portfolio corporativo de contratos de energía renovable del mundo. Los PPAs son contratos a largo plazo (10–20 años) que garantizan a Google un precio fijo de electricidad renovable. Es la principal herramienta para cumplir el objetivo 24/7 Carbon-Free Energy.',sections:[{t:'Qué son los PPAs',x:'Power Purchase Agreement: contrato donde Google paga un precio fijo por la energía de una planta renovable por 10–20 años. La planta recibe financiación garantizada para construirse; Google recibe energía barata y renovable. Google tiene más de 20GW contratados en +30 países, el mayor portfolio corporativo del mundo.'}],risk:'Los PPAs garantizan energía renovable "en términos anuales" pero no en cada hora del día. El objetivo 24/7 CFE (energía limpia en cada hora) es mucho más difícil. Google reconoce que aún no lo alcanza, especialmente en horas pico.',comps:[{n:'Google',s:35,c:'#4ade80'},{n:'Meta',s:25,c:'#4a9eff'},{n:'Amazon',s:25,c:'#fbbf24'},{n:'Microsoft',s:15,c:'#a78bfa'}],compLbl:'PPAs contratados por hyperscaler (GW, est.)',chart:[5,8,11,15,18,20],chartLbl:'Capacidad PPAs renovables Google (GW) contratados',chartCol:'#4ade80'},
+
+  'l-battery': {eyebrow:'Long Duration Energy Storage',title:'Baterías LDES',amount:'Programa activo',amountColor:'#4ade80',stats:[{l:'Inversiones GV',v:'Malta Inc.',s:'Thermal energy storage',c:'#4ade80'},{l:'Partner LDES',v:'Form Energy',s:'Iron-air batteries · semanas',c:'#2dd4bf'},{l:'Objetivo',v:'Almacenar días',s:'No solo horas como Li-ion',c:'#fbbf24'},{l:'Status',v:'Pre-comercial',s:'Primeros proyectos piloto en marcha',c:'#4a9eff'}],tags:[{l:'Malta Inc.',c:'#4ade80'},{l:'Form Energy',c:'#2dd4bf'},{l:'Iron-air batteries',c:'#2dd4bf'},{l:'LDES tech',c:'#fbbf24'}],alpha:'Google invierte en LDES a través de su brazo de venture capital GV. La idea: almacenar energía solar y eólica durante días o semanas para usarla cuando no hay sol ni viento. Esto es fundamental para alcanzar el objetivo 24/7 CFE sin necesitar nuclear o gas.',sections:[{t:'Por qué LDES es crítico',x:'Las baterías de Li-ion actuales almacenan energía durante horas. Para un data center que necesita energía 24/7, no es suficiente. Long Duration Energy Storage (baterías de hierro-aire, almacenamiento térmico) puede guardar energía durante días o semanas a mucho menor coste por kWh. Malta Inc. usa sal fundida y Form Energy usa baterías de hierro-aire.'}],risk:'Las tecnologías LDES aún están en fase pre-comercial. Malta Inc. y Form Energy tienen prototipos pero no producción a escala. El coste por kWh de almacenamiento sigue siendo alto comparado con las proyecciones. Riesgo de que la tecnología no escale en el horizonte necesario.',comps:[{n:'Li-ion convencional',s:70,c:'#4ade80'},{n:'LDES (Malta/Form)',s:5,c:'#2dd4bf'},{n:'Pumped hydro',s:20,c:'#4a9eff'},{n:'Otros',s:5,c:'#5a5855'}],compLbl:'Mix almacenamiento energético Google (estimado)',chart:[0.01,0.05,0.1,0.2,0.5,1.0],chartLbl:'Capacidad LDES portfolio GV ($B invertidos)',chartCol:'#2dd4bf'},
+
+  'n-stakes': {eyebrow:'Inversiones externas · Stakes estratégicos',title:'Stakes estratégicos',amount:'~$60B+',amountColor:'#fbbf24',stats:[{l:'Anthropic',v:'hasta $40B',s:'14% stake · IPO 2026e',c:'#fbbf24'},{l:'SpaceX stake',v:'~6.11%',s:'Valor $100-122B al precio de IPO',c:'#a78bfa'},{l:'Berkshire in',v:'$10B',s:'Greg Abel · colocación privada jun 26',c:'#fbbf24'},{l:'Blackstone JV',v:'$5B',s:'TPU-as-a-service · 500MW 2027',c:'#2dd4bf'}],tags:[{l:'Anthropic $40B',c:'#fbbf24'},{l:'SpaceX IPO',c:'#a78bfa'},{l:'Berkshire $10B',c:'#fbbf24'},{l:'Blackstone JV',c:'#2dd4bf'}],alpha:'Los stakes estratégicos de Alphabet van más allá de la inversión financiera: cada uno sirve para asegurar un cliente anchor (Anthropic→TPU), acceder a infraestructura única (SpaceX→compute), conseguir validación institucional (Berkshire), o crear nuevos mercados (Blackstone→TPU-as-a-service).',sections:[{t:'La lógica estratégica',x:'Anthropic: mayor cliente de TPUs y hedge frente a OpenAI. SpaceX: $29.4B en revenue cloud comprometido + posibles ganancias de $100B+ en IPO. Berkshire: señal de calidad para inversores institucionales. Blackstone: monetiza los TPUs fuera de Google Cloud. GV+CapitalG: 500+ startups que usan Google Cloud.'}],risk:'Concentración de stakes en empresas privadas que aún no han debutado en bolsa. Si la IPO de Anthropic o SpaceX se retrasa o decepcionan, Alphabet tendría que rebajar el valor de estos activos en balance.',comps:[{n:'Anthropic',s:55,c:'#fbbf24'},{n:'SpaceX (stake)',s:30,c:'#a78bfa'},{n:'Blackstone JV',s:8,c:'#2dd4bf'},{n:'Otros',s:7,c:'#5a5855'}],compLbl:'Distribución stakes estratégicos Alphabet',chart:[5,10,20,35,50,60],chartLbl:'Valor acumulado stakes estratégicos ($B) (estimado)',chartCol:'#fbbf24'},
+
+  'l-anthropic': {eyebrow:'Privada · IPO 2026e · Valoración $350B',title:'Anthropic',amount:'hasta $40B',amountColor:'#fbbf24',stats:[{l:'Inversión Google',v:'$40B',s:'$10B inmediato + $30B condicional',c:'#fbbf24'},{l:'Stake Google',v:'~14%',s:'Máximo pactado: 15%',c:'#fbbf24'},{l:'Valoración',v:'$350-380B',s:'Post-money · última ronda',c:'#4a9eff'},{l:'Revenue anualizado',v:'$30B',s:'Abril 2026 · rampa récord',c:'#4ade80'}],tags:[{l:'Claude / Mythos',c:'#a78bfa'},{l:'5GW TPU compute',c:'#4a9eff'},{l:'IPO 2026',c:'#fbbf24'},{l:'$65B pledged total',c:'#fbbf24'},{l:'>1000 enterprise $1M+',c:'#4ade80'}],alpha:'Es el deal más estratégico de Alphabet en 2026. Anthropic se compromete a usar la infraestructura TPU de Google, lo que la convierte en el mayor cliente anchor. Si la IPO se produce en 2026 a valoración superior a $350B, Alphabet reconocería ganancias masivas. Además, el deal bloquea a OpenAI de usar TPUs de Google directamente.',sections:[{t:'La estructura del deal (24 abril 2026)',x:'$10B inmediato a valoración $350B + $30B contingentes a hitos de rendimiento. Incluye 5GW de capacidad TPU dedicada desde 2027 (con Broadcom). Es el mayor deal financiero con un startup de IA fuera de Microsoft-OpenAI. Amazon también puso $25B la misma semana: Anthropic tiene $65B comprometidos y 10GW de compute reservados.'},
+    {t:'Rampa de ingresos récord',x:'$1B a finales de 2024 → $9B a finales de 2025 → $30B en abril 2026. Una de las rampas más rápidas en la historia del software empresarial. Anthropic tiene más de 1.000 clientes enterprise pagando más de $1M/año, con contratos medios de $200+/usuario/mes.'}],risk:'Si la IPO de Anthropic no se produce en 2026 o la valoración es inferior a $350B, Alphabet tendría que rebajar su inversión. También: Google es simultáneamente competidor (Gemini) y proveedor de Anthropic — si Claude supera a Gemini en calidad, crea tensión interna.',comps:[{n:'Google/Anthropic',s:14,c:'#fbbf24'},{n:'Amazon',s:25,c:'#4a9eff'},{n:'Otros inversores',s:61,c:'#5a5855'}],compLbl:'Distribución ownership Anthropic (estimada)',chart:[1,1.5,2.5,4,6,9,13,18,24,30],chartLbl:'Revenue Anthropic anualizado ($B)',chartCol:'#fbbf24'},
+
+  'l-spacex': {eyebrow:'Privada · IPO 2026e · Valoración ~$1.75T',title:'SpaceX',amount:'~6.11% stake',amountColor:'#a78bfa',stats:[{l:'Stake Alphabet',v:'~6.11%',s:'Valor $100-122B al precio IPO',c:'#a78bfa'},{l:'Valoración IPO estimada',v:'$1.75T+',s:'Superaría a Saudi Aramco',c:'#a78bfa'},{l:'Cloud deal Google',v:'$920M/mes',s:'× 32 meses = $29.4B total',c:'#4a9eff'},{l:'GPUs del deal',v:'110.000',s:'Nvidia H100/H200 para Google',c:'#4ade80'}],tags:[{l:'6.11% stake',c:'#a78bfa'},{l:'IPO 2026e',c:'#a78bfa'},{l:'Starlink',c:'#4a9eff'},{l:'$920M/mes Google deal',c:'#4a9eff'},{l:'Dual: cliente+proveedor',c:'#fbbf24'}],alpha:'SpaceX es única en el árbol de Alphabet porque es simultáneamente un activo (stake 6.11%), un cliente (compra compute de Google por $920M/mes) y un proveedor (suministra 110.000 GPUs Nvidia a Google). La IPO de SpaceX podría generar una ganancia de papel de $100-122B para Alphabet de golpe.',sections:[{t:'La doble naturaleza del deal SpaceX',x:'En junio 2026, SpaceX firmó un contrato con Google para comprar capacidad de compute por $920M/mes durante 32 meses ($29.4B total). A cambio, Google obtiene acceso a 110.000 GPUs Nvidia H100/H200 que SpaceX opera. Es un deal donde ambas partes se benefician: SpaceX financia su expansión, Google consigue GPUs que escasean.'},
+    {t:'La IPO: el potencial catalizador',x:'SpaceX planea salir a bolsa en 2026 a valoración de $1.75T+. Si lo logra, el stake de Alphabet (6.11%) pasaría de estar valorado en libros a ~$100-122B en el balance. Eso podría generar la mayor ganancia de un solo trimestre en la historia de Alphabet.'}],risk:'Si la IPO de SpaceX se retrasa o la valoración es inferior a $1T, el impacto en balance sería menor. También: la relación competitiva con Starlink (conectividad) puede crear tensiones si Starlink compite directamente con servicios de Google en zonas remotas.',comps:[{n:'Lanzamientos',s:60,c:'#a78bfa'},{n:'Starlink',s:30,c:'#4a9eff'},{n:'Defense/Otros',s:10,c:'#fbbf24'}],compLbl:'Distribución revenue SpaceX (estimado 2026)',chart:[100,200,400,700,1000,1500,1750],chartLbl:'Valoración SpaceX ($B) hasta IPO estimada',chartCol:'#a78bfa'},
+
+  'l-bh': {eyebrow:'BRK.B · NYSE · Inversor institucional',title:'Berkshire Hathaway',amount:'$10B inversión en GOOG',amountColor:'#fbbf24',stats:[{l:'Inversión jun 2026',v:'$10B',s:'$5B Class A + $5B Class C',c:'#fbbf24'},{l:'Precio pagado',v:'$351.81/acc A',s:'$348.20/acc C · colocación privada',c:'#fbbf24'},{l:'Quién decide',v:'Greg Abel',s:'Sucesor de Warren Buffett',c:'#4a9eff'},{l:'Posición previa',v:'Sí',s:'Construyendo desde Q3 2025',c:'#4ade80'}],tags:[{l:'Greg Abel (CEO)',c:'#4a9eff'},{l:'Colocación privada',c:'#fbbf24'},{l:'Jun 2026',c:'#fbbf24'},{l:'Desde Q3 2025',c:'#4ade80'}],alpha:'La inversión de Berkshire Hathaway en Alphabet es una señal de enorme importancia para el mercado. Berkshire, conocida por su riguroso análisis de valor, raramente invierte en tech. Que Greg Abel (sucesor de Buffett) haya comprometido $10B en Alphabet envía un mensaje claro: el negocio de IA de Google es sólido y valorado razonablemente.',sections:[{t:'Por qué importa que sea Berkshire',x:'Warren Buffett históricamente evitó tecnología por no entenderla. Pero Berkshire ya compró Apple hace años (una de sus mejores inversiones). La apuesta de $10B en Alphabet bajo Greg Abel significa que el sucesor de Buffett ve en Google una empresa de valor duradero, no solo una apuesta especulativa en IA.'}],risk:'Berkshire es un inversor, no un partner estratégico. Su entrada no genera sinergias operativas directas. Si el mercado corrige, la posición de $10B de Berkshire no protege a Alphabet de una caída del precio.',comps:[{n:'Apple (BRK stake)',s:40,c:'#4ade80'},{n:'Bank of America',s:10,c:'#4a9eff'},{n:'Alphabet (nuevo)',s:5,c:'#fbbf24'},{l:'Otros',s:45,c:'#5a5855'}],compLbl:'Distribución portfolio tech Berkshire (estimada)',chart:[350,360,375,385,400,520],chartLbl:'Precio acción BRK.B ($) últimos 6 trimestres',chartCol:'#fbbf24'},
+
+  'l-blackstone': {eyebrow:'BX · NYSE · Joint Venture TPU-as-a-service',title:'Blackstone JV',amount:'$5B inicial',amountColor:'#2dd4bf',stats:[{l:'JV inicial',v:'$5B',s:'Mayo 2026',c:'#2dd4bf'},{l:'Capacidad 2027',v:'500MW',s:'TPU compute disponible',c:'#4ade80'},{l:'Modelo',v:'TPU-as-a-service',s:'Alquiler TPUs como nube',c:'#2dd4bf'},{l:'Precio Blackstone',v:'~$142/acc',s:'BX · NYSE',c:'#fbbf24'}],tags:[{l:'JV mayo 2026',c:'#2dd4bf'},{l:'TPU rentable',c:'#2dd4bf'},{l:'500MW capacidad',c:'#4ade80'},{l:'$5B compromiso',c:'#fbbf24'}],alpha:'Este JV permite a Google monetizar sus TPUs más allá de Google Cloud. Blackstone construye o adapta infraestructura de data center donde instala TPUs de Google. Las empresas pueden alquilar esos TPUs sin estar dentro del ecosistema Google Cloud. Es la estrategia para competir con Nvidia en el mercado de alquiler de chips.',sections:[{t:'Por qué este JV es estratégico',x:'Google históricamente solo ofrecía TPUs dentro de Google Cloud. Este JV con Blackstone abre el mercado a empresas que quieren TPUs pero no quieren usar GCP. Es una respuesta directa a CoreWeave (que alquila GPUs Nvidia fuera de AWS/Azure/GCP). 500MW de capacidad en 2027 equivale a decenas de miles de TPUs disponibles para cualquier empresa.'}],risk:'Blackstone es un fondo de private equity, no un operador de data centers. La ejecución operativa podría ser más lenta que una empresa tech. Además: si CoreWeave y otros alquiladores de GPUs Nvidia ofrecen mejor precio, la demanda de TPUs arrendados podría ser limitada.',comps:[{n:'Google Cloud TPU',s:60,c:'#2dd4bf'},{n:'Blackstone JV TPU',s:15,c:'#4ade80'},{n:'CoreWeave GPU',s:15,c:'#fbbf24'},{n:'Otros',s:10,c:'#5a5855'}],compLbl:'Cuota mercado TPU (estimado 2027)',chart:[0,0.5,1.5,3,4,5],chartLbl:'Inversión acumulada JV Blackstone-Google ($B)',chartCol:'#2dd4bf'},
+
+  'l-gv': {eyebrow:'GV + CapitalG · Venture capital Alphabet',title:'GV + CapitalG',amount:'~$1-2B/año',amountColor:'#fbbf24',stats:[{l:'Portfolio total',v:'+500 startups',s:'Across GV + CapitalG',c:'#fbbf24'},{l:'Deal destacado 2026',v:'Bedrock Robotics',s:'$270M · val. $1.75B',c:'#4ade80'},{l:'Enfoque GV',v:'Early stage',s:'Series A/B · health/AI/SaaS',c:'#4a9eff'},{l:'Enfoque CapitalG',v:'Growth',s:'Series C+ · empresas maduras',c:'#a78bfa'}],tags:[{l:'500+ startups',c:'#fbbf24'},{l:'Bedrock Robotics',c:'#4ade80'},{l:'Form Energy',c:'#4ade80'},{l:'Agile Robots',c:'#a78bfa'}],alpha:'GV y CapitalG son los brazos de venture de Alphabet. No solo son retornos financieros: cada startup del portfolio tiende a usar Google Cloud, creando clientes cautivos. Bedrock Robotics (Waymo+Segment vets), Agile Robots (DeepMind integration) y Form Energy (LDES para data centers) son ejemplos de inversiones que alimentan el ecosistema.',sections:[{t:'La lógica de las inversiones',x:'Cada inversión de GV/CapitalG tiene una doble función: retorno financiero + creación de ecosistema Google Cloud. Una startup que recibe $10M de GV tiende a usar GCP como su nube. Con 500+ startups en portfolio, GV y CapitalG generan cientos de millones en ARR para Google Cloud indirectamente.'}],risk:'Las inversiones de VC tienen alta tasa de fracaso. En ciclos bajistas de mercado, el portfolio podría generar write-offs significativos. Además: reguladores pueden escrutar las inversiones si crean conflictos de interés con empresas competidoras de Google.',comps:[{n:'GV (Google)',s:20,c:'#fbbf24'},{n:'a16z',s:15,c:'#4a9eff'},{n:'Sequoia',s:15,c:'#4ade80'},{n:'Otros top VCs',s:50,c:'#5a5855'}],compLbl:'Cuota AUM VCs tech top tier (estimada)',chart:[0.5,0.8,1.0,1.2,1.5,1.8],chartLbl:'Gasto anual GV+CapitalG estimado ($B)',chartCol:'#fbbf24'},
+
+  'n-bets': {eyebrow:'Other Bets · Filiales Alphabet',title:'Filiales (Other Bets)',amount:'~$16B+',amountColor:'#2dd4bf',stats:[{l:'Waymo valoración',v:'$126B',s:'Ronda $16B feb 2026',c:'#2dd4bf'},{l:'Waymo rides/sem',v:'500k+',s:'Q1 2026 · récord',c:'#4ade80'},{l:'Wing entregas',v:'+3M',s:'Entrega drones operativo',c:'#2dd4bf'},{l:'Intrinsic',v:'Integrada',s:'Robótica → Google DeepMind feb 26',c:'#a78bfa'}],tags:[{l:'Waymo $126B',c:'#2dd4bf'},{l:'Wing drones',c:'#2dd4bf'},{l:'Intrinsic robotics',c:'#a78bfa'},{l:'Google X',c:'#2dd4bf'}],alpha:'Las Other Bets son las apuestas a largo plazo de Alphabet fuera del negocio principal. Waymo es la más valiosa y la más cercana a generar retorno. Wing ya opera comercialmente. Intrinsic se integró en Google DeepMind en feb 2026. Históricamente generaban pérdidas, pero Waymo está próxima al breakeven.',sections:[{t:'Estado de las filiales en 2026',x:'Waymo es la gran protagonista: 500k rides/semana, valoración $126B, ronda de $16B liderada por Alphabet en feb 2026. Está próxima al breakeven operativo. Wing superó 3M de entregas con drones. Intrinsic se reintegró en Google para acelerar la robótica con Gemini.'}],risk:'Las Other Bets han costado miles de millones en pérdidas históricas. Si Waymo no alcanza el breakeven en 2026–2027, Alphabet podría verse presionada a reducir inversiones. La competencia en robotaxis (Tesla FSD, Waymo, Cruise) se intensifica.',comps:[{n:'Waymo (robotaxi)',s:70,c:'#2dd4bf'},{n:'Wing (drones)',s:10,c:'#4ade80'},{n:'Intrinsic',s:10,c:'#a78bfa'},{n:'Otros (X lab)',s:10,c:'#5a5855'}],compLbl:'Distribución valor Other Bets (estimada)',chart:[2,4,6,8,12,16],chartLbl:'Inversión acumulada Other Bets Alphabet ($B)',chartCol:'#2dd4bf'},
+
+  'l-waymo': {eyebrow:'Filial 100% Alphabet · Valoración $126B',title:'Waymo',amount:'$16B ronda feb 2026',amountColor:'#2dd4bf',stats:[{l:'Valoración',v:'$126B',s:'Ronda feb 2026',c:'#2dd4bf'},{l:'Rides/semana',v:'500k+',s:'Q1 2026 · récord',c:'#4ade80'},{l:'Ciudades activas',v:'4',s:'SF · LA · Phoenix · Austin',c:'#4a9eff'},{l:'Ronda feb 2026',v:'$16B',s:'Liderada por Alphabet',c:'#fbbf24'}],tags:[{l:'Robotaxi',c:'#2dd4bf'},{l:'SF·LA·PHX·AUS',c:'#4ade80'},{l:'100% autónomo',c:'#2dd4bf'},{l:'Vs Tesla FSD',c:'#fbbf24'}],alpha:'Waymo es la filial más valiosa de las Other Bets. A $126B de valoración, si saliera a bolsa, sería una de las mayores IPOs del año. Alphabet posee la mayoría y acaba de liderar una ronda de $16B en feb 2026. Con 500k rides/semana, está escalando hacia el breakeven operativo.',sections:[{t:'Estado actual Q1 2026',x:'500.000 viajes completamente autónomos por semana, sin conductor de seguridad. Opera en SF, LA, Phoenix y Austin. Expansión planificada en más ciudades. Única empresa con robotaxis comerciales a escala en EE.UU. Para contexto: Uber vale ~$160B pero lleva 15 años operando.'},
+    {t:'La competencia se intensifica',x:'Tesla Full Self-Driving (FSD) es el mayor rival: más barato (usa cámaras vs LIDAR de Waymo), pero aún no aprobado para operación sin conductor. Waymo usa LIDAR + cámaras + radar, más caro pero más seguro. La batalla por el robotaxi definirá el transporte urbano de la próxima década.'}],risk:'Tesla FSD podría aprobar operación sin conductor antes de fin de 2026, con costes de hardware muy inferiores a Waymo. Si FSD es aprobado por NHTSA, crearía competencia de precio brutal. Además, accidentes de vehículos autónomos generan reacción regulatoria instantánea.',comps:[{n:'Waymo (Alphabet)',s:50,c:'#2dd4bf'},{n:'Tesla FSD',s:30,c:'#f87171'},{n:'Zoox (Amazon)',s:10,c:'#fbbf24'},{n:'Otros',s:10,c:'#5a5855'}],compLbl:'Cuota flotas robotaxi activas (EE.UU., estimada)',chart:[10,25,50,100,200,500],chartLbl:'Rides autónomos/semana Waymo (miles)',chartCol:'#2dd4bf'},
+
+  'l-wing': {eyebrow:'Filial Alphabet · Entrega por drones',title:'Wing',amount:'Operativo',amountColor:'#2dd4bf',stats:[{l:'Entregas totales',v:'+3M',s:'Acumulado histórico',c:'#2dd4bf'},{l:'Países activos',v:'3',s:'Australia · EE.UU. · Finlandia',c:'#4a9eff'},{l:'Modelo',v:'B2C + B2B',s:'Consumidor y empresas',c:'#4ade80'},{l:'Regulación',v:'FAA aprobada',s:'EE.UU. · operación comercial',c:'#fbbf24'}],tags:[{l:'Australia (pionero)',c:'#2dd4bf'},{l:'EE.UU. activo',c:'#4a9eff'},{l:'Finlandia',c:'#2dd4bf'},{l:'FAA aprobado',c:'#fbbf24'}],alpha:'Wing es la filial de entrega por drones de Alphabet. Superó 3M de entregas acumuladas. Opera comercialmente en Australia (donde comenzó), EE.UU. (Texas, Virginia) y Finlandia. Es el único servicio de drones de entrega con aprobación de la FAA para operación comercial en EE.UU. a escala.',sections:[{t:'Estado del negocio',x:'Wing opera en zonas suburbanas y rurales donde la entrega por drone es más competitiva que los vehículos. Los principales socios incluyen Walgreens, FedEx y cadenas de comida rápida en EE.UU. En Australia tiene acuerdos con supermercados. El dron Wing entrega en 5–10 minutos en zonas de cobertura.'}],risk:'Regulación: la FAA puede cambiar los requisitos de operación. Ruido y privacidad son quejas comunes en zonas residenciales. Competencia: Amazon Prime Air y UPS Flight Forward tienen programas similares. El negocio es aún pequeño en ingresos aunque operativamente probado.',comps:[{n:'Wing (Google)',s:35,c:'#2dd4bf'},{n:'Amazon Prime Air',s:30,c:'#fbbf24'},{n:'UPS Flight Fwd',s:15,c:'#4a9eff'},{n:'Zipline',s:20,c:'#4ade80'}],compLbl:'Cuota entregas comerciales por drone (estimada)',chart:[0.1,0.3,0.6,1.0,1.8,3.0],chartLbl:'Entregas acumuladas Wing (millones)',chartCol:'#2dd4bf'},
+
+  'l-intrinsic': {eyebrow:'Robótica · Integrada en Google feb 2026',title:'Intrinsic',amount:'Robótica industrial',amountColor:'#a78bfa',stats:[{l:'Status',v:'Integrada',s:'Unida a Google DeepMind feb 2026',c:'#a78bfa'},{l:'Origen',v:'Google X',s:'Moonshot graduada 2021',c:'#2dd4bf'},{l:'Tecnología',v:'AI + robótica',s:'Software para robots industriales',c:'#a78bfa'},{l:'Integración',v:'Gemini + GCP',s:'Usa modelos de DeepMind',c:'#4a9eff'}],tags:[{l:'Robot software',c:'#a78bfa'},{l:'DeepMind integrado',c:'#a78bfa'},{l:'Gemini Robotics',c:'#4a9eff'},{l:'Industrial AI',c:'#fbbf24'}],alpha:'Intrinsic se reintegró en Google en feb 2026 para acelerar la robotica con los modelos de Gemini de DeepMind. La tesis: los robots industriales son muy difíciles de programar. Intrinsic + Gemini quieren hacer que cualquier empresa pueda usar robots industriales sin necesitar expertos en robótica.',sections:[{t:'Por qué la reintegración',x:'Intrinsic "graduó" de Google X en 2021 como filial independiente. Pero la velocidad de avance de los modelos de IA (Gemini) hizo más sentido reintegrarla directamente en Google para que pueda usar los modelos más avanzados sin fricción. El resultado: Gemini Robotics, un modelo específicamente entrenado para controlar robots.'}],risk:'La robótica industrial tiene ciclos de ventas muy largos. Las empresas industriales son lentas en adoptar nuevas tecnologías. Competencia de Boston Dynamics (Hyundai), ABB, Fanuc — empresas con décadas de relaciones con clientes industriales.',comps:[{n:'Google/Intrinsic',s:5,c:'#a78bfa'},{n:'ABB Robotics',s:25,c:'#4a9eff'},{n:'FANUC',s:20,c:'#fbbf24'},{n:'Boston Dynamics',s:10,c:'#4ade80'},{n:'Otros',s:40,c:'#5a5855'}],compLbl:'Cuota mercado robótica industrial (estimada)',chart:[0.1,0.2,0.4,0.7,1.0,1.5],chartLbl:'Revenue estimado Intrinsic ($B) (proyección)',chartCol:'#a78bfa'},
+
+  'l-xlab': {eyebrow:'Moonshot factory · Proyectos pre-comerciales',title:'X (Google X)',amount:'Laboratorio',amountColor:'#2dd4bf',stats:[{l:'Proyectos activos',v:'~10+',s:'La mayoría confidenciales',c:'#2dd4bf'},{l:'Graduados exitosos',v:'3+',s:'Waymo · Wing · Intrinsic',c:'#4ade80'},{l:'Modelo',v:'Moonshots',s:'Probabilidad 10x improvement',c:'#2dd4bf'},{l:'Lider',v:'Astro Teller',s:'CEO de X desde 2010',c:'#4a9eff'}],tags:[{l:'Moonshots',c:'#2dd4bf'},{l:'Waymo origen',c:'#2dd4bf'},{l:'Wing origen',c:'#2dd4bf'},{l:'Astro Teller CEO',c:'#4a9eff'}],alpha:'X es la incubadora de proyectos moonshot de Alphabet. Su filosofía: abordar problemas enormes con tecnología radical que ofrece mejoras de 10x, no 10%. La mayoría de proyectos son "matados" intencionalmente cuando el equipo demuestra que no funcionará. Los que sobreviven se convierten en filiales (Waymo, Wing, Intrinsic).',sections:[{t:'La filosofía moonshot',x:'X tiene una cultura única en tech: se premia al equipo que mata un proyecto a tiempo tanto como al que lo lleva adelante. Esto evita el "sunk cost fallacy". Proyectos conocidos actualmente en X incluyen iniciativas en energía de fusión, conectividad por balón (Loon, ya cerrado), y otras iniciativas no divulgadas.'}],risk:'X tiene un historial mixto: Waymo es un éxito enorme, pero Loon (internet por balones) se cerró tras gastar cientos de millones. El coste de oportunidad de los recursos de X es alto y los retornos son inciertos y a muy largo plazo.',comps:[{n:'Google X',s:100,c:'#2dd4bf'}],compLbl:'X es única — no tiene comparables directos',chart:[1,2,3,4,5,6],chartLbl:'Proyectos activos estimados en X (histórico)',chartCol:'#2dd4bf'},
+
+  'n-ai': {eyebrow:'I+D Modelos IA · ~$13B R&D',title:'IA / Modelos',amount:'~$13B R&D',amountColor:'#a78bfa',stats:[{l:'Gemini MAU',v:'750M',s:'Q1 2026 · creciendo rápido',c:'#a78bfa'},{l:'Tokens API/min',v:'16B',s:'+60% vs trimestre anterior',c:'#4ade80'},{l:'Suscripciones pago',v:'350M',s:'YouTube + Google One + Gemini',c:'#fbbf24'},{l:'Enterprise +40%',v:'QoQ',s:'Gemini Enterprise pagando',c:'#2dd4bf'}],tags:[{l:'Gemini 3',c:'#a78bfa'},{l:'750M MAU',c:'#a78bfa'},{l:'DeepMind Nobel',c:'#4ade80'},{l:'Quantum Willow',c:'#2dd4bf'}],alpha:'La división de IA de Alphabet — centrada en Google DeepMind — es la que genera la ventaja competitiva a largo plazo. Sin modelos mejores, todo el capex de chips y data centers no sirve. DeepMind ganó el Nobel de Química en 2024 por AlphaFold. Gemini ya procesa 16B tokens/min y creciendo.',sections:[{t:'El rol central de DeepMind',x:'La fusión DeepMind + Google Brain (2023) creó el laboratorio de IA más poderoso del mundo en términos de recursos. Gemini 3 es el modelo más avanzado de Alphabet. AlphaFold 3 revolucionó la biología computacional. El CEO Demis Hassabis habla con Sundar Pichai todos los días.'}],risk:'OpenAI, Anthropic y Meta AI están invirtiendo igual o más en modelos. Si algún competidor lanza un modelo significativamente superior a Gemini, Google podría perder cuota en el mercado de IA enterprise, que está creciendo explosivamente.',comps:[{n:'Google Gemini',s:25,c:'#a78bfa'},{n:'OpenAI GPT',s:40,c:'#4a9eff'},{n:'Anthropic Claude',s:15,c:'#fbbf24'},{n:'Meta LLaMA',s:10,c:'#4ade80'},{n:'Otros',s:10,c:'#5a5855'}],compLbl:'Cuota tráfico IA generativa (Similarweb, 2026)',chart:[6,10,15,19,22,25],chartLbl:'Cuota mercado IA generativa Gemini (%) — Similarweb',chartCol:'#a78bfa'},
+
+  'l-deepmind': {eyebrow:'Google DeepMind · Lab IA líder mundial',title:'DeepMind / Google Brain',amount:'Core R&D',amountColor:'#a78bfa',stats:[{l:'CEO',v:'Demis Hassabis',s:'Nobel Química 2024 · cofundador',c:'#a78bfa'},{l:'Modelo estrella',v:'Gemini 3',s:'Top en múltiples benchmarks',c:'#4ade80'},{l:'AlphaFold',v:'AlphaFold 3',s:'Dobla proteínas · Nobel 2024',c:'#2dd4bf'},{l:'Quantum',v:'Willow (105q)',s:'Chip cuántico dic 2024',c:'#fbbf24'}],tags:[{l:'Nobel Química 2024',c:'#4ade80'},{l:'Gemini 3',c:'#a78bfa'},{l:'AlphaFold 3',c:'#2dd4bf'},{l:'Willow quantum',c:'#fbbf24'},{l:'Fusión Brain+DeepMind',c:'#a78bfa'}],alpha:'DeepMind es el corazón de la estrategia de IA de Alphabet. Desde la fusión con Google Brain en 2023, tiene acceso a los mayores recursos de cómputo del mundo. Genera los modelos Gemini, AlphaFold, y Willow. Demis Hassabis habla con Pichai diariamente — un indicador de la importancia estratégica.',sections:[{t:'Los tres frentes de DeepMind',x:'(1) Gemini: el modelo de lenguaje y multimodal que compite con GPT y Claude. (2) AlphaFold: la herramienta de predicción de proteínas que revolucionó la biología y ganó el Nobel. (3) Willow: el chip cuántico que en diciembre 2024 demostró reducción exponencial de errores cuánticos, un hito hacia la computación cuántica práctica.'},
+    {t:'Isomorphic Labs: el spinoff farmacéutico',x:'Demis Hassabis dirige Isomorphic Labs (spinoff de DeepMind) como "segundo trabajo" desde las 22h. En abril 2025 levantó $600M. Deals con Eli Lilly y Novartis por hasta $3B en milestones. Trials oncología esperados en 2026. AlphaFold 3 + IsoDDE pueden transformar el desarrollo de fármacos.'}],risk:'Fuga de talento: DeepMind compite por los mismos investigadores que OpenAI, Anthropic y Meta AI. Los salarios del sector son astronómicos. Si figuras clave se van, puede afectar la ventaja en research. También: la fusión Brain+DeepMind generó fricciones culturales iniciales.',comps:[{n:'Google DeepMind',s:30,c:'#a78bfa'},{n:'OpenAI',s:35,c:'#4a9eff'},{n:'Anthropic',s:15,c:'#fbbf24'},{n:'Meta AI',s:15,c:'#4ade80'},{n:'Otros',s:5,c:'#5a5855'}],compLbl:'Cuota publicaciones top AI (estimada 2025)',chart:[5,8,12,16,20,25],chartLbl:'Cuota tráfico Gemini API (%) crecimiento',chartCol:'#a78bfa'},
+
+  'l-gemini': {eyebrow:'Producto IA · App + API + Enterprise',title:'Gemini App',amount:'750M MAU',amountColor:'#a78bfa',stats:[{l:'MAU',v:'750M',s:'Q1 2026 · vs 800M ChatGPT',c:'#a78bfa'},{l:'Tokens API/min',v:'16B',s:'+60% QoQ · récord',c:'#4ade80'},{l:'Enterprise growth',v:'+40% QoQ',s:'Gemini Enterprise pagando',c:'#fbbf24'},{l:'Suscripciones pago',v:'350M total',s:'Incl. Google One + YouTube',c:'#2dd4bf'}],tags:[{l:'750M MAU',c:'#a78bfa'},{l:'+60% tokens',c:'#4ade80'},{l:'Apple deal',c:'#2dd4bf'},{l:'Enterprise',c:'#fbbf24'},{l:'Gemini 3',c:'#a78bfa'}],alpha:'Gemini es el producto de IA de cara al consumidor y las empresas. 750M MAU está muy cerca de ChatGPT (800M+). El deal con Apple (Gemini impulsa Siri en 2.500M dispositivos) podría ser el mayor salto de distribución en la historia de Gemini. La API genera 16B tokens/min y creciendo al 60% trimestral.',sections:[{t:'Gemini vs ChatGPT: la carrera de MAU',x:'ChatGPT tiene ~800M MAU; Gemini tiene ~750M. La diferencia se está cerrando. El deal con Apple para impulsar Siri podría llevar Gemini a 2.500M dispositivos sin que el usuario tenga que instalar nada. Es el mayor deal de distribución de IA de la historia.'},
+    {t:'El modelo de monetización',x:'Gemini Advanced (plan de pago): suscripción mensual. Gemini Enterprise (B2B): $200+/usuario/mes, creciendo +40% QoQ. Gemini API (developers): cobro por token. Las 350M suscripciones de pago de Alphabet (YouTube Premium + Google One + Gemini) generan miles de millones en ARR recurrente.'}],risk:'OpenAI mantiene ventaja de mindshare: cuando alguien piensa en "IA", piensa en ChatGPT. Cambiar esa percepción requiere años. Además: Gemini tuvo controversias de calidad en 2024 (imágenes históricas incorrectas) que dañaron la confianza.',comps:[{n:'ChatGPT (OpenAI)',s:45,c:'#4a9eff'},{n:'Gemini (Google)',s:25,c:'#a78bfa'},{n:'Claude (Anthropic)',s:15,c:'#fbbf24'},{n:'Copilot (MS)',s:10,c:'#4ade80'},{n:'Otros',s:5,c:'#5a5855'}],compLbl:'Cuota tráfico IA generativa (Similarweb 2026)',chart:[200,350,450,550,650,750],chartLbl:'MAU Gemini App (millones)',chartCol:'#a78bfa'},
+
+  'l-agile': {eyebrow:'Robótica IA · Partnership DeepMind',title:'Agile Robots',amount:'Partnership',amountColor:'#a78bfa',stats:[{l:'Tipo',v:'Partnership',s:'No inversión directa conocida',c:'#a78bfa'},{l:'Tecnología',v:'Humanoid robots',s:'Bípedos para industria',c:'#4ade80'},{l:'Integración',v:'Gemini Robotics',s:'Modelos foundation de DeepMind',c:'#a78bfa'},{l:'Mercado objetivo',v:'Manufactura',s:'Logística y ensamblaje',c:'#fbbf24'}],tags:[{l:'Humanoid robots',c:'#a78bfa'},{l:'Gemini Robotics',c:'#4a9eff'},{l:'Manufactura',c:'#fbbf24'},{l:'DeepMind partner',c:'#a78bfa'}],alpha:'Agile Robots integra los modelos Gemini Robotics de DeepMind con su hardware de robots humanoides para industria. Google no manufactura hardware, pero provee la IA que hace útiles esos robots. Es parte de la estrategia de Google de convertir Gemini en la IA que controla el mundo físico.',sections:[{t:'Por qué robots humanoides ahora',x:'Los modelos de IA foundation han alcanzado el nivel necesario para controlar robots bípedos en entornos no estructurados. Agile Robots tiene hardware; DeepMind tiene los modelos. Juntos desarrollan robots que pueden trabajar en líneas de manufactura sin programación específica, usando instrucciones en lenguaje natural.'}],risk:'La robótica humanide es extremadamente difícil de desplegar en entornos industriales reales. Tesla Optimus, Figure AI y Boston Dynamics están en el mismo mercado con más recursos de hardware. La ventaja de Google es el modelo de IA, no el hardware.',comps:[{n:'Tesla Optimus',s:30,c:'#f87171'},{n:'Figure AI',s:15,c:'#fbbf24'},{n:'Boston Dynamics',s:20,c:'#4a9eff'},{n:'Agile/Google',s:10,c:'#a78bfa'},{n:'Otros',s:25,c:'#5a5855'}],compLbl:'Cuota robots humanoides (estimada 2026)',chart:[0,1,2,5,10,20],chartLbl:'Robots humanoides industriales desplegados (miles)',chartCol:'#a78bfa'},
+
+  'l-quantum': {eyebrow:'Quantum AI · Chip Willow · Dic 2024',title:'Willow (Quantum)',amount:'Investigación',amountColor:'#a78bfa',stats:[{l:'Chip',v:'Willow',s:'105 qubits · dic 2024',c:'#a78bfa'},{l:'Hito',v:'Error correction',s:'Reducción exponencial de errores',c:'#4ade80'},{l:'Velocidad',v:'10^25 x supercomp.',s:'Resuelve en minutos lo que tarda 10^25 años',c:'#fbbf24'},{l:'Aplicación IA',v:'2030+',s:'No aplicación práctica a corto plazo',c:'#f87171'}],tags:[{l:'105 qubits',c:'#a78bfa'},{l:'Error correction',c:'#4ade80'},{l:'Google AI Lab',c:'#a78bfa'},{l:'2030+ práctico',c:'#fbbf24'}],alpha:'Willow es el chip cuántico de Google lanzado en diciembre 2024. El hito no es la velocidad bruta sino la corrección de errores: a mayor número de qubits, los errores se reducen exponencialmente (no crecen como en sistemas anteriores). Esto es el obstáculo fundamental que impedía el quantum computing práctico.',sections:[{t:'Por qué Willow es un hito',x:'En computación cuántica, el problema histórico es que añadir más qubits genera más errores. Willow demostró el efecto contrario: más qubits = menos errores. Esto es el prerequisito para construir computadoras cuánticas prácticas. En un benchmark, resolvió un problema que a un supercomputador le llevaría 10^25 años.'},
+    {t:'Aplicaciones futuras para IA',x:'Quantum computing podría transformar el entrenamiento de modelos de IA (optimización de millones de parámetros), criptografía (romper/fortalecer encriptación), y drug discovery (modelar moléculas complejas). Pero las aplicaciones prácticas para negocio están estimadas para 2030+.'}],risk:'Otros labs de quantum (IBM, IonQ, Microsoft) también avanzan rápido. El quantum computing sigue siendo pre-comercial. Una empresa que apuesta en exceso a quantum demasiado pronto puede desperdiciar recursos. El horizonte real de aplicación es 2030+.',comps:[{n:'Google Willow',s:25,c:'#a78bfa'},{n:'IBM Quantum',s:30,c:'#4a9eff'},{n:'IonQ',s:10,c:'#4ade80'},{n:'Microsoft',s:20,c:'#2dd4bf'},{n:'Otros',s:15,c:'#5a5855'}],compLbl:'Cuota publicaciones quantum computing (2025)',chart:[5,20,40,72,105,120],chartLbl:'Evolución qubits Google Quantum (count)',chartCol:'#a78bfa'},
+
+  'l-apple': {eyebrow:'Partnership nov 2025 · Distribución IA masiva',title:'Apple — Siri + Gemini',amount:'Deal distribución',amountColor:'#a78bfa',stats:[{l:'Dispositivos',v:'2.500M',s:'iPhone + Mac + iPad + Watch',c:'#a78bfa'},{l:'Fecha deal',v:'Nov 2025',s:'Anunciado con iOS 19',c:'#4a9eff'},{l:'Modelo',v:'Gemini en Siri',s:'Para consultas complejas',c:'#a78bfa'},{l:'Revenue para Google',v:'Multi-B$/año',s:'Estimado por analistas',c:'#fbbf24'}],tags:[{l:'2.5B dispositivos',c:'#a78bfa'},{l:'iOS 19+',c:'#4a9eff'},{l:'Siri powered by Gemini',c:'#a78bfa'},{l:'Multi-B$/año',c:'#fbbf24'}],alpha:'El deal Apple es posiblemente el mayor acuerdo de distribución de IA de la historia. Apple integra Gemini de Google en Siri para responder consultas complejas que Siri sola no puede resolver. Con 2.500M dispositivos activos, Gemini tendrá acceso a la mayor base de usuarios de dispositivos premium del mundo.',sections:[{t:'Por qué Apple eligió Gemini (y no OpenAI)',x:'Apple necesitaba un partner de IA con presencia real en el cloud corporativo, compromiso con la privacidad, y modelos multimodales de primer nivel. Google ya tenía el deal de búsqueda con Safari ($15B/año). Extenderlo a IA fue un paso natural. ChatGPT también está integrado pero para casos de uso diferentes.'},
+    {t:'El impacto en MAU de Gemini',x:'Cada vez que un usuario de iPhone hace una consulta compleja a Siri, Gemini responde. Aunque el usuario no lo sepa, está usando Gemini. Esto puede añadir cientos de millones de usuarios "silenciosos" al número de MAU de Gemini. La monetización para Google viene de la tarifa que Apple paga por query.'}],risk:'Apple está desarrollando sus propios modelos de IA foundation (Apple Intelligence). Si Apple Intelligence alcanza la calidad de Gemini, podría cancelar o renegociar el deal. Esto es el mismo riesgo que tiene el acuerdo de búsqueda con Safari ($15B/año amenazado por DOJ).',comps:[{n:'Gemini (Google)',s:60,c:'#a78bfa'},{n:'ChatGPT (OpenAI)',s:30,c:'#4a9eff'},{n:'Apple Intelligence',s:10,c:'#5a5855'}],compLbl:'Distribución IA en dispositivos Apple (estimada)',chart:[0,100,300,600,1000,2500],chartLbl:'Dispositivos Apple con acceso a Gemini (millones)',chartCol:'#a78bfa'},
+
+  'n-health': {eyebrow:'Ciencias de la vida · Biotech IA',title:'Salud / Bio',amount:'~$2B+',amountColor:'#f87171',stats:[{l:'Isomorphic ronda',v:'$600M',s:'Abr 2025 · spinoff DeepMind',c:'#f87171'},{l:'Deals pharma',v:'hasta $3B',s:'Eli Lilly + Novartis milestones',c:'#fbbf24'},{l:'AlphaFold 3',v:'Activo',s:'Dobla cualquier proteína + otros mol.',c:'#f87171'},{l:'Verily',v:'Operativo',s:'Wearables médicos + estudios',c:'#4a9eff'}],tags:[{l:'AlphaFold 3',c:'#f87171'},{l:'Isomorphic $600M',c:'#f87171'},{l:'Lilly + Novartis',c:'#fbbf24'},{l:'Trials oncología 2026',c:'#4ade80'}],alpha:'La salud es una apuesta de largo plazo de Alphabet que puede ser enorme. AlphaFold 3 + Isomorphic Labs tienen el potencial de reducir el coste de desarrollo de fármacos de $2.5B a decenas de millones. Si un fármaco desarrollado con IA de Google llega al mercado, el modelo de negocio cambia radicalmente.',sections:[{t:'La cadena Alphabet en biotech',x:'DeepMind → AlphaFold 3 (predice estructura de cualquier molécula) → Isomorphic Labs (aplica eso a drug discovery) → Deals con Lilly y Novartis ($3B en milestones) → Trials clínicos oncología esperados en 2026. Alphabet no manufactura fármacos; crea la IA que los descubre y licencia esa capacidad a las farmacéuticas.'}],risk:'El desarrollo de fármacos es un proceso de 10-15 años con altísima tasa de fracaso (95%+ de moléculas no llegan al mercado). Aunque Isomorphic mejora la tasa de éxito inicial, los trials clínicos siguen siendo largos y costosos. Revenue real de fármacos está muy lejos.',comps:[{n:'Isomorphic/Google',s:15,c:'#f87171'},{n:'Recursion Pharma',s:10,c:'#fbbf24'},{n:'Exscientia',s:8,c:'#4a9eff'},{n:'Big Pharma IA',s:67,c:'#5a5855'}],compLbl:'Cuota AI drug discovery (estimada)',chart:[0.1,0.2,0.4,0.8,1.5,2.0],chartLbl:'Revenue/milestones acumulados salud Alphabet ($B)',chartCol:'#f87171'},
+
+  'l-isomorphic': {eyebrow:'Spinoff DeepMind · Drug discovery IA',title:'Isomorphic Labs',amount:'$600M ronda',amountColor:'#f87171',stats:[{l:'Ronda abr 2025',v:'$600M',s:'Post-money no divulgada',c:'#f87171'},{l:'Deal Eli Lilly',v:'hasta $1.9B',s:'Milestones oncología y otras',c:'#fbbf24'},{l:'Deal Novartis',v:'hasta $1.2B',s:'Milestones enfermedades complejas',c:'#fbbf24'},{l:'CEO',v:'Demis Hassabis',s:'Dirige también DeepMind',c:'#4a9eff'}],tags:[{l:'AlphaFold 3',c:'#f87171'},{l:'IsoDDE tool',c:'#f87171'},{l:'Lilly deal',c:'#fbbf24'},{l:'Novartis deal',c:'#fbbf24'},{l:'Oncología trials',c:'#4ade80'}],alpha:'Isomorphic Labs es el spinoff farmacéutico de DeepMind liderado personalmente por Demis Hassabis. Usa AlphaFold 3 + IsoDDE para predecir moléculas candidatas a fármacos con una precisión 2x superior. Los deals con Eli Lilly ($1.9B milestones) y Novartis ($1.2B milestones) son validación de que las grandes farmacéuticas creen en la tecnología.',sections:[{t:'IsoDDE: la herramienta clave',x:'IsoDDE (lanzada feb 2026) dobla la precisión de AlphaFold 3 para generar candidatos a fármacos. Donde AlphaFold predice la estructura de proteínas, IsoDDE predice cómo una molécula se une a esa proteína — el paso fundamental del drug design. Trials clínicos en oncología esperados en 2026.'},
+    {t:'El modelo de negocio',x:'Isomorphic no manufactura fármacos. Cobra milestones por el descubrimiento (cuando la molécula pasa cada fase de trials) y regalías si el fármaco llega al mercado. Con $3B en milestones potenciales solo con Lilly y Novartis, y 4x menor gasto de entrenamiento que OpenAI, la unit economics es muy favorable.'}],risk:'El 95%+ de moléculas candidatas fracasan en trials clínicos por toxicidad o ineficacia en humanos. Isomorphic mejora la fase de descubrimiento, pero no puede predecir todos los fracasos clínicos. Los milestones solo se cobran si las moléculas superan cada fase — puede llevar 10+ años.',comps:[{n:'Isomorphic',s:15,c:'#f87171'},{n:'Recursion',s:12,c:'#fbbf24'},{n:'Insilico Medicine',s:8,c:'#4a9eff'},{n:'Exscientia',s:5,c:'#4ade80'},{n:'Otros AI pharma',s:60,c:'#5a5855'}],compLbl:'Cuota AI-driven drug discovery (estimada)',chart:[0,0.1,0.2,0.5,1.2,2.5],chartLbl:'Milestones acumulados Isomorphic ($B proyectado)',chartCol:'#f87171'},
+
+  'l-verily': {eyebrow:'Filial Alphabet · Ciencias de la vida',title:'Verily',amount:'Operativo',amountColor:'#f87171',stats:[{l:'Modelo negocio',v:'Life sciences',s:'Wearables + estudios salud',c:'#f87171'},{l:'Proyecto emblema',v:'Baseline Study',s:'Salud longitudinal 10.000 personas',c:'#4a9eff'},{l:'Partners',v:'Pharma + seguros',s:'J&J, Novartis, Onduo diabetes',c:'#fbbf24'},{l:'Status',v:'Reestructuración',s:'Reducción plantilla 2023',c:'#f87171'}],tags:[{l:'Baseline Study',c:'#4a9eff'},{l:'Wearables médicos',c:'#f87171'},{l:'Diabetes (Onduo)',c:'#fbbf24'},{l:'Reestructurada 2023',c:'#f87171'}],alpha:'Verily aplica IA y datos a la salud. Su proyecto más importante es Baseline Study: seguimiento longitudinal de la salud de 10.000 personas para crear el mayor dataset de salud del mundo. Ese dataset es extremadamente valioso para entrenar modelos médicos de IA.',sections:[{t:'Qué hace Verily',x:'Verily desarrolla wearables médicos de grado clínico, estudia enfermedades crónicas (diabetes con Onduo, enfermedades cardiacas), y colabora con farmacéuticas para ensayos clínicos más eficientes. El Baseline Study es su proyecto más ambicioso: seguimiento completo de salud (biometría, genómica, laboratorio) de 10.000 personas durante años.'}],risk:'Verily tuvo que reestructurarse en 2023 reduciendo plantilla significativamente. El negocio de salud tiene ciclos de ventas largos y regulación compleja (FDA, HIPAA). La monetización de los datos de salud tiene restricciones legales severas.',comps:[{n:'Verily',s:5,c:'#f87171'},{n:'Apple Health',s:20,c:'#4a9eff'},{n:'Fitbit (Google)',s:10,c:'#4ade80'},{n:'Epic Systems',s:25,c:'#fbbf24'},{n:'Otros',s:40,c:'#5a5855'}],compLbl:'Cuota plataformas salud digital (estimada)',chart:[0.2,0.4,0.6,0.8,1.0,1.2],chartLbl:'Revenue estimado Verily ($B)',chartCol:'#f87171'},
+
+  'l-calico': {eyebrow:'Filial Alphabet · Investigación longevidad',title:'Calico',amount:'Investigación',amountColor:'#f87171',stats:[{l:'Objetivo',v:'Longevidad',s:'Extender vida saludable humana',c:'#f87171'},{l:'Partner',v:'AbbVie',s:'$2.5B comprometidos conjuntamente',c:'#fbbf24'},{l:'CEO',v:'Art Levinson',s:'Ex CEO Apple · cofundador',c:'#4a9eff'},{l:'Status',v:'Investigación básica',s:'Sin producto comercial aún',c:'#f87171'}],tags:[{l:'Longevity research',c:'#f87171'},{l:'AbbVie $2.5B JV',c:'#fbbf24'},{l:'Art Levinson',c:'#4a9eff'},{l:'Pre-comercial',c:'#f87171'}],alpha:'Calico es la apuesta más especulativa y a largo plazo de Alphabet. Su objetivo es entender y tratar el envejecimiento como enfermedad. Con AbbVie ha creado un JV de $2.5B. Si logran extender la vida saludable humana, el impacto sería inconmensurable — pero el horizonte es de décadas.',sections:[{t:'La tesis de Calico',x:'El envejecimiento es la causa subyacente de la mayoría de enfermedades (cáncer, Alzheimer, enfermedades cardiacas). Si se puede frenar o revertir el proceso de envejecimiento, se previenen todas esas enfermedades. Calico investiga los mecanismos moleculares del envejecimiento, usando biología computacional y modelos de IA de DeepMind.'}],risk:'Investigación básica de longevidad puede tardar décadas en producir resultados comerciales. Calico ha estado activa desde 2013 sin haber lanzado ningún producto comercial. Las expectativas deben ser a muy largo plazo (20–30 años) o el proyecto puede percibirse como un gasto sin retorno.',comps:[{n:'Calico',s:5,c:'#f87171'},{n:'Unity Biotech',s:8,c:'#fbbf24'},{n:'Altos Labs (BezosExp)',s:10,c:'#4a9eff'},{n:'Otros longevity',s:77,c:'#5a5855'}],compLbl:'Cuota inversión longevity research (estimada)',chart:[0.1,0.2,0.3,0.5,0.7,1.0],chartLbl:'Inversión Calico + AbbVie acumulada ($B)',chartCol:'#f87171'}
+};
+
+var alphSbChart = null;
+var alphSbActive = null;
+
+function alphOpenSb(key) {
+  var d = ALPH_SB_DATA[key];
+  if (!d) { console.warn('No data for', key); return; }
+
+  if (alphSbActive) document.getElementById(alphSbActive).classList.remove('active');
+  document.getElementById(key).classList.add('active');
+  alphSbActive = key;
+
+  document.getElementById('alph-sb-eyebrow').textContent = d.eyebrow;
+  document.getElementById('alph-sb-title').textContent = d.title;
+
+  var html = '';
+  if (d.isInternal) html += '<div class="sb-int-badge">Producto interno Google · No cotiza en bolsa</div>';
+  html += '<div class="sb-amount" style="color:' + d.amountColor + '">' + d.amount + '</div>';
+
+  html += '<div class="sb-stats">';
+  d.stats.forEach(function(s) {
+    html += '<div class="sb-stat"><div class="sb-stat-lbl">' + s.l + '</div><div class="sb-stat-val" style="color:' + s.c + '">' + s.v + '</div><div class="sb-stat-sub">' + s.s + '</div></div>';
+  });
+  html += '</div>';
+
+  html += '<div class="sb-tags">';
+  d.tags.forEach(function(t) { html += '<span class="sb-tag" style="background:' + t.c + '22;color:' + t.c + '">' + t.l + '</span>'; });
+  html += '</div>';
+
+  html += '<div class="sb-alpha"><div class="sb-alpha-lbl">Relación con Alphabet</div><div class="sb-alpha-txt">' + d.alpha + '</div></div>';
+
+  d.sections.forEach(function(s) {
+    html += '<div class="sb-section"><div class="sb-sec-title">' + s.t + '</div><div class="sb-sec-text">' + s.x + '</div></div>';
+  });
+
+  if (d.comps && d.comps.length) {
+    html += '<div class="sb-section"><div class="sb-sec-title">' + d.compLbl + '</div>';
+    d.comps.forEach(function(c) {
+      var name = c.n || c.name || '';
+      var share = c.s || c.share || 0;
+      var color = c.c || c.color || '#888';
+      html += '<div class="sb-comp-row"><div class="sb-comp-name">' + name + '</div><div class="sb-comp-bw"><div class="sb-comp-b" style="width:' + share + '%;background:' + color + '"></div></div><div class="sb-comp-val">' + share + '%</div></div>';
+    });
+    html += '</div>';
+  }
+
+  html += '<div class="sb-risk"><div class="sb-risk-lbl">Principal riesgo a vigilar</div><div class="sb-risk-txt">' + d.risk + '</div></div>';
+
+  html += '<div class="sb-section"><div class="sb-sec-title">' + d.chartLbl + '</div><div class="sb-chart-wrap"><canvas id="sb-chart" role="img" aria-label="' + d.chartLbl + '"></canvas></div></div>';
+
+  document.getElementById('alph-sb-body').innerHTML = html;
+
+  if (alphSbChart) { alphSbChart.destroy(); alphSbChart = null; }
+  var ctx = document.getElementById('alph-sb-chart');
+  if (ctx) {
+    alphSbChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: d.chart.map(function() { return ''; }),
+        datasets: [{
+          data: d.chart,
+          borderColor: d.chartCol,
+          borderWidth: 2,
+          pointRadius: d.chart.map(function(_, i) { return i === d.chart.length - 1 ? 4 : 0; }),
+          pointBackgroundColor: d.chartCol,
+          tension: 0.4, fill: true,
+          backgroundColor: d.chartCol + '18'
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { display: false },
+          y: { ticks: { color: '#5a5855', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.04)' }, border: { display: false } }
+        }
+      }
+    });
+  }
+
+  document.getElementById('alph-sb-panel').classList.add('open');
+}
+
+function alphCloseSb() {
+  document.getElementById('alph-sb-panel').classList.remove('open');
+  if (alphSbActive) { document.getElementById(alphSbActive).classList.remove('active'); alphSbActive = null; }
+}
+
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') alphCloseSb(); });
+
 </script>
 </body>
 </html>
