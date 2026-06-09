@@ -1423,12 +1423,12 @@ body{
       </div>
 
       <div class="itabs">
-        <button class="itab active" onclick="showITabSheet('alp','negocio',this)">Los 6 negocios</button>
-        <button class="itab" onclick="showITabSheet('alp','resultados',this)">Resultados recientes</button>
-        <button class="itab" onclick="showITabSheet('alp','ia',this)">Estrategia IA</button>
-        <button class="itab" onclick="showITabSheet('alp','riesgos',this)">Riesgos</button>
-        <button class="itab" onclick="showITabSheet('alp','escenarios',this)">Escenarios precio</button>
-        <button class="itab" onclick="showITabSheet('alp','arbol',this);setTimeout(alphDrawLines,120);">🌳 Árbol inversiones</button>
+        <button class="itab active" onclick="showITabSheet('alp','negocio',this);this.closest('.s1-inner').classList.remove('is-tree')">Los 6 negocios</button>
+        <button class="itab" onclick="showITabSheet('alp','resultados',this);this.closest('.s1-inner').classList.remove('is-tree')">Resultados recientes</button>
+        <button class="itab" onclick="showITabSheet('alp','ia',this);this.closest('.s1-inner').classList.remove('is-tree')">Estrategia IA</button>
+        <button class="itab" onclick="showITabSheet('alp','riesgos',this);this.closest('.s1-inner').classList.remove('is-tree')">Riesgos</button>
+        <button class="itab" onclick="showITabSheet('alp','escenarios',this);this.closest('.s1-inner').classList.remove('is-tree')">Escenarios precio</button>
+        <button class="itab" onclick="showITabSheet('alp','arbol',this);this.closest('.s1-inner').classList.add('is-tree');setTimeout(alphDrawLines,120);">🌳 Árbol inversiones</button>
       </div>
 
       <!-- LOS 6 NEGOCIOS -->
