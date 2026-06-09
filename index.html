@@ -316,9 +316,7 @@ body{
 
 /* ══ ALPHABET TREE ══ */
 .alph-tree-wrap {
-  --bg: #0a0c10; --bg2: #111318; --bg3: #181b22;
-  --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.13);
-  --text: #e8e6df; --text2: #9b9990; --text3: #5a5855;
+  /* accent colors unique to the tree */
   --blue: #4a9eff; --blue-bg: rgba(74,158,255,0.08);
   --green: #4ade80; --green-bg: rgba(74,222,128,0.08);
   --amber: #fbbf24; --amber-bg: rgba(251,191,36,0.08);
@@ -329,9 +327,13 @@ body{
   position: relative; overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   font-size: 13px; line-height: 1.5;
-  background: #0a0c10; color: #e8e6df;
-  min-height: 600px;
 }
+/* full-width mode when arbol tab is active */
+.s1-inner.is-tree { max-width: none; padding-left: 0; padding-right: 0; padding-top: 0; }
+.s1-inner.is-tree .metrics,
+.s1-inner.is-tree .itabs { padding-left: 44px; padding-right: 44px; }
+.s1-inner.is-tree .metrics { padding-top: 28px; }
+#alp-arbol.active { overflow-x: auto; }
 
 
   /* ── HEADER ── */
