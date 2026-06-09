@@ -2168,7 +2168,10 @@ function showSheet(id, btn) {
   document.querySelectorAll('.sheet-tab').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.sheet').forEach(s => s.classList.remove('active'));
   document.getElementById('sheet-' + id).classList.add('active');
-  btn.classList.add('active');
+  if (btn) btn.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const sideItem = document.querySelector('.nav-item[data-sheet="' + id + '"]');
+  if (sideItem) sideItem.classList.add('active');
   updateHeader(id);
   if (id === 'mosaic') renderCharts();
   if (id === 'calendario') renderCalendar();
