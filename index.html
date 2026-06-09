@@ -1162,7 +1162,10 @@ body{
           <div class="cal-month-title" id="calTitle"></div>
           <button onclick="changeMonth(1)">&#8594;</button>
         </div>
-        <button class="cal-add-btn" onclick="openModal()">+ Añadir fecha</button>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div id="evSummary" style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:7px 14px;display:flex;align-items:center;gap:16px;"></div>
+          <button class="cal-add-btn" onclick="openModal()">+ Añadir fecha</button>
+        </div>
       </div>
 
       <!-- Layout: (calendario + noticias) izquierda + próximos eventos derecha -->
