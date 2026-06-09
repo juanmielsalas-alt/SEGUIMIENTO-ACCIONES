@@ -339,6 +339,36 @@ body{
   </div>
 </header>
 
+<!-- MAIN LAYOUT: sidebar + content -->
+<div class="main-layout">
+
+<!-- SIDEBAR NAV -->
+<nav class="sidebar" id="sidebar">
+  <div class="nav-group">
+    <div class="nav-group-hdr">Inicio</div>
+    <button class="nav-item active" data-sheet="calendario" onclick="showSheet('calendario',null)"><span class="nav-icon">📅</span>Calendario &amp; Noticias</button>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-hdr">Cartera</div>
+    <button class="nav-item" data-sheet="mosaic" onclick="showSheet('mosaic',null)"><span class="nav-icon">📊</span>Mosaic (MOS)</button>
+    <button class="nav-item" data-sheet="lumentum" onclick="showSheet('lumentum',null)"><span class="nav-icon">🔦</span>Lumentum (LITE)</button>
+    <button class="nav-item" data-sheet="iag" onclick="showSheet('iag',null)"><span class="nav-icon">✈️</span>IAG</button>
+    <button class="nav-item" data-sheet="onsemi" onclick="showSheet('onsemi',null)"><span class="nav-icon">⚡</span>ON Semi (ON)</button>
+    <button class="nav-item" data-sheet="horizon" onclick="showSheet('horizon',null)"><span class="nav-icon">🤖</span>Horizon (9660.HK)</button>
+    <button class="nav-item" data-sheet="alphabet" onclick="showSheet('alphabet',null)"><span class="nav-icon">🔍</span>Alphabet (GOOGL)</button>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-hdr">IPOs</div>
+    <button class="nav-item" data-sheet="spacex" onclick="showSheet('spacex',null)"><span class="nav-icon">🚀</span>SpaceX (SPCX)</button>
+    <button class="nav-item" data-sheet="anthropic" onclick="showSheet('anthropic',null)"><span class="nav-icon">🤖</span>Anthropic</button>
+    <button class="nav-item" data-sheet="openai" onclick="showSheet('openai',null)"><span class="nav-icon">🧠</span>OpenAI</button>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-hdr">Contexto</div>
+    <button class="nav-item" data-sheet="ormuz" onclick="showSheet('ormuz',null)"><span class="nav-icon">🌊</span>Ormuz — Sectores</button>
+  </div>
+</nav>
+
 <!-- SCROLLABLE AREA -->
 <div class="sheet-area">
 
