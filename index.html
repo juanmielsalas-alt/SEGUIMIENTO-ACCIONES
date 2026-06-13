@@ -362,6 +362,29 @@ body{
 .ct-gray{background:var(--bg4);color:var(--text3);}
 @media(max-width:768px){.segs-grid,.wg{grid-template-columns:1fr;}.peor-grid{grid-template-columns:1fr;}}
 
+/* ── MOSAIC — golfo / q1q2 / plantas ── */
+.gulf-g{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:12px 0 20px;}
+.gulf-c{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px 16px;}
+.gulf-c-hd{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.gulf-c-sub{font-size:11px;color:var(--text3);margin-bottom:10px;}
+.cmp-hd{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4px;font-size:11px;font-weight:600;color:var(--text3);background:var(--bg3);border-radius:var(--r);padding:6px 8px;margin-bottom:4px;}
+.cmp-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4px;font-size:12px;padding:6px 8px;border-bottom:1px solid var(--border);align-items:center;color:var(--text2);}
+.cmp-row:last-child{border-bottom:none;}
+.cu{color:var(--green);font-weight:500;}
+.cd{color:var(--red);font-weight:500;}
+.cn{color:var(--amber);font-weight:500;}
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 16px;}
+.kpi-c{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;}
+.kpi-c .kl{font-size:11px;color:var(--text3);margin-bottom:3px;}
+.kpi-c .kv{font-size:18px;font-weight:500;}
+.kpi-c .kd{font-size:11px;margin-top:2px;font-weight:500;}
+.sens-g{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 16px;}
+.sens-c{background:var(--bg3);border-radius:var(--r);padding:10px 12px;font-size:12px;color:var(--text2);line-height:1.55;}
+.sens-c .st{font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.ps-ok{background:var(--green-bg);color:var(--green);display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;margin-bottom:6px;}
+.ps-warn{background:var(--amber-bg);color:var(--amber);display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;margin-bottom:6px;}
+@media(max-width:768px){.gulf-g{grid-template-columns:1fr;}.kpi-row{grid-template-columns:1fr 1fr;}.sens-g{grid-template-columns:1fr 1fr;}}
+
 /* ── MAIN LAYOUT ── */
 .main-layout{display:flex;flex:1;min-height:0;overflow:hidden;}
 
