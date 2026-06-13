@@ -3318,11 +3318,15 @@ let events = [
   // Alphabet
   { id:22, date:'2026-07-28', title:'🔍 Alphabet — Resultados Q2 2026', type:'resultados', desc:'Primer trimestre con AI Overviews generando ingresos materiales ($8B ARR confirmado en I/O 2026). Vigilar: crecimiento Cloud (consenso +58% YoY), monetización Search con IA, y CapEx 2026 vs guidance $180-190B.' },
   // MOS
-  { id:23, date:'2026-08-03', title:'📊 Mosaic — Resultados Q2 2026', type:'resultados', desc:'Primer trimestre completo con el impacto del bloqueo de Ormuz en precios del azufre y fosfatos. Vigilar: precio realizado de potasio y fosfato en Q2, impacto en márgenes del encarecimiento de azufre vs. ventaja competitiva propia, y guidance H2 2026.' },
+  { id:23, date:'2026-08-03', title:'📊 Mosaic — Resultados Q2 2026', type:'resultados', desc:'1ª radiografía post-paz. Vigilar: precio realizado fosfato/potasio en Q2 (¿rebote tras reapertura Ormuz?), guía H2 2026, y si los analistas actualizan objetivos al alza. Deal China el 12 jun puede ser señal positiva de demanda.' },
   // Alphabet
-  { id:24, date:'2026-06-08', title:'🔍 Alphabet — Ex-dividendo $0,22/acc', type:'resultados', desc:'Fecha ex-dividendo. Accionistas registrados antes del 6 jun cobraron $0,22/acc el 8 jun. Yield ~0,2% sobre precio. Segundo año consecutivo de dividendos.' },
+  { id:24, date:'2026-06-08', title:'✅ Alphabet — Ex-dividendo $0,22/acc (cobrado)', type:'resultados', desc:'Fecha ex-dividendo pasada. Accionistas registrados antes del 6 jun cobraron $0,22/acc el 8 jun. Yield ~0,2% sobre precio. Segundo año consecutivo de dividendos.' },
+  // Novedades jun 2026
+  { id:26, date:'2026-06-12', title:'🌊 Irán — Texto final de paz acordado', type:'guerra', desc:'EE.UU. e Irán alcanzan acuerdo sobre texto final del tratado de paz, con mediación de Pakistán (PM Shehbaz Sharif confirma). Términos: reapertura completa del Estrecho de Ormuz, levantamiento del bloqueo naval de EE.UU. a puertos iraníes, alivio de sanciones. Pendiente firma formal.' },
+  { id:27, date:'2026-06-12', title:'📊 Mosaic — Sube con upgrades y deal agrícola China', type:'resultados', desc:'MOS sube en sesión tras upgrades de analistas y noticias de acuerdo agrícola entre EE.UU. y China que impulsa demanda de fertilizantes. Contexto: CIBC sube objetivo a $33 desde $32. Combinado con señales de paz en Ormuz — reducción de costes de azufre prevista para H2 2026.' },
+  { id:28, date:'2026-06-25', title:'✈️ IAG — Ex-dividendo', type:'resultados', desc:'Fecha ex-dividendo IAG. Hay que estar en el registro antes del 24 jun para cobrar dividendo (£0,07586/acc · yield ~1,78% anual). IAG cotiza en máximos del año a 407p tras recuperación post-Ormuz.' },
 ];
-let nextId = 25;
+let nextId = 29;
 
 function saveEvents() {
   localStorage.setItem('acciones_events', JSON.stringify(events));
