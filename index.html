@@ -3245,20 +3245,21 @@ function renderCharts() {
       scales:{ x:{grid:{color:gc},ticks:{color:tc,font:{size:11}}}, y:{grid:{color:gc},ticks:{color:tc,callback:v=>'$'+v},min:15,max:45} }
     }
   });
-  _charts.escenarios = new Chart(document.getElementById('chartEscenarios'), {
-    type:'line',
+  _charts.ebitdaHist = new Chart(document.getElementById('chartEbitdaHist'), {
+    type:'bar',
     data:{
-      labels:['Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene 27','Feb','Mar','Abr','May'],
-      datasets:[
-        {label:'Base',    data:[25,26.5,28,30,31,32,33,34,35,35.5,36,35],  borderColor:'#378ADD',borderWidth:2,  pointRadius:2,tension:.4,fill:false},
-        {label:'Optimista',data:[26,29,33,36,38,40,42,43,44,44.5,45,44], borderColor:'#639922',borderWidth:1.5,pointRadius:2,tension:.4,fill:false,borderDash:[6,3]},
-        {label:'Pesimista',data:[23,22,20,19,18,17.5,17,16.5,16,15.5,15,16],borderColor:'#E24B4A',borderWidth:1.5,pointRadius:2,tension:.4,fill:false,borderDash:[3,3]}
-      ]
+      labels:['2019','2020','2021','2022','2023','2024','2025'],
+      datasets:[{
+        label:'EBITDA ajustado ($B)',
+        data:[1.8,1.25,3.6,6.2,2.8,2.2,2.4],
+        backgroundColor:['#888780','#888780','#5dcaa5','#E24B4A','#BA7517','#BA7517','#378ADD'],
+        borderRadius:4, borderSkipped:false
+      }]
     },
     options:{
       responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{display:false}, tooltip:{backgroundColor:'#2e2e2e',borderColor:'rgba(255,255,255,.1)',borderWidth:1,titleColor:'#888',bodyColor:'#f0f0f0',callbacks:{label:c=>' '+c.dataset.label+': $'+c.raw.toFixed(1)}} },
-      scales:{ x:{grid:{color:gc},ticks:{color:tc,font:{size:11}}}, y:{grid:{color:gc},ticks:{color:tc,callback:v=>'$'+v},min:10,max:50} }
+      plugins:{ legend:{display:false}, tooltip:{backgroundColor:'#2e2e2e',borderColor:'rgba(255,255,255,.1)',borderWidth:1,titleColor:'#888',bodyColor:'#f0f0f0',callbacks:{label:c=>' EBITDA: $'+c.raw.toFixed(2)+'B'}} },
+      scales:{ x:{grid:{color:gc},ticks:{color:tc}}, y:{beginAtZero:true,max:7,grid:{color:gc},ticks:{color:tc,callback:v=>'$'+v+'B'}} }
     }
   });
   _charts.ratings = new Chart(document.getElementById('chartRatings'), {
