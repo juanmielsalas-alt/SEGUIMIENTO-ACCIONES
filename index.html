@@ -3650,8 +3650,15 @@ function saveEvents() {
 function loadEvents() {
   try {
     const saved = localStorage.getItem('acciones_events');
-    if (saved) { events = JSON.parse(saved); nextId = parseInt(localStorage.getItem('acciones_events_nextid')) || nextId; }
-  } catch(e) {}
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) {
+        events = parsed.filter(e => e && typeof e.id === 'number' && typeof e.date === 'string' && typeof e.title === 'string');
+      }
+      const savedId = parseInt(localStorage.getItem('acciones_events_nextid'));
+      if (!isNaN(savedId)) nextId = savedId;
+    }
+  } catch(e) { console.error('[acciones] Error cargando eventos guardados:', e); }
 }
 loadEvents();
 
