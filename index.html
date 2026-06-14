@@ -171,6 +171,10 @@ body{
 /* NEWS FEED */
 .news-section{margin-top:32px;}
 .news-filter-wrap{position:relative;display:inline-flex;align-items:center;}
+.news-sent-btns{display:flex;align-items:center;gap:4px;}
+.ns-sent-btn{padding:4px 10px;font-size:11px;font-family:inherit;border:1px solid var(--border);border-radius:20px;cursor:pointer;background:transparent;color:var(--text3);transition:all .15s;}
+.ns-sent-btn:hover{border-color:var(--border2);color:var(--text2);}
+.ns-sent-btn.active{border-color:var(--blue);background:var(--blue-bg);color:var(--blue);font-weight:500;}
 .news-filter-btn{display:flex;align-items:center;gap:6px;padding:5px 10px;font-size:12px;font-family:inherit;border:1px solid var(--border2);border-radius:var(--r);cursor:pointer;background:var(--bg3);color:var(--text2);transition:all .15s;}
 .news-filter-btn:hover{background:var(--bg4);color:var(--text);}
 .news-filter-btn.has-filter{border-color:var(--blue);color:var(--blue);}
