@@ -3981,9 +3981,9 @@ document.addEventListener('click', e => {
 function renderNews() {
   const feed = document.getElementById('newsFeed');
   if (!feed) return;
-  const filtered = activeNewsFilter === 'all'
-    ? [...NEWS]
-    : NEWS.filter(n => n.company === activeNewsFilter);
+  const filtered = NEWS
+    .filter(n => activeNewsFilter === 'all' || n.company === activeNewsFilter)
+    .filter(n => activeSentimentFilter === 'all' || n.sentiment === activeSentimentFilter);
   filtered.sort((a, b) => b.date.localeCompare(a.date));
   feed.innerHTML = '';
   filtered.forEach(n => {
