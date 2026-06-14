@@ -3778,7 +3778,14 @@ function saveEvent() {
   const date = document.getElementById('evDate').value;
   const title = document.getElementById('evTitle').value.trim();
   if (!date || !title) { alert('Por favor rellena al menos la fecha y el título.'); return; }
-  events.push({ id: nextId++, date, title, type: document.getElementById('evType').value, desc: document.getElementById('evDesc').value.trim() });
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) { alert('Formato de fecha inválido. Usa YYYY-MM-DD.'); return; }
+  const [y, m, d] = date.split('-').map(Number);
+  const dt = new Date(y, m - 1, d);
+  if (isNaN(dt.getTime()) || dt.getMonth() !== m - 1) { alert('Fecha inválida.'); return; }
+  if (title.length > 200) { alert('El título no puede superar 200 caracteres.'); return; }
+  const desc = document.getElementById('evDesc').value.trim();
+  if (desc.length > 1000) { alert('La descripción no puede superar 1000 caracteres.'); return; }
+  events.push({ id: nextId++, date, title, type: document.getElementById('evType').value, desc });
   events.sort((a,b) => a.date.localeCompare(b.date));
   saveEvents();
   closeModal();
