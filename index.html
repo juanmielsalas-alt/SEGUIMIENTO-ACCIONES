@@ -1738,13 +1738,21 @@ body{
           <div class="news-section">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0;flex-wrap:wrap;gap:10px;">
               <div class="sl" style="margin-bottom:0;">Últimas noticias</div>
-              <div class="news-filter-wrap" id="newsFilterWrap">
-                <button class="news-filter-btn" id="newsFilterBtn" onclick="toggleNewsDropdown()">
-                  <span class="news-filter-icon">⚙︎</span>
-                  <span class="news-filter-label" id="newsFilterLabel">Todas</span>
-                  <span style="font-size:10px;color:var(--text3);margin-left:2px;">▾</span>
-                </button>
-                <div class="news-filter-dropdown" id="newsFilterDropdown"></div>
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                <div class="news-sent-btns" id="newsSentimentBtns">
+                  <button class="ns-sent-btn active" data-sent="all" onclick="filterSentiment('all')">Todas</button>
+                  <button class="ns-sent-btn" data-sent="pos" onclick="filterSentiment('pos')">✅ Positivo</button>
+                  <button class="ns-sent-btn" data-sent="neg" onclick="filterSentiment('neg')">❌ Negativo</button>
+                  <button class="ns-sent-btn" data-sent="neu" onclick="filterSentiment('neu')">➖ Neutro</button>
+                </div>
+                <div class="news-filter-wrap" id="newsFilterWrap">
+                  <button class="news-filter-btn" id="newsFilterBtn" onclick="toggleNewsDropdown()">
+                    <span class="news-filter-icon">⚙︎</span>
+                    <span class="news-filter-label" id="newsFilterLabel">Todas</span>
+                    <span style="font-size:10px;color:var(--text3);margin-left:2px;">▾</span>
+                  </button>
+                  <div class="news-filter-dropdown" id="newsFilterDropdown"></div>
+                </div>
               </div>
             </div>
             <div class="news-feed" id="newsFeed"></div>
