@@ -3927,6 +3927,13 @@ const NEWS_COMPANIES = [
 ];
 
 let activeNewsFilter = 'all';
+let activeSentimentFilter = 'all';
+
+function filterSentiment(sent) {
+  activeSentimentFilter = sent;
+  document.querySelectorAll('.ns-sent-btn').forEach(b => b.classList.toggle('active', b.dataset.sent === sent));
+  renderNews();
+}
 
 function buildNewsDropdown() {
   const dd = document.getElementById('newsFilterDropdown');
